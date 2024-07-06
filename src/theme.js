@@ -1,15 +1,11 @@
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 
 const theme = extendTheme({
+  buttonStyle: {
+    height: '44px',
+    width: '220px'
+  },
   colorSchemes: {
-    //light: {
-    //  palette: {
-    //    primary: {
-    //      main: '#fff'
-    //    }
-    //  }
-    //},
-
     dark: {
       palette: {
         primary: {

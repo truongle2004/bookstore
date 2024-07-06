@@ -5,18 +5,21 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import {
   checkCofirmPassword,
   checkEmail,
   checkUsername,
   valueValidation
 } from '~/constant/constant'
+import { isOpenedDialog } from '~/redux/features/OpenDialog'
 
 function RegisterForm() {
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const dispatch = useDispatch()
 
   const handleSubmit = () => {
     if (
@@ -33,7 +36,10 @@ function RegisterForm() {
       })
     }
   }
-  const handleClose = () => {}
+  const handleClose = () => {
+    dispatch(isOpenedDialog(false))
+  }
+
   return (
     <Box>
       <DialogTitle>Register</DialogTitle>

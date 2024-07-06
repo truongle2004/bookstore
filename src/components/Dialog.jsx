@@ -1,14 +1,15 @@
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import Tab from '@mui/material/Tab'
-import Tabs from '@mui/material/Tabs'
+import { Box, Dialog, Tab, Tabs } from '@mui/material'
+import Slide from '@mui/material/Slide'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />
+})
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props
@@ -58,6 +59,7 @@ export default function FormDialog() {
         maxWidth={'xs'}
         open={open}
         onClose={handleClose}
+        TransitionComponent={Transition}
       >
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -66,6 +68,7 @@ export default function FormDialog() {
               onChange={handleChange}
               aria-label="basic tabs example"
               variant="fullWidth"
+              textColor="secondary"
             >
               <Tab label="Login" {...a11yProps(0)} />
               <Tab label="Register" {...a11yProps(1)} />
