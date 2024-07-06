@@ -36,9 +36,7 @@ function Appbars() {
             }}
           >
             <Logo />
-            <Widgets />
             <Search />
-            <Notification />
             <Cart />
             <Account />
             <ModeToggle />
