@@ -45,9 +45,6 @@ export default function FormDialog() {
   const handleClose = () => {
     dispatch(isOpenedDialog(false))
   }
-  const handleOpen = () => {
-    dispatch(isOpenedDialog(true))
-  }
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
@@ -56,9 +53,6 @@ export default function FormDialog() {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleOpen}>
-        Open max-width dialog
-      </Button>
       <Dialog
         fullWidth={true}
         maxWidth={'xs'}

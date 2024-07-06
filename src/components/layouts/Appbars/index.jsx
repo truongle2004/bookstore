@@ -8,41 +8,45 @@ import Cart from './Menus/Cart'
 import Account from './Menus/Account'
 import Stack from '@mui/material/Stack'
 import ModeToggle from './ModeSelects'
+import { Outlet } from 'react-router-dom'
 
 function Appbars() {
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        alignItems: 'center'
-      }}
-    >
-      <AppBar
-        position="static"
+    <>
+      <Box
         sx={{
-          gap: 3,
-          height: '68px'
+          flexGrow: 1,
+          alignItems: 'center'
         }}
       >
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-evenly"
+        <AppBar
+          position="static"
           sx={{
-            paddingY: '10px',
-            position: 'relative'
+            gap: 3,
+            height: '68px'
           }}
         >
-          <Logo />
-          <Widgets />
-          <Search />
-          <Notification />
-          <Cart />
-          <Account />
-          <ModeToggle />
-        </Stack>
-      </AppBar>
-    </Box>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-evenly"
+            sx={{
+              paddingY: '10px',
+              position: 'relative'
+            }}
+          >
+            <Logo />
+            <Widgets />
+            <Search />
+            <Notification />
+            <Cart />
+            <Account />
+            <ModeToggle />
+          </Stack>
+        </AppBar>
+      </Box>
+      <Outlet />
+    </>
   )
 }
 export default Appbars

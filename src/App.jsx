@@ -4,14 +4,16 @@ import Appbars from '~/components/layouts/Appbars'
 import theme from '~/theme'
 import BoardBar from '~/components/layouts/Footer/BoardBar'
 import FormDialog from './components/Dialog'
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
   return (
     <CssVarsProvider theme={theme}>
       <CssBaseline />
-      <Appbars />
-      <BoardBar />
-      <FormDialog />
+      <AppRoutes />
+      {/* <Appbars /> */}
+      {/* <BoardBar /> */}
+      {/* <FormDialog /> */}
     </CssVarsProvider>
   )
 }
