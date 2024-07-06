@@ -1,19 +1,39 @@
 import { Button, TextField, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
+import {
+  checkCofirmPassword,
+  checkEmail,
+  checkUsername,
+  valueValidation
+} from '~/constant/constant'
 
 function RegisterForm() {
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [matchPassword, setMatchPassword] = useState('')
-  const handleSubmit = () => {}
-  const handleClose = () => {}
+  const [confirmPassword, setConfirmPassword] = useState('')
 
+  const handleSubmit = () => {
+    if (
+      checkUsername(username) &&
+      checkEmail(email) &&
+      checkCofirmPassword(password, confirmPassword)
+    ) {
+      // to-do somethings
+    } else {
+      valueValidation.forEach((key, value) => {
+        if (value === false) {
+          // to-do somethings
+        }
+      })
+    }
+  }
+  const handleClose = () => {}
   return (
     <Box>
       <DialogTitle>Register</DialogTitle>
@@ -74,7 +94,7 @@ function RegisterForm() {
                 type="password"
                 fullWidth
                 required
-                onChange={(e) => setMatchPassword(e.target.value)}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 margin="normal"
               />
             </Box>
