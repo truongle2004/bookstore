@@ -28,7 +28,7 @@ function RegisterForm() {
               <Typography>Enter Email</Typography>
               <TextField
                 sx={{
-                  width: 280
+                  width: 320
                 }}
                 type="email"
                 fullWidth
@@ -42,7 +42,7 @@ function RegisterForm() {
               <Typography>Enter User Name</Typography>
               <TextField
                 sx={{
-                  width: 280
+                  width: 320
                 }}
                 type="text"
                 fullWidth
@@ -56,7 +56,7 @@ function RegisterForm() {
               <Typography>Enter password</Typography>
               <TextField
                 sx={{
-                  width: 280
+                  width: 320
                 }}
                 type="password"
                 fullWidth
@@ -69,7 +69,7 @@ function RegisterForm() {
               <Typography>Enter Password Again</Typography>
               <TextField
                 sx={{
-                  width: 280
+                  width: 320
                 }}
                 type="password"
                 fullWidth

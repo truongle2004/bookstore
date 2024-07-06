@@ -1,19 +1,29 @@
 import { CssBaseline } from '@mui/material'
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles'
-import Appbars from '~/components/layouts/Appbars'
 import theme from '~/theme'
-import BoardBar from '~/components/layouts/Footer/BoardBar'
 import FormDialog from './components/Dialog'
 import AppRoutes from './routes/AppRoutes'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
   return (
     <CssVarsProvider theme={theme}>
       <CssBaseline />
       <AppRoutes />
-      {/* <Appbars /> */}
-      {/* <BoardBar /> */}
-      {/* <FormDialog /> */}
+      <FormDialog />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition:Bounce
+      />
     </CssVarsProvider>
   )
 }
