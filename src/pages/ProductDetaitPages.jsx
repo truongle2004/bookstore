@@ -5,11 +5,13 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { bookInfo } from '~/publics'
 import { addToCart } from '~/redux/features/storeProducts'
-import ProductActions from './ProductAction'
-import ProductDetails from './ProductDetails'
-import ProductQuantity from './ProductQuantity'
+import {
+  ProductActions,
+  ProductDetails,
+  ProductQuantity
+} from '~/components/BookDetails'
 
-function BookDetailPage() {
+function ProductDetailPages() {
   const [quantity, setQuantity] = useState(1)
   const dispatch = useDispatch()
   const handleAddProductToCart = (product) => {
@@ -80,4 +82,4 @@ function BookDetailPage() {
   )
 }
 
-export default BookDetailPage
+export default ProductDetailPages

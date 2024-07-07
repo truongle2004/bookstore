@@ -6,13 +6,11 @@ import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import {
-  checkCofirmPassword,
-  checkEmail,
-  checkUsername,
-  valueValidation
-} from '~/constant/constant'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
+import checkUsername from '~/utils/userNameValidation'
+import { checkEmail } from '~/utils/emailValidation'
+import { checkCofirmPassword } from '~/utils/passwordValidation'
+import { valueValidation } from '~/constant'
 
 function RegisterForm() {
   const [email, setEmail] = useState('')

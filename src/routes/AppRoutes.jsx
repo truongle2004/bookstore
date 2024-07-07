@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom'
-import Appbars from '~/components/layouts/Appbars'
-import BoardBar from '~/components/layouts/Footer/BoardBar/BoardBar'
-import BookDetails from '~/components/layouts/Footer/BookDetails/BookDetails'
-import CartPage from '~/pages/Cart.page'
+import Appbars from '~/components/Appbars'
+import BoardBar from '~/components/BoardBar/BoardBar'
+import ProductDetailPages from '~/pages/ProductDetaitPages'
+import CartPage from '~/pages/CartPage'
 
 function AppRoutes() {
   return (
@@ -10,7 +10,7 @@ function AppRoutes() {
       <Route path="/" element={<Appbars />}>
         <Route path="home" element={<BoardBar />} />
         <Route path="checkout/cart" element={<CartPage />} />
-        <Route path="product" element={<BookDetails />} />
+        <Route path="product" element={<ProductDetailPages />} />
       </Route>
     </Routes>
   )
