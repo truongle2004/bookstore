@@ -15,13 +15,24 @@ function Account() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
-  const handleClose = () => {
-    setAnchorEl(null)
+
+  const handleCloseMenuAndOpenDialog = () => {
+    handleClose()
     handleOpenDialog()
   }
+
+  const handleCloseDialog = () => {
+    dispatch(isOpenedDialog(false))
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   const handleOpenDialog = () => {
     dispatch(isOpenedDialog(true))
   }
+
   return (
     <div>
       <Stack direction="column" alignItems="center">
@@ -60,9 +71,9 @@ function Account() {
           }
         }}
       >
-        <MenuItem onClick={handleClose}>Login</MenuItem>
-        <MenuItem onClick={handleClose}>Register</MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleCloseMenuAndOpenDialog}>Login</MenuItem>
+        <MenuItem onClick={handleCloseMenuAndOpenDialog}>Register</MenuItem>
+        <MenuItem onClick={handleCloseMenuAndOpenDialog}>
           <FacebookIcon
             sx={{
               marginRight: '3px'
