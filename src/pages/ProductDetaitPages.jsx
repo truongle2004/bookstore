@@ -10,16 +10,14 @@ import {
   ProductDetails,
   ProductQuantity
 } from '~/components/BookDetails'
+import useQuantity from '~/hooks'
 
 function ProductDetailPages() {
-  const [quantity, setQuantity] = useState(1)
   const dispatch = useDispatch()
   const handleAddProductToCart = (product) => {
     dispatch(addToCart(product))
   }
-
-  const handleIncrease = () => setQuantity((prev) => prev + 1)
-  const handleReduce = () => setQuantity((prev) => (prev > 1 ? prev - 1 : prev))
+  const { quantity, handleIncrease, handleReduce } = useQuantity()
 
   return (
     <Container

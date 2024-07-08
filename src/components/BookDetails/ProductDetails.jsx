@@ -14,6 +14,7 @@ const ProductDetail = React.memo((props) => {
       >
         <Typography
           className={props.title}
+          id={props.id}
           sx={{
             fontSize: '22px',
             fontWeight: '600px'
