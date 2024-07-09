@@ -4,13 +4,13 @@ import Stack from '@mui/material/Stack'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { bookInfo } from '~/publics'
-import { addToCart } from '~/redux/features/storeProducts'
+import { addToCart } from '~/redux/features/Products'
 import {
   ProductActions,
   ProductDetails,
   ProductQuantity
 } from '~/components/BookDetails'
-import useQuantity from '~/hooks'
+import { useQuantity } from '~/hooks'
 
 function ProductDetailPages() {
   const dispatch = useDispatch()

@@ -1,17 +1,24 @@
 import AddIcon from '@mui/icons-material/Add'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import RemoveIcon from '@mui/icons-material/Remove'
-import Button from '@mui/material/Button'
+import { Typography } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
+import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import IconButton from '@mui/material/IconButton'
-import useQuantity from '~/hooks'
-import { Typography } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { useQuantity } from '~/hooks'
+import { removeFromCart } from '~/redux/features/Products'
 
 function CartItem(props) {
   const { quantity, handleReduce, handleIncrease } = useQuantity()
+  const dispatch = useDispatch()
+
+  const handleRemoveItem = () => {
+    dispatch(removeFromCart(props.id))
+  }
   return (
     <>
       <TableBody>
@@ -64,7 +71,9 @@ function CartItem(props) {
           </TableCell>
           <TableCell align="right">{quantity * props.price}</TableCell>
           <TableCell align="right">
-            <Button color="error">Remove</Button>
+            <IconButton color="error" onClick={handleRemoveItem}>
+              <DeleteForeverIcon />
+            </IconButton>
           </TableCell>
         </TableRow>
       </TableBody>

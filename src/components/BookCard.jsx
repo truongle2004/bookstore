@@ -24,7 +24,7 @@ const card = (
   </React.Fragment>
 )
 
-export default function BookCard() {
+export default function BookCard(props) {
   return (
     <Card
       variant="outlined"
