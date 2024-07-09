@@ -3,15 +3,17 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import { useControlQuantity } from '~/hooks'
 
-const ProductQuantity = (props) => {
+const ProductQuantity = () => {
+  const { quantity, handleIncrease, handleReduce } = useControlQuantity()
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
-      <IconButton onClick={props.handleReduce}>
+      <IconButton onClick={handleReduce}>
         <RemoveIcon />
       </IconButton>
-      <Typography>{props.quantity}</Typography>
-      <IconButton onClick={props.handleIncrease}>
+      <Typography>{quantity}</Typography>
+      <IconButton onClick={handleIncrease}>
         <AddIcon />
       </IconButton>
     </Stack>

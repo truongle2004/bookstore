@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export const useQuantity = () => {
+export const useControlQuantity = () => {
   const [quantity, setQuantity] = useState(1)
   const handleIncrease = () => setQuantity((prev) => prev + 1)
   const handleReduce = () => setQuantity((prev) => (prev > 1 ? prev - 1 : prev))
@@ -11,4 +11,3 @@ export const useQuantity = () => {
     handleReduce
   }
 }
-

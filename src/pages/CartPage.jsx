@@ -7,10 +7,10 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 import { useSelector } from 'react-redux'
-import CartItem from './Cart/CartItem'
+import ListItem from './Cart/ListItem'
 
 function CartPage() {
-  const listBooks = useSelector((state) => state.userProductsReducer.products)
+  const listBooks = useSelector((state) => state.ListProducts.products)
   return (
     <Container
       sx={{
@@ -79,7 +79,7 @@ function CartPage() {
                 <TableCell align="right">Operator</TableCell>
               </TableRow>
             </TableHead>
-            {listBooks.map((value, index) => (
+            {/* {listBooks.map((value, index) => (
               <CartItem
                 key={index}
                 image={value.images}
@@ -89,7 +89,8 @@ function CartPage() {
                 price={value.price}
                 currency={value.currency}
               />
-            ))}
+            ))} */}
+            <ListItem />
           </Table>
         )}
       </Box>

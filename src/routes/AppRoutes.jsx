@@ -4,13 +4,14 @@ import BoardBar from '~/components/BoardBar/BoardBar'
 import ProductDetailPages from '~/pages/ProductDetaitPages'
 import CartPage from '~/pages/CartPage'
 import Box from '@mui/material/Box'
-import CartFooterCheckout from '~/pages/Cart/CartFooterCheckout'
+import CartFooterCheckout from '~/components/Footer/CartFooterCheckout'
+import Home from '~/pages/Home'
 
 function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Appbars />}>
-        <Route path="home" element={<BoardBar />} />
+        <Route path="home" element={<Home />} />
         <Route
           path="checkout/cart"
           element={

@@ -1,24 +1,20 @@
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { bookInfo } from '~/publics'
-import { addToCart } from '~/redux/features/Products'
+import { addToCart } from '~/redux/features/ListProducts'
 import {
   ProductActions,
   ProductDetails,
   ProductQuantity
 } from '~/components/BookDetails'
-import { useQuantity } from '~/hooks'
+import { useControlQuantity } from '~/hooks'
 
 function ProductDetailPages() {
   const dispatch = useDispatch()
   const handleAddProductToCart = (product) => {
     dispatch(addToCart(product))
   }
-  const { quantity, handleIncrease, handleReduce } = useQuantity()
-
   return (
     <Container
       maxWidth={'xl'}
@@ -57,22 +53,8 @@ function ProductDetailPages() {
             </Stack>
           </Box>
           <Box>
-            <ProductDetails
-              title={bookInfo.title}
-              publisher={bookInfo.publisher}
-              publishedBy={bookInfo.publishedBy}
-              author={bookInfo.author}
-              coverType={bookInfo.coverType}
-              price={bookInfo.price}
-              originalPrice={bookInfo.originalPrice}
-              currency={bookInfo.currency}
-              discount={bookInfo.discount}
-            />
-            <ProductQuantity
-              quantity={quantity}
-              handleIncrease={handleIncrease}
-              handleReduce={handleReduce}
-            />
+            <ProductDetails />
+            <ProductQuantity />
           </Box>
         </Stack>
       </Box>

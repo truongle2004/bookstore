@@ -1,49 +1,80 @@
-import * as React from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { CardMedia } from '@mui/material'
+import { useSelector } from 'react-redux'
+import CircularProgress from '@mui/material/CircularProgress'
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
 
-const card = (
-  <React.Fragment>
-    <CardMedia
-      component="img"
-      src="https://cdn0.fahasa.com/media/catalog/product/z/5/z5569703671543_9999563d8928c9cca25d572ab6764328.jpg"
-    />
-    <CardContent>
-      <Typography>Giải thích ngữ pháp tiếng anh(tái bản 2024)</Typography>
-      <Typography
-        sx={{
-          color: 'red',
-          textDecoration: 'line-through'
-        }}
-      >
-        134.000 đ
-      </Typography>
-    </CardContent>
-  </React.Fragment>
-)
-
-export default function BookCard(props) {
+function BookCard() {
+  const listBooks = useSelector((state) => state.ListProducts.products)
   return (
-    <Card
-      variant="outlined"
-      sx={{
-        mx: '20px',
-        height: '360px',
-        width: '225px',
-        margin: '0 2px 8px 2px',
-        justifyContent: 'space-around',
-        position: 'relative',
-        my: '9px',
-        border: 'none',
-        ':hover': {
-          boxShadow:
-            'rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px'
-        }
-      }}
-    >
-      {card}
-    </Card>
+    <>
+      {listBooks && listBooks.length > 0 ? (
+        listBooks.map((props, index) => (
+          <Card
+            variant="outlined"
+            sx={{
+              mx: '20px',
+              height: '360px',
+              width: '225px',
+              margin: '0 2px 8px 2px',
+              justifyContent: 'space-around',
+              position: 'relative',
+              my: '9px',
+              border: 'none',
+              ':hover': {
+                boxShadow:
+                  'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
+              }
+            }}
+            key={index}
+          >
+            <CardMedia component="img" src={`${props.images}`} />
+            <CardContent>
+              <Typography>{props.title}</Typography>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography
+                  sx={{
+                    color: 'red'
+                  }}
+                >
+                  {props.price}
+                  {props.currency}
+                </Typography>
+                <Typography
+                  sx={{
+                    bgcolor: '#C92127',
+                    borderRadius: '8px',
+                    width: '30px',
+                    color: 'primary.light'
+                  }}
+                  fontSize="small"
+                >
+                  {props.discount}
+                </Typography>
+              </Stack>
+              <Typography
+                sx={{
+                  color: 'gray',
+                  textDecoration: 'line-through'
+                }}
+                fontSize="small"
+              >
+                {props.originalPrice}
+                {props.currency}
+              </Typography>
+            </CardContent>
+          </Card>
+        ))
+      ) : (
+        <Box sx={{ display: 'flex' }}>
+          <CircularProgress color="secondary" />
+        </Box>
+      )}
+    </>
   )
 }
+
+export default BookCard

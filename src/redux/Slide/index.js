@@ -1,8 +1,10 @@
 import openDialogReducer from '../features/OpenDialog'
 import { combineSlices } from '@reduxjs/toolkit'
-import userProductsReducer from '../features/Products'
+import ListProductsReducer from '../features/ListProducts'
+import ProductDetailReducer from '../features/ProductDetail'
 
 export const rootReducer = combineSlices({
   openDialog: openDialogReducer,
-  userProductsReducer: userProductsReducer
+  ListProducts: ListProductsReducer,
+  ProductDetail: ProductDetailReducer
 })
