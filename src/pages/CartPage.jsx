@@ -79,17 +79,6 @@ function CartPage() {
                 <TableCell align="right">Operator</TableCell>
               </TableRow>
             </TableHead>
-            {/* {listBooks.map((value, index) => (
-              <CartItem
-                key={index}
-                image={value.images}
-                title={value.title}
-                id={value.id}
-                originalPrice={value.originalPrice}
-                price={value.price}
-                currency={value.currency}
-              />
-            ))} */}
             <ListItem />
           </Table>
         )}

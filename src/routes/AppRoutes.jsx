@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
 import Appbars from '~/components/Appbars'
-import BoardBar from '~/components/BoardBar/BoardBar'
 import ProductDetailPages from '~/pages/ProductDetaitPages'
 import CartPage from '~/pages/CartPage'
 import Box from '@mui/material/Box'

@@ -13,10 +13,6 @@ const initialState = {
       originalPrice: 20000,
       discount: '-5%',
       currency: '₫',
-      rating: {
-        stars: 0,
-        reviews: 0
-      },
       images: [
         'https://cdn0.fahasa.com/media/catalog/product/c/h/chiasetutraitim-bia.jpg'
       ]
@@ -32,10 +28,6 @@ const initialState = {
       originalPrice: 55000,
       discount: '-9%',
       currency: '₫',
-      rating: {
-        stars: 4.8,
-        reviews: 120
-      },
       images: [
         'https://cdn0.fahasa.com/media/catalog/product/c/o/combo-9786043440287-9786044742250.jpg'
       ]
@@ -51,10 +43,6 @@ const initialState = {
       originalPrice: 45000,
       discount: '-11%',
       currency: '₫',
-      rating: {
-        stars: 4.5,
-        reviews: 89
-      },
       images: [
         'https://cdn0.fahasa.com/media/catalog/product/8/9/8934974203018_2.jpg'
       ]
@@ -89,10 +77,6 @@ const initialState = {
       originalPrice: 75000,
       discount: '-7%',
       currency: '₫',
-      rating: {
-        stars: 4.6,
-        reviews: 110
-      },
       images: [
         'https://cdn0.fahasa.com/media/catalog/product/a/n/anhdaidienspkemqua_t07_800x800.jpg'
       ]

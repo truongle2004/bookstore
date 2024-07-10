@@ -8,9 +8,57 @@ import Stack from '@mui/material/Stack'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useControlQuantity } from '~/hooks'
+import {
+  increaseSelecteCheckBox,
+  reduceSelectedCheckBox
+} from '~/redux/features/CartFeatures/totalProductSelected'
 import { removeAnItemFromCart } from '~/redux/features/ListProducts'
+
+function CheckSelect(props) {
+  const dispatch = useDispatch()
+  const handleUnSelectCheckBox = () => {
+    dispatch(reduceSelectedCheckBox())
+  }
+
+  const handleSelectCheckBox = () => {
+    dispatch(increaseSelecteCheckBox())
+  }
+
+  const [checked, setChecked] = useState(false)
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked)
+  }
+
+  useEffect(() => {
+    const action = checked
+      ? increaseSelecteCheckBox()
+      : reduceSelectedCheckBox()
+    dispatch(action)
+  }, [checked, dispatch])
+
+  return (
+    <TableCell component="th" scope="row">
+      <Stack direction="row">
+        <Checkbox
+          onClick={() => setChecked(!checked)}
+          sx={{
+            color: 'red'
+          }}
+        />
+        <img
+          src={props.images}
+          style={{
+            height: '80px'
+          }}
+        />
+      </Stack>
+    </TableCell>
+  )
+}
 
 function ListItem() {
   const { quantity, handleReduce, handleIncrease } = useControlQuantity()
@@ -20,22 +68,14 @@ function ListItem() {
     dispatch(removeAnItemFromCart(id))
   }
   const listBooks = useSelector((state) => state.ListProducts.products)
+
+  //FIXME color checkbox
   return (
     <>
       {listBooks.map((props, index) => (
         <TableBody key={index}>
           <TableRow key={props.id}>
-            <TableCell component="th" scope="row">
-              <Stack direction="row">
-                <Checkbox />
-                <img
-                  src={props.image}
-                  style={{
-                    height: '80px'
-                  }}
-                />
-              </Stack>
-            </TableCell>
+            <CheckSelect images={props.images} />
             <TableCell align="right">
               <Typography
                 fontSize="small"
@@ -71,7 +111,10 @@ function ListItem() {
                 </IconButton>
               </Stack>
             </TableCell>
-            <TableCell align="right">{quantity * props.price}</TableCell>
+            <TableCell align="right">
+              {quantity * props.price}
+              {props.currency}
+            </TableCell>
             <TableCell align="right">
               <IconButton
                 color="error"

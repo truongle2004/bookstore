@@ -67,17 +67,23 @@ const ProductDetail = React.memo(() => {
               }}
             >
               <Stack direction="row" alignItems="center" spacing={2}>
+                <strong>
+                  <Typography
+                    sx={{
+                      fontSize: '50px',
+                      color: '#C92127'
+                    }}
+                  >
+                    {props.price}
+                    {props.currency}
+                  </Typography>
+                </strong>
                 <Typography
                   sx={{
                     fontSize: 50,
                     color: '#C92127'
                   }}
-                >
-                  <strong>
-                    {props.price}
-                    {props.currency}
-                  </strong>
-                </Typography>
+                ></Typography>
                 <Typography
                   sx={{
                     textDecoration: 'line-through'

@@ -1,20 +1,20 @@
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import { useDispatch } from 'react-redux'
+import { ProductDetails, ProductQuantity } from '~/components/BookDetails'
 import { addToCart } from '~/redux/features/ListProducts'
-import {
-  ProductActions,
-  ProductDetails,
-  ProductQuantity
-} from '~/components/BookDetails'
-import { useControlQuantity } from '~/hooks'
+import { useSelector } from 'react-redux'
+import theme from '~/theme'
 
 function ProductDetailPages() {
+  // const handleAddProductToCart = (id) => {
+  //   dispatch(addToCart(id))
+  // }
   const dispatch = useDispatch()
-  const handleAddProductToCart = (product) => {
-    dispatch(addToCart(product))
-  }
+  //const listBooks = useSelector((state) => state.ListProducts.products)
   return (
     <Container
       maxWidth={'xl'}
@@ -49,7 +49,23 @@ function ProductDetailPages() {
                   height: '400px'
                 }}
               />
-              <ProductActions />
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  sx={theme.buttonStyle}
+                  startIcon={<ShoppingCartIcon />}
+                >
+                  Add to cart
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  sx={theme.buttonStyle}
+                >
+                  Buy now
+                </Button>
+              </Stack>
             </Stack>
           </Box>
           <Box>

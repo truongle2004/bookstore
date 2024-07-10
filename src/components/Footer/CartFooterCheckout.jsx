@@ -4,25 +4,18 @@ import Checkbox from '@mui/material/Checkbox'
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
-import { useSelector } from 'react-redux'
 
 // TODO add props value and display value
 const CartFooterCheckout = () => {
-  const listBooks = useSelector((state) => state.ListProducts.products)
-
-  const handleRemoveAllItem = () => {
-    // TODO: do something here
-  }
   return (
     <Container>
       <Paper
         sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
         elevation={3}
       >
-        <BottomNavigation
-          showLabels={true}
+        <Stack
+          direction="row"
           sx={{
-            alignItems: 'center',
             justifyContent: 'space-evenly'
           }}
         >
@@ -45,7 +38,7 @@ const CartFooterCheckout = () => {
               Buy
             </Button>
           </Stack>
-        </BottomNavigation>
+        </Stack>
       </Paper>
     </Container>
   )
