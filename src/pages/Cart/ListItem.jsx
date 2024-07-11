@@ -1,37 +1,28 @@
 import AddIcon from '@mui/icons-material/Add'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import RemoveIcon from '@mui/icons-material/Remove'
-import { Typography } from '@mui/material'
+import Typography from '@mui/material/Typography'
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { formatNumber } from '~/constant'
 import { useControlQuantity } from '~/hooks'
+import { AddMoney, SubtractMoney } from '~/redux/features/CartMoney'
 import {
   increaseSelecteCheckBox,
   reduceSelectedCheckBox
-} from '~/redux/features/CartFeatures/totalProductSelected'
+} from '~/redux/features/CountProductSelected'
 import { removeAnItemFromCart } from '~/redux/features/ListProducts'
 
 function CheckSelect(props) {
   const dispatch = useDispatch()
-  const handleUnSelectCheckBox = () => {
-    dispatch(reduceSelectedCheckBox())
-  }
-
-  const handleSelectCheckBox = () => {
-    dispatch(increaseSelecteCheckBox())
-  }
 
   const [checked, setChecked] = useState(false)
-
-  const handleChange = (event) => {
-    setChecked(event.target.checked)
-  }
 
   useEffect(() => {
     const action = checked
@@ -60,13 +51,67 @@ function CheckSelect(props) {
   )
 }
 
-function ListItem() {
-  const { quantity, handleReduce, handleIncrease } = useControlQuantity()
+function CountQuantityAndPrice(props) {
   const dispatch = useDispatch()
-
+  const { quantity, handleReduce, handleIncrease } = useControlQuantity()
   const handleRemoveItem = (id) => {
     dispatch(removeAnItemFromCart(id))
   }
+  const previousQuantity = useRef(quantity)
+
+  useEffect(() => {
+    const handleAddMoney = (Money) => {
+      dispatch(AddMoney(Money))
+    }
+
+    const handleSubtractMoney = (Money) => {
+      dispatch(SubtractMoney(Money))
+    }
+
+    if (previousQuantity.current > quantity) {
+      handleSubtractMoney(props.price)
+    } else if (previousQuantity.current < quantity) {
+      handleAddMoney(props.price)
+    }
+    previousQuantity.current = quantity
+  }, [quantity, props.price, dispatch])
+
+  return (
+    <>
+      <TableCell align="right">
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems="center"
+          sx={{
+            float: 'right'
+          }}
+        >
+          <IconButton onClick={handleReduce} size="small">
+            <RemoveIcon />
+          </IconButton>
+
+          <Typography>{quantity}</Typography>
+
+          <IconButton onClick={handleIncrease} size="small">
+            <AddIcon />
+          </IconButton>
+        </Stack>
+      </TableCell>
+      <TableCell align="right">
+        {formatNumber(quantity * props.price)}
+        {props.currency}
+      </TableCell>
+      <TableCell align="right">
+        <IconButton color="error" onClick={() => handleRemoveItem(props.id)}>
+          <DeleteForeverIcon />
+        </IconButton>
+      </TableCell>
+    </>
+  )
+}
+
+function ListItem() {
   const listBooks = useSelector((state) => state.ListProducts.products)
 
   //FIXME color checkbox
@@ -83,46 +128,18 @@ function ListItem() {
                   textDecoration: 'line-through'
                 }}
               >
-                {props.originalPrice}
+                {formatNumber(props.originalPrice)}
                 {props.currency}
               </Typography>
               <Typography>
-                {props.price}
+                {formatNumber(props.price)}
                 {props.currency}
               </Typography>
             </TableCell>
-            <TableCell align="right">
-              <Stack
-                direction="row"
-                spacing={2}
-                alignItems="center"
-                sx={{
-                  float: 'right'
-                }}
-              >
-                <IconButton onClick={handleReduce} size="small">
-                  <RemoveIcon />
-                </IconButton>
-
-                <Typography>{quantity}</Typography>
-
-                <IconButton onClick={handleIncrease} size="small">
-                  <AddIcon />
-                </IconButton>
-              </Stack>
-            </TableCell>
-            <TableCell align="right">
-              {quantity * props.price}
-              {props.currency}
-            </TableCell>
-            <TableCell align="right">
-              <IconButton
-                color="error"
-                onClick={() => handleRemoveItem(props.id)}
-              >
-                <DeleteForeverIcon />
-              </IconButton>
-            </TableCell>
+            <CountQuantityAndPrice
+              price={props.price}
+              currency={props.currency}
+            />
           </TableRow>
         </TableBody>
       ))}

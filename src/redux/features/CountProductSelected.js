@@ -10,7 +10,6 @@ export const ProductSelectedSlide = createSlice({
   reducers: {
     increaseSelecteCheckBox: (state) => {
       state.productsSelected = state.productsSelected + 1
-      console.log(state.productsSelected)
     },
     reduceSelectedCheckBox: (state) => {
       state.productsSelected =
