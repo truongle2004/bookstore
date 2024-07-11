@@ -31,7 +31,7 @@ const CartFooterCheckout = () => {
         elevation={3}
       >
         <Stack direction="row" alignItems="center" spacing={3}>
-          <Checkbox />
+          <Checkbox color="success" />
           <Typography>Select all (16)</Typography>
           <Button variant="contained" color="primary">
             Remove All

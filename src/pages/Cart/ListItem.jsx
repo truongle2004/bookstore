@@ -34,12 +34,7 @@ function CheckSelect(props) {
   return (
     <TableCell component="th" scope="row">
       <Stack direction="row">
-        <Checkbox
-          onClick={() => setChecked(!checked)}
-          sx={{
-            color: 'red'
-          }}
-        />
+        <Checkbox onClick={() => setChecked(!checked)} color="success" />
         <img
           src={props.images}
           style={{
