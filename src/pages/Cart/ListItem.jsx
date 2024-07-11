@@ -36,9 +36,7 @@ function CheckSelect(props) {
       <Stack direction="row">
         <Checkbox
           onClick={() => setChecked(!checked)}
-          sx={{
-            color: 'red'
-          }}
+          color="success"
         />
         <img
           src={props.images}
