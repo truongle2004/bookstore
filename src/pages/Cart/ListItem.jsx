@@ -1,14 +1,18 @@
-import AddIcon from '@mui/icons-material/Add'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import RemoveIcon from '@mui/icons-material/Remove'
-import Typography from '@mui/material/Typography'
-import Checkbox from '@mui/material/Checkbox'
-import IconButton from '@mui/material/IconButton'
-import Stack from '@mui/material/Stack'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
-import { useEffect, useState, useRef } from 'react'
+import {
+  Add as AddIcon,
+  DeleteForever as DeleteForeverIcon,
+  Remove as RemoveIcon
+} from '@mui/icons-material'
+import {
+  Checkbox,
+  IconButton,
+  Stack,
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography
+} from '@mui/material'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { formatNumber } from '~/constant'
 import { useControlQuantity } from '~/hooks'
@@ -20,23 +24,48 @@ import {
 import { removeAnItemFromCart } from '~/redux/features/ListProducts'
 
 function CheckSelect(props) {
+  const { images, id, handleCheckboxClick } = props
   const dispatch = useDispatch()
-
   const [checked, setChecked] = useState(false)
+  const isFirstRender = useRef(true)
 
   useEffect(() => {
+    //if (checked) {
+    //  handleNotificationChecked()
+    //} else {
+    //  handleNotificationUnchecked()
+    //}
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    } else {
+      handleCheckboxClick(id, checked)
+    }
+
     const action = checked
       ? increaseSelecteCheckBox()
       : reduceSelectedCheckBox()
     dispatch(action)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checked, dispatch])
+
+  const handleClickedCheckBox = () => {
+    setChecked((prev) => !prev)
+  }
 
   return (
     <TableCell component="th" scope="row">
       <Stack direction="row">
-        <Checkbox onClick={() => setChecked(!checked)} color="success" />
+        <Checkbox
+          onClick={() => {
+            handleClickedCheckBox()
+          }}
+          color="success"
+          checked={checked}
+        />
         <img
-          src={props.images}
+          src={images}
+          alt="Product"
           style={{
             height: '80px'
           }}
@@ -47,29 +76,39 @@ function CheckSelect(props) {
 }
 
 function CountQuantityAndPrice(props) {
+  const { isSelected, price, id, currency } = props
   const dispatch = useDispatch()
   const { quantity, handleReduce, handleIncrease } = useControlQuantity()
-  const handleRemoveItem = (id) => {
-    dispatch(removeAnItemFromCart(id))
-  }
   const previousQuantity = useRef(quantity)
+  const firstSelected = useRef(true)
+  const handleRemoveItem = useCallback(() => {
+    dispatch(removeAnItemFromCart(id))
+  }, [dispatch, id])
 
   useEffect(() => {
-    const handleAddMoney = (Money) => {
-      dispatch(AddMoney(Money))
+    const handleAddMoney = (money) => dispatch(AddMoney(money))
+    const handleSubtractMoney = (money) => dispatch(SubtractMoney(money))
+    if (!isSelected && !firstSelected.current) {
+      handleSubtractMoney(quantity * price)
+      firstSelected.current = true
+      console.log('unchecked is called')
     }
 
-    const handleSubtractMoney = (Money) => {
-      dispatch(SubtractMoney(Money))
+    if (isSelected) {
+      if (firstSelected.current) {
+        console.log('checked is called')
+        firstSelected.current = false
+        handleAddMoney(price * quantity)
+      }
+      if (previousQuantity.current > quantity && isSelected) {
+        handleSubtractMoney(price)
+      } else if (previousQuantity.current < quantity) {
+        handleAddMoney(price)
+      }
+      previousQuantity.current = quantity
     }
-
-    if (previousQuantity.current > quantity) {
-      handleSubtractMoney(props.price)
-    } else if (previousQuantity.current < quantity) {
-      handleAddMoney(props.price)
-    }
-    previousQuantity.current = quantity
-  }, [quantity, props.price, dispatch])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quantity, dispatch, isSelected])
 
   return (
     <>
@@ -78,27 +117,22 @@ function CountQuantityAndPrice(props) {
           direction="row"
           spacing={2}
           alignItems="center"
-          sx={{
-            float: 'right'
-          }}
+          sx={{ float: 'right' }}
         >
           <IconButton onClick={handleReduce} size="small">
             <RemoveIcon />
           </IconButton>
-
           <Typography>{quantity}</Typography>
-
           <IconButton onClick={handleIncrease} size="small">
             <AddIcon />
           </IconButton>
         </Stack>
       </TableCell>
       <TableCell align="right">
-        {formatNumber(quantity * props.price)}
-        {props.currency}
+        {formatNumber(quantity * price)} {currency}
       </TableCell>
       <TableCell align="right">
-        <IconButton color="error" onClick={() => handleRemoveItem(props.id)}>
+        <IconButton color="error" onClick={handleRemoveItem}>
           <DeleteForeverIcon />
         </IconButton>
       </TableCell>
@@ -109,31 +143,54 @@ function CountQuantityAndPrice(props) {
 function ListItem() {
   const listBooks = useSelector((state) => state.ListProducts.products)
 
-  //FIXME color checkbox
+  //const handleNotificationChecked = useCallback(() => {
+  //  itemSelected.current = true
+  //}, [])
+  //
+  //const handleNotificationUnchecked = useCallback(() => {
+  //  itemSelected.current = false
+  //}, [])
+
+  const [checkedStates, setCheckedStates] = useState(
+    listBooks.reduce((acc, book) => {
+      acc[book.id] = false
+      return acc
+    }, {})
+  )
+
+  const handleCheckboxClick = (id, checked) => {
+    setCheckedStates((prevState) => ({
+      ...prevState,
+      [id]: checked
+    }))
+  }
+
   return (
     <>
-      {listBooks.map((props, index) => (
-        <TableBody key={index}>
-          <TableRow key={props.id}>
-            <CheckSelect images={props.images} />
+      {listBooks.map((props) => (
+        <TableBody key={props.id}>
+          <TableRow>
+            <CheckSelect
+              id={props.id}
+              images={props.images}
+              handleCheckboxClick={handleCheckboxClick}
+            />
             <TableCell align="right">
               <Typography
                 fontSize="small"
-                sx={{
-                  textDecoration: 'line-through'
-                }}
+                sx={{ textDecoration: 'line-through' }}
               >
-                {formatNumber(props.originalPrice)}
-                {props.currency}
+                {formatNumber(props.originalPrice)} {props.currency}
               </Typography>
               <Typography>
-                {formatNumber(props.price)}
-                {props.currency}
+                {formatNumber(props.price)} {props.currency}
               </Typography>
             </TableCell>
             <CountQuantityAndPrice
+              id={props.id}
               price={props.price}
               currency={props.currency}
+              isSelected={checkedStates[props.id]}
             />
           </TableRow>
         </TableBody>

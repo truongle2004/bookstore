@@ -15,13 +15,14 @@ function CartPage() {
   return (
     <Container
       sx={{
-        marginTop: 3
+        mt: 3,
+        mb: 6
       }}
     >
       <Typography
         sx={{
           fontSize: 25,
-          marginBottom: 2
+          mb: 2
         }}
       >
         <strong>Cart ({listBooks.length} product)</strong>
@@ -29,7 +30,7 @@ function CartPage() {
       <Box
         sx={{
           boxShadow: 3,
-          marginTop: '20px'
+          mt: '20px'
         }}
       >
         {listBooks.length === 0 ? (
@@ -52,7 +53,7 @@ function CartPage() {
             />
             <Typography
               sx={{
-                marginTop: 2
+                mt: 2
               }}
             >
               There is no product in your cart
@@ -61,7 +62,7 @@ function CartPage() {
               variant="contained"
               color="error"
               sx={{
-                marginTop: 3
+                mt: 3
               }}
               href="/home"
             >
@@ -70,7 +71,6 @@ function CartPage() {
           </Box>
         ) : (
           <Table sx={{ minWidth: 650 }} aria-label="caption table">
-            <caption>A basic table example with a caption</caption>
             <TableHead>
               <TableRow>
                 <TableCell>Products</TableCell>

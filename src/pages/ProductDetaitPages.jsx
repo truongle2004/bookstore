@@ -19,7 +19,7 @@ function ProductDetailPages() {
     <Container
       maxWidth={'xl'}
       sx={{
-        marginTop: 8,
+        mt: 8,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
