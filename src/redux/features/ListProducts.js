@@ -100,10 +100,12 @@ export const ListProductsSlice = createSlice({
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       )
-      console.log(state.products)
+    },
+    removeAllItems: (state) => {
+      state.products = []
     }
   }
 })
 
-export const { addToCart, removeAnItemFromCart } = ListProductsSlice.actions
+export const { addToCart, removeAnItemFromCart, removeAllItems } = ListProductsSlice.actions
 export default ListProductsSlice.reducer

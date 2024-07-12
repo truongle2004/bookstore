@@ -27,7 +27,18 @@ function CheckSelect(props) {
   const { images, id, handleCheckboxClick } = props
   const dispatch = useDispatch()
   const [checked, setChecked] = useState(false)
+  const isSelectedAll = useSelector(
+    (state) => state.isSelectedAll.selectAllItems
+  )
   const isFirstRender = useRef(true)
+
+  useEffect(() => {
+    if (isSelectedAll) {
+      setChecked(true)
+    } else {
+      setChecked(false)
+    }
+  }, [isSelectedAll])
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -76,6 +87,7 @@ function CountQuantityAndPrice(props) {
   const { quantity, handleReduce, handleIncrease } = useControlQuantity()
   const previousQuantity = useRef(quantity)
   const firstSelected = useRef(true)
+
   const handleRemoveItem = useCallback(() => {
     dispatch(removeAnItemFromCart(id))
   }, [dispatch, id])
@@ -83,8 +95,9 @@ function CountQuantityAndPrice(props) {
   useEffect(() => {
     const handleAddMoney = (money) => dispatch(AddMoney(money))
     const handleSubtractMoney = (money) => dispatch(SubtractMoney(money))
+
     if (!isSelected && !firstSelected.current) {
-      handleSubtractMoney(quantity * price)
+      handleSubtractMoney(previousQuantity.current * price) // Use previousQuantity for subtraction
       firstSelected.current = true
     }
 
@@ -92,16 +105,14 @@ function CountQuantityAndPrice(props) {
       if (firstSelected.current) {
         firstSelected.current = false
         handleAddMoney(price * quantity)
-      }
-      if (previousQuantity.current > quantity && isSelected) {
-        handleSubtractMoney(price)
+      } else if (previousQuantity.current > quantity) {
+        handleSubtractMoney(price * (previousQuantity.current - quantity))
       } else if (previousQuantity.current < quantity) {
-        handleAddMoney(price)
+        handleAddMoney(price * (quantity - previousQuantity.current))
       }
       previousQuantity.current = quantity
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quantity, dispatch, isSelected])
+  }, [quantity, dispatch, isSelected, price])
 
   return (
     <>

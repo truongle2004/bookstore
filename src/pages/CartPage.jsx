@@ -40,7 +40,8 @@ function CartPage() {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              textAlign: 'center'
+              textAlign: 'center',
+              py: 10
             }}
           >
             <img
