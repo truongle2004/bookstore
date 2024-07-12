@@ -8,7 +8,7 @@ function Home() {
     <>
       <Container
         sx={{
-          marginTop: '20px'
+          mt: '20px'
         }}
       >
         <BoardBar />

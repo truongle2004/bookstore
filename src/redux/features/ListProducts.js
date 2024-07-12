@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 
 const initialState = {
   products: [
@@ -89,18 +90,20 @@ export const ListProductsSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      if (state.product.find(action.payload)) {
+      if (!state.product.find(action.payload)) {
         state.products.push(action.payload)
+      } else {
+        toast.error('product exists in cart')
       }
     },
     removeAnItemFromCart: (state, action) => {
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       )
+      console.log(state.products)
     }
   }
 })
 
-export const { addToCart, removeAnItemFromCart, quantityListProducts } =
-  ListProductsSlice.actions
+export const { addToCart, removeAnItemFromCart } = ListProductsSlice.actions
 export default ListProductsSlice.reducer
