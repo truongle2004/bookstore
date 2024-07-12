@@ -95,7 +95,7 @@ const ProductDetail = React.memo(() => {
                 <Typography
                   sx={{
                     bgcolor: '#C92127',
-                    padding: '3px',
+                    p: '3px',
                     borderRadius: '5px',
                     color: 'white'
                   }}

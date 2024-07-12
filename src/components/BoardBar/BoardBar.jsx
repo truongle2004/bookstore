@@ -24,7 +24,7 @@ function BoardBar() {
         />
         <Typography
           sx={{
-            paddingTop: '10px',
+            pt: '10px',
             fontSize: '18px',
             fontWeight: '700'
           }}

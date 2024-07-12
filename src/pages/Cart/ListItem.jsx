@@ -30,11 +30,6 @@ function CheckSelect(props) {
   const isFirstRender = useRef(true)
 
   useEffect(() => {
-    //if (checked) {
-    //  handleNotificationChecked()
-    //} else {
-    //  handleNotificationUnchecked()
-    //}
     if (isFirstRender.current) {
       isFirstRender.current = false
       return
@@ -91,12 +86,10 @@ function CountQuantityAndPrice(props) {
     if (!isSelected && !firstSelected.current) {
       handleSubtractMoney(quantity * price)
       firstSelected.current = true
-      console.log('unchecked is called')
     }
 
     if (isSelected) {
       if (firstSelected.current) {
-        console.log('checked is called')
         firstSelected.current = false
         handleAddMoney(price * quantity)
       }
@@ -142,14 +135,6 @@ function CountQuantityAndPrice(props) {
 
 function ListItem() {
   const listBooks = useSelector((state) => state.ListProducts.products)
-
-  //const handleNotificationChecked = useCallback(() => {
-  //  itemSelected.current = true
-  //}, [])
-  //
-  //const handleNotificationUnchecked = useCallback(() => {
-  //  itemSelected.current = false
-  //}, [])
 
   const [checkedStates, setCheckedStates] = useState(
     listBooks.reduce((acc, book) => {

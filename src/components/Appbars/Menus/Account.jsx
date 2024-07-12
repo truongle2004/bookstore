@@ -76,7 +76,7 @@ function Account() {
         <MenuItem onClick={handleCloseMenuAndOpenDialog}>
           <FacebookIcon
             sx={{
-              marginRight: '3px'
+              mr: '3px'
             }}
           />
           Login by Facebook

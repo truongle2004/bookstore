@@ -26,7 +26,7 @@ function Appbars() {
             alignItems="center"
             justifyContent="space-evenly"
             sx={{
-              paddingY: '10px',
+              py: '10px',
               position: 'relative'
             }}
           >

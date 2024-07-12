@@ -29,7 +29,7 @@ function ProductDetailPages() {
         sx={{
           height: '590px',
           width: '1230px',
-          padding: '16px 16px 25px 16px',
+          p: '16px 16px 25px 16px',
           borderTopRightRadius: '8px',
           borderTopLeftRadius: '8px',
           boxShadow: 10
@@ -38,7 +38,7 @@ function ProductDetailPages() {
         <Stack direction="row">
           <Box
             sx={{
-              marginRight: 3
+              mr: 3
             }}
           >
             <Stack alignItems="center" spacing={4}>
