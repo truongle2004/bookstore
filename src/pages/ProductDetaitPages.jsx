@@ -16,7 +16,42 @@ import { bookInfo } from '~/publics'
 import { Divider } from '@mui/material'
 import { useState } from 'react'
 import RadioGroupRating from '~/components/RadioGroupRating'
-import ReadMore from '~/components/Readmore'
+
+function ReadMore({ desc }) {
+  const [expanded, setExpanded] = useState(false)
+
+  const showFullDescriptionHandler = () => {
+    setExpanded((prev) => !prev)
+  }
+
+  const description = expanded ? desc : desc.slice(0, 1000) // first 0 > 1000 characters
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start'
+      }}
+    >
+      <Typography
+        sx={{
+          maxHeight: expanded ? 'none' : '100px',
+          overflow: 'hidden',
+          transition: 'max-height 0.3s ease'
+        }}
+      >
+        {description}
+      </Typography>
+      <Button
+        onClick={showFullDescriptionHandler}
+        style={{ marginTop: '8px', alignSelf: 'center' }}
+      >
+        Read {expanded ? 'Less' : 'More'}
+      </Button>
+    </Box>
+  )
+}
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.body}`]: {
@@ -26,12 +61,6 @@ const StyledTableCell = styled(TableCell)(() => ({
 }))
 
 function ProductDetailPages() {
-  // const handleAddProductToCart = (id) => {
-  //   dispatch(addToCart(id))
-  // }
-  //const dispatch = useDispatch()
-  //const listBooks = useSelector((state) => state.ListProducts.products)
-
   const [value, setValue] = useState(2)
   return (
     <Box
@@ -196,37 +225,78 @@ function ProductDetailPages() {
           >
             <TableBody>
               <TableRow key={bookInfo.id}>
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell
+                  component="th"
+                  scope="row"
+                  sx={{
+                    color: 'gray'
+                  }}
+                >
                   ID
                 </StyledTableCell>
                 <StyledTableCell align="justify">{bookInfo.id}</StyledTableCell>
               </TableRow>
               <TableRow>
-                <StyledTableCell align="left">Supplier</StyledTableCell>
+                <StyledTableCell
+                  align="left"
+                  sx={{
+                    color: 'gray'
+                  }}
+                >
+                  Supplier
+                </StyledTableCell>
                 <StyledTableCell align="left">
                   {bookInfo.publishingYear}
                 </StyledTableCell>
               </TableRow>
               <TableRow>
-                <StyledTableCell align="left">Language</StyledTableCell>
+                <StyledTableCell
+                  align="left"
+                  sx={{
+                    color: 'gray'
+                  }}
+                >
+                  Language
+                </StyledTableCell>
                 <StyledTableCell align="left">
                   {bookInfo.language}
                 </StyledTableCell>
               </TableRow>
               <TableRow>
-                <StyledTableCell align="left">Packaging size</StyledTableCell>
+                <StyledTableCell
+                  align="left"
+                  sx={{
+                    color: 'gray'
+                  }}
+                >
+                  Packaging size
+                </StyledTableCell>
                 <StyledTableCell align="left">
                   {bookInfo.packagingSize}
                 </StyledTableCell>
               </TableRow>
               <TableRow>
-                <StyledTableCell align="left">Number of pages</StyledTableCell>
+                <StyledTableCell
+                  align="left"
+                  sx={{
+                    color: 'gray'
+                  }}
+                >
+                  Number of pages
+                </StyledTableCell>
                 <StyledTableCell align="left">
                   {bookInfo.numberOfPages}
                 </StyledTableCell>
               </TableRow>
               <TableRow>
-                <StyledTableCell align="left">Cover type</StyledTableCell>
+                <StyledTableCell
+                  align="left"
+                  sx={{
+                    color: 'gray'
+                  }}
+                >
+                  Cover type
+                </StyledTableCell>
                 <StyledTableCell align="left">
                   {bookInfo.coverType}
                 </StyledTableCell>
@@ -246,15 +316,8 @@ function ProductDetailPages() {
               <strong>{bookInfo.headerDcription}</strong>
             </Typography>
 
-            {/* <Typography sx={{ wordSpacing: '3px' }}>
-              {bookInfo.description}
-            </Typography> */}
-            <Box
-              sx={{
-                px: 3
-              }}
-            >
-              <ReadMore text={bookInfo.description} />
+            <Box>
+              <ReadMore desc={bookInfo.description} />
             </Box>
             <Divider />
             <Typography sx={{ wordSpacing: '3px' }}>
