@@ -82,6 +82,7 @@ const CartFooterCheckout = () => {
           <Button
             startIcon={<ShoppingCartIcon />}
             variant="contained"
+            href="/user/purchase"
             color="error"
             sx={{
               width: '210px'
