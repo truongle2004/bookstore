@@ -1,11 +1,12 @@
 import { Box, Dialog, Tab, Tabs } from '@mui/material'
 import Slide from '@mui/material/Slide'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
+import { handleGetToken } from '~/axios/handleServices'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
@@ -43,22 +44,30 @@ function a11yProps(index) {
 export default function FormDialog() {
   const open = useSelector((state) => state.openDialog.open)
   const dispatch = useDispatch()
-  const handleClose = () => {
-    dispatch(isOpenedDialog(false))
-  }
+  const existToken = handleGetToken() ? true : false
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
 
+  const handleClose = () => {
+    dispatch(isOpenedDialog(false))
+  }
+
+  useEffect(() => {
+    if (existToken) {
+      handleClose()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [existToken])
   return (
     <React.Fragment>
       <Dialog
         fullWidth={true}
         maxWidth={'xs'}
         open={open}
-        onClose={handleClose}
+        // onClose={handleClose}
         TransitionComponent={Transition}
       >
         <Box sx={{ width: '100%' }}>

@@ -1,3 +1,5 @@
+import React from 'react'
+
 function Logo() {
   return (
     <img
@@ -11,4 +13,4 @@ function Logo() {
   )
 }
 
-export default Logo
+export default React.memo(Logo)
