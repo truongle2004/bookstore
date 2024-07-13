@@ -7,14 +7,11 @@ export const isEmailValid = (email) => {
   return re.test(email)
 }
 export const checkEmail = (email) => {
-  let valid = true
   const trimmedEmail = email.trim()
 
   if (!isEmailValid(trimmedEmail)) {
-    valueValidation.set('email', false)
-    valid = false
-  } else {
-    valueValidation.set('email', true)
+    // valueValidation.set('email', false)
+    return false
   }
-  return valid
+  return true
 }

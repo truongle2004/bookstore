@@ -14,15 +14,6 @@ export const checkPassword = (passwordInput) => {
   }
   return true
 }
-export const checkCofirmPassword = (passwordInput, matchPasswordInput) => {
-  let valid = true
-  const password = passwordInput.trim()
-  const matchPassword = matchPasswordInput.trim()
-  if (password !== matchPassword) {
-    valueValidation.current.set('password', false)
-  } else {
-    valueValidation.current.set('password', true)
-    valid = true
-  }
-  return valid
+export const checkConfirmPassword = (passwordInput, matchPasswordInput) => {
+  return passwordInput === matchPasswordInput
 }

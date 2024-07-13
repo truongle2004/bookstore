@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
 
 function LoginForm() {
-  const [usernameOrEmail, setUsernameOrEmail] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
   const handleSubmit = () => {}
@@ -24,7 +24,7 @@ function LoginForm() {
         <FormControl variant="standard">
           <form action="" onSubmit={handleSubmit}>
             <Box>
-              <Typography>Enter username or email</Typography>
+              <Typography>Enter email</Typography>
               <TextField
                 sx={{
                   width: 320
@@ -34,7 +34,7 @@ function LoginForm() {
                 autoFocus
                 required
                 margin="normal"
-                onChange={(e) => setUsernameOrEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Box>
             <Box>

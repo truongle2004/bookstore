@@ -1,39 +1,51 @@
-import { Button, TextField, Typography } from '@mui/material'
-import Box from '@mui/material/Box'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
-import FormControl from '@mui/material/FormControl'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl
+} from '@mui/material'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
 import checkUsername from '~/utils/userNameValidation'
 import { checkEmail } from '~/utils/emailValidation'
-import { checkCofirmPassword } from '~/utils/passwordValidation'
-import { valueValidation } from '~/constant'
-
-function RegisterForm() {
+import { checkConfirmPassword as checkConfirmPassword } from '~/utils/passwordValidation'
+import { RegisterApiCall } from '~/axios/services'
+import { toast } from 'react-toastify'
+//TODO: check validation + add check secure password
+const RegisterForm = () => {
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  // const [checkConfirmPassword, setCheckConformPassword] = useState('false')
   const dispatch = useDispatch()
 
+  const handleRegisterApiCall = async () => {
+    const res = await RegisterApiCall(username, email, password)
+    if (res.data && res.status == 200) {
+      toast.success('Register Successfully')
+    } else {
+      toast.error('Register Failed')
+    }
+  }
+
   const handleSubmit = () => {
+    event.preventDefault()
+
     if (
       checkUsername(username) &&
       checkEmail(email) &&
-      checkCofirmPassword(password, confirmPassword)
+      checkConfirmPassword(confirmPassword, password)
     ) {
-      // to-do somethings
-    } else {
-      valueValidation.forEach((key, value) => {
-        if (value === false) {
-          // to-do somethings
-        }
-      })
+      handleRegisterApiCall(username, email, password)
     }
   }
+
   const handleClose = () => {
     dispatch(isOpenedDialog(false))
   }
@@ -43,73 +55,72 @@ function RegisterForm() {
       <DialogTitle>Register</DialogTitle>
       <DialogContent
         sx={{
-          display: 'flex'
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
         }}
       >
-        <FormControl variant="standard">
-          <form onSubmit={handleSubmit}>
-            <Box>
-              <Typography>Enter Email</Typography>
-              <TextField
-                sx={{
-                  width: 320
-                }}
-                type="email"
-                fullWidth
-                autoFocus
-                required
-                margin="normal"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Box>
-            <Box>
-              <Typography>Enter User Name</Typography>
-              <TextField
-                sx={{
-                  width: 320
-                }}
-                type="text"
-                fullWidth
-                autoFocus
-                required
-                margin="normal"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </Box>
-            <Box>
-              <Typography>Enter password</Typography>
-              <TextField
-                sx={{
-                  width: 320
-                }}
-                type="password"
-                fullWidth
-                required
-                margin="normal"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Box>
-            <Box>
-              <Typography>Enter Password Again</Typography>
-              <TextField
-                sx={{
-                  width: 320
-                }}
-                type="password"
-                fullWidth
-                required
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                margin="normal"
-              />
-            </Box>
-            <DialogActions>
-              <Button onClick={handleClose}>Close</Button>
-              <Button type="submit">Submit</Button>
-            </DialogActions>
-          </form>
+        <FormControl
+          variant="standard"
+          component="form"
+          onSubmit={handleSubmit}
+        >
+          <Box>
+            <Typography>Enter Email</Typography>
+            <TextField
+              sx={{ width: 320 }}
+              type="email"
+              fullWidth
+              autoFocus
+              required
+              margin="normal"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Box>
+          <Box>
+            <Typography>Enter User Name</Typography>
+            <TextField
+              sx={{ width: 320 }}
+              type="text"
+              fullWidth
+              autoFocus
+              required
+              margin="normal"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </Box>
+          <Box>
+            <Typography>Enter Password</Typography>
+            <TextField
+              sx={{ width: 320 }}
+              type="password"
+              fullWidth
+              required
+              margin="normal"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Box>
+          <Box>
+            <Typography>Enter Password Again</Typography>
+            <TextField
+              sx={{ width: 320 }}
+              type="password"
+              fullWidth
+              required
+              margin="normal"
+              error={!checkConfirmPassword}
+              helperText={!checkConfirmPassword ? 'password not match' : ''}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </Box>
+          <DialogActions>
+            <Button onClick={handleClose}>Close</Button>
+            <Button type="submit">Submit</Button>
+          </DialogActions>
         </FormControl>
       </DialogContent>
     </Box>
   )
 }
+
 export default RegisterForm

@@ -13,45 +13,10 @@ import Typography from '@mui/material/Typography'
 import { ProductQuantity } from '~/components/BookDetails'
 import theme from '~/theme'
 import { bookInfo } from '~/publics'
-import { Divider } from '@mui/material'
+import Divider from '@mui/material/Divider'
 import { useState } from 'react'
 import RadioGroupRating from '~/components/RadioGroupRating'
-
-function ReadMore({ desc }) {
-  const [expanded, setExpanded] = useState(false)
-
-  const showFullDescriptionHandler = () => {
-    setExpanded((prev) => !prev)
-  }
-
-  const description = expanded ? desc : desc.slice(0, 1000) // first 0 > 1000 characters
-
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start'
-      }}
-    >
-      <Typography
-        sx={{
-          maxHeight: expanded ? 'none' : '100px',
-          overflow: 'hidden',
-          transition: 'max-height 0.3s ease'
-        }}
-      >
-        {description}
-      </Typography>
-      <Button
-        onClick={showFullDescriptionHandler}
-        style={{ marginTop: '8px', alignSelf: 'center' }}
-      >
-        Read {expanded ? 'Less' : 'More'}
-      </Button>
-    </Box>
-  )
-}
+import ReadMoreAndLess from '~/components/ReadLessAndMore'
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.body}`]: {
@@ -75,15 +40,15 @@ function ProductDetailPages() {
           p: '16px 16px 25px 16px',
           borderTopRightRadius: '8px',
           borderTopLeftRadius: '8px',
-          boxShadow: 9
+          boxShadow: 9,
+          minWidth: 800,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}
       >
-        <Stack direction="row">
-          <Box
-            sx={{
-              mr: 3
-            }}
-          >
+        <Stack direction="row" spacing={11}>
+          <Box>
             <Stack alignItems="center" spacing={4}>
               <img
                 src="https://cdn0.fahasa.com/media/catalog/product/z/5/z5569703671543_9999563d8928c9cca25d572ab6764328.jpg"
@@ -205,6 +170,7 @@ function ProductDetailPages() {
           </Box>
         </Stack>
       </Box>
+
       <Box
         sx={{
           my: 10,
@@ -317,7 +283,7 @@ function ProductDetailPages() {
             </Typography>
 
             <Box>
-              <ReadMore desc={bookInfo.description} />
+              <ReadMoreAndLess desc={bookInfo.description} />
             </Box>
             <Divider />
             <Typography sx={{ wordSpacing: '3px' }}>
