@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
-
+import { formatNumber } from '~/constant'
 
 function BookCard() {
   const listBooks = useSelector((state) => state.ListProducts.products)
@@ -41,15 +41,14 @@ function BookCard() {
                     color: 'red'
                   }}
                 >
-                  {props.price}
+                  {formatNumber(props.price)}
                   {props.currency}
                 </Typography>
                 <Typography
                   sx={{
-                    bgcolor: '#C92127',
                     borderRadius: '8px',
                     width: '30px',
-                    color: 'primary.light'
+                    color: 'green'
                   }}
                   fontSize="small"
                 >
@@ -63,7 +62,7 @@ function BookCard() {
                 }}
                 fontSize="small"
               >
-                {props.originalPrice}
+                {formatNumber(props.originalPrice)}
                 {props.currency}
               </Typography>
             </CardContent>

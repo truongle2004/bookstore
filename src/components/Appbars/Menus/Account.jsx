@@ -1,15 +1,17 @@
 import PersonIcon from '@mui/icons-material/Person'
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import { useState } from 'react'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import FacebookIcon from '@mui/icons-material/Facebook'
 import { useDispatch } from 'react-redux'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
+import { handleGetToken, handleRemoveToken } from '~/axios/handleServices'
 
 function Account() {
   const [anchorEl, setAnchorEl] = useState(null)
+  const existedUser = handleGetToken() ? true : false
   const dispatch = useDispatch()
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -33,6 +35,10 @@ function Account() {
     dispatch(isOpenedDialog(true))
   }
 
+  const handleLogout = () => {
+    handleRemoveToken()
+    handleCloseMenuAndOpenDialog()
+  }
   return (
     <div>
       <Stack direction="column" alignItems="center">
@@ -71,16 +77,16 @@ function Account() {
           }
         }}
       >
-        <MenuItem onClick={handleCloseMenuAndOpenDialog}>Login</MenuItem>
-        <MenuItem onClick={handleCloseMenuAndOpenDialog}>Register</MenuItem>
-        <MenuItem onClick={handleCloseMenuAndOpenDialog}>
-          <FacebookIcon
-            sx={{
-              mr: '3px'
-            }}
-          />
-          Login by Facebook
-        </MenuItem>
+        {!existedUser ? (
+          <Box>
+            <MenuItem onClick={handleCloseMenuAndOpenDialog}>Login</MenuItem>
+            <MenuItem onClick={handleCloseMenuAndOpenDialog}>Register</MenuItem>
+          </Box>
+        ) : (
+          <Box>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Box>
+        )}
       </Menu>
     </div>
   )

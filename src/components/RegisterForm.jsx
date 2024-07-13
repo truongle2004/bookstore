@@ -13,10 +13,13 @@ import {
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
 import checkUsername from '~/utils/userNameValidation'
 import { checkEmail } from '~/utils/emailValidation'
-import { checkConfirmPassword as checkConfirmPassword } from '~/utils/passwordValidation'
+import {
+  checkConfirmPassword as checkConfirmPassword,
+  checkPassword
+} from '~/utils/passwordValidation'
 import { RegisterApiCall } from '~/axios/services'
 import { toast } from 'react-toastify'
-//TODO: check validation + add check secure password
+
 const RegisterForm = () => {
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
@@ -34,14 +37,16 @@ const RegisterForm = () => {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-
-    if (
+    const isPassedChecking =
       checkUsername(username) &&
       checkEmail(email) &&
+      checkPassword(password) &&
       checkConfirmPassword(confirmPassword, password)
-    ) {
+        ? true
+        : false
+    if (isPassedChecking) {
       handleRegisterApiCall(username, email, password)
     }
   }

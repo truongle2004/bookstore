@@ -6,17 +6,32 @@ import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
+import { handleSaveLocalStorage } from '~/axios/handleServices'
+import { LoginApiCall } from '~/axios/services'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
 
 function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
-  const handleSubmit = () => {}
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    handleLoginApiCall()
+  }
   const handleClose = () => {
     dispatch(isOpenedDialog(false))
   }
 
+  const handleLoginApiCall = async () => {
+    const res = await LoginApiCall(email, password)
+    if (res && res.status === 200) {
+      handleSaveLocalStorage(res.headers.authorization)
+      toast.success('Login Successfully')
+    } else {
+      toast.error('Login Failed')
+    }
+  }
   return (
     <Box>
       <DialogTitle>Login</DialogTitle>
