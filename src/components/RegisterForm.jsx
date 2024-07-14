@@ -17,7 +17,7 @@ import {
   checkConfirmPassword as checkConfirmPassword,
   checkPassword
 } from '~/utils/passwordValidation'
-import { RegisterApiCall } from '~/axios/services'
+import { registerApiCall } from '~/axios/services'
 import { toast } from 'react-toastify'
 
 const RegisterForm = () => {
@@ -25,11 +25,10 @@ const RegisterForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  // const [checkConfirmPassword, setCheckConformPassword] = useState('false')
   const dispatch = useDispatch()
 
   const handleRegisterApiCall = async () => {
-    const res = await RegisterApiCall(username, email, password)
+    const res = await registerApiCall(username, email, password)
     if (res.data && res.status == 200) {
       toast.success('Register Successfully')
     } else {
@@ -88,7 +87,6 @@ const RegisterForm = () => {
               sx={{ width: 320 }}
               type="text"
               fullWidth
-              autoFocus
               required
               margin="normal"
               onChange={(e) => setUsername(e.target.value)}

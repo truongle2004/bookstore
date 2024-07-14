@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
-import { handleGetToken } from '~/axios/handleServices'
+import { handleGetToken } from '~/axios/handleUserServices'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
@@ -47,6 +47,8 @@ export default function FormDialog() {
   const existToken = handleGetToken() ? true : false
   const [value, setValue] = React.useState(0)
 
+  const index = useSelector((state) => state.userServiceIndex.index)
+
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
@@ -54,6 +56,10 @@ export default function FormDialog() {
   const handleClose = () => {
     dispatch(isOpenedDialog(false))
   }
+
+  useEffect(() => {
+    setValue(index)
+  }, [index])
 
   useEffect(() => {
     if (existToken) {

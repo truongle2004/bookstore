@@ -7,3 +7,4 @@ export const valueValidation = new Map([
 export const formatNumber = (number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 }
+

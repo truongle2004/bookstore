@@ -10,7 +10,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Appbars />}>
-        <Route path="home" element={<Home />} />
+        <Route index element={<Home />} />
         <Route
           path="checkout/cart"
           element={

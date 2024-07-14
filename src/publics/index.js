@@ -144,7 +144,7 @@ Sách nằm trong series các cuốn sách tranh khoa học - lịch sử - văn
       date: '2024-07-10',
       rating: 5,
       comment:
-        'An incredible read! The author\'s deep understanding of history shines through every page. Highly recommend!'
+        "An incredible read! The author's dee` understanding of history shines through every page. Highly recommend!"
     },
     {
       username: 'HistoryBuff89',
@@ -172,7 +172,7 @@ Sách nằm trong series các cuốn sách tranh khoa học - lịch sử - văn
       date: '2024-07-13',
       rating: 4,
       comment:
-        'Philip Parker\'s writing is both engaging and insightful. I learned a lot about the Viking world. Highly recommended.'
+        "Philip Parker's writing is both engaging and insightful. I learned a lot about the Viking world. Highly recommended."
     }
   ]
 }

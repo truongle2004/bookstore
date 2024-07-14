@@ -18,7 +18,8 @@ function Appbars() {
           position="static"
           sx={{
             gap: 3,
-            height: '68px'
+            height: '68px',
+            display: 'flex'
           }}
         >
           <Stack

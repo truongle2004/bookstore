@@ -7,8 +7,8 @@ import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import { handleSaveLocalStorage } from '~/axios/handleServices'
-import { LoginApiCall } from '~/axios/services'
+import { handleSaveLocalStorage } from '~/axios/handleUserServices'
+import { loginApiCall } from '~/axios/services'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
 
 function LoginForm() {
@@ -24,7 +24,7 @@ function LoginForm() {
   }
 
   const handleLoginApiCall = async () => {
-    const res = await LoginApiCall(email, password)
+    const res = await loginApiCall(email, password)
     if (res && res.status === 200) {
       handleSaveLocalStorage(res.headers.authorization)
       toast.success('Login Successfully')
@@ -41,9 +41,6 @@ function LoginForm() {
             <Box>
               <Typography>Enter email</Typography>
               <TextField
-                sx={{
-                  width: 320
-                }}
                 type="email"
                 fullWidth
                 autoFocus

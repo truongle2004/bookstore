@@ -3,16 +3,28 @@ import { Typography } from '@mui/material'
 import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box'
 import { useNavigate } from 'react-router-dom'
+import { handleGetToken } from '~/axios/handleUserServices'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { isOpenedDialog } from '~/redux/features/OpenDialog'
 
 function Cart() {
   const navigate = useNavigate()
+  const isAllowed = handleGetToken() ? true : false
+  const dispatch = useDispatch()
+  const handleCheckBeforeAction = () => {
+    if (isAllowed) {
+      navigate(`${import.meta.env.VITE_USER_CART_URL}`)
+    } else {
+      toast.error('You need to login account')
+      dispatch(isOpenedDialog(true))
+    }
+  }
   return (
     <Box>
       <Stack>
         <ShoppingCartIcon
-          onClick={() => {
-            navigate('/checkout/cart')
-          }}
+          onClick={handleCheckBeforeAction}
           sx={{
             cursor: 'pointer'
           }}

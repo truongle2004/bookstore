@@ -15,7 +15,8 @@ function Search() {
       value={searchValue}
       onChange={(e) => setSearchValue(e.target.value)}
       sx={{
-        width: '555px'
+        maxWidth: '100%'
+        //minWidth: '200px'
       }}
       InputProps={{
         startAdornment: (
