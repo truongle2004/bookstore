@@ -1,24 +1,22 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import {
   Box,
   Button,
-  TextField,
-  Typography,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl
+  FormControl,
+  TextField,
+  Typography
 } from '@mui/material'
-import { isOpenedDialog } from '~/redux/features/OpenDialog'
-import checkUsername from '~/utils/userNameValidation'
-import { checkEmail } from '~/utils/emailValidation'
-import {
-  checkConfirmPassword as checkConfirmPassword,
-  checkPassword
-} from '~/utils/passwordValidation'
-import { registerApiCall } from '~/axios/services'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
+import { registerApiCall } from '~/axios/services'
+import { isOpenedDialog } from '~/redux/features/OpenDialog'
+import { setOpenLogin } from '~/redux/features/UserServiceIndex'
+import { checkEmail } from '~/utils/emailValidation'
+import { checkConfirmPassword, checkPassword } from '~/utils/passwordValidation'
+import checkUsername from '~/utils/userNameValidation'
 
 const RegisterForm = () => {
   const [email, setEmail] = useState('')
@@ -31,6 +29,12 @@ const RegisterForm = () => {
     const res = await registerApiCall(username, email, password)
     if (res.data && res.status == 200) {
       toast.success('Register Successfully')
+      dispatch(isOpenedDialog(false))
+      setInterval(() => {
+        window.location.reload()
+        dispatch(setOpenLogin())
+        dispatch(isOpenedDialog(true))
+      }, 1000)
     } else {
       toast.error('Register Failed')
     }
@@ -55,24 +59,36 @@ const RegisterForm = () => {
   }
 
   return (
-    <Box>
-      <DialogTitle>Register</DialogTitle>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <DialogTitle
+        sx={{
+          textAlign: 'center'
+        }}
+      >
+        Register
+      </DialogTitle>
       <DialogContent
         sx={{
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
+          flexDirection: 'column', // Make sure content is in a column
+          alignItems: 'center',
+          width: '100%'
         }}
       >
         <FormControl
           variant="standard"
           component="form"
           onSubmit={handleSubmit}
+          sx={{ width: '100%' }} // Ensure form takes full width
         >
           <Box>
             <Typography>Enter Email</Typography>
             <TextField
-              sx={{ width: 320 }}
               type="email"
               fullWidth
               autoFocus
@@ -84,7 +100,6 @@ const RegisterForm = () => {
           <Box>
             <Typography>Enter User Name</Typography>
             <TextField
-              sx={{ width: 320 }}
               type="text"
               fullWidth
               required
@@ -95,7 +110,6 @@ const RegisterForm = () => {
           <Box>
             <Typography>Enter Password</Typography>
             <TextField
-              sx={{ width: 320 }}
               type="password"
               fullWidth
               required
@@ -106,7 +120,6 @@ const RegisterForm = () => {
           <Box>
             <Typography>Enter Password Again</Typography>
             <TextField
-              sx={{ width: 320 }}
               type="password"
               fullWidth
               required

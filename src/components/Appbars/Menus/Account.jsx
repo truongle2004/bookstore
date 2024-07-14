@@ -6,8 +6,12 @@ import MenuItem from '@mui/material/MenuItem'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { handleGetToken, handleRemoveToken } from '~/axios/handleUserServices'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  handleGetEmailUser,
+  handleGetToken,
+  handleRemoveToken
+} from '~/axios/handleUserServices'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
 import {
   setOpenLogin,
@@ -19,6 +23,7 @@ function Account() {
   const dispatch = useDispatch()
   const open = Boolean(anchorEl)
   const existedUser = Boolean(handleGetToken())
+  const userEmail = handleGetEmailUser()
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -32,17 +37,19 @@ function Account() {
     dispatch(isOpenedDialog(true))
   }
 
-  const handleLogout = () => {
-    handleRemoveToken()
-    handleClose()
-    handleOpenDialog()
-  }
+  //const handleLogout = () => {
+  //  handleRemoveToken()
+  //  handleClose()
+  //  handleOpenDialog()
+  //}
 
   const handleMenuAction = (action) => {
     handleClose()
     handleOpenDialog()
     if (action === 'login') {
       dispatch(setOpenLogin())
+    } else if (action === 'logout') {
+      handleRemoveToken()
     } else {
       dispatch(setOpenRegister())
     }
@@ -76,7 +83,11 @@ function Account() {
             />
           </>
         )}
-        <Typography sx={{ fontSize: '12px' }}>Account</Typography>
+        {userEmail ? (
+          <Typography sx={{ fontSize: '12px' }}>{userEmail}</Typography>
+        ) : (
+          <Typography sx={{ fontSize: '12px' }}>Account</Typography>
+        )}
       </Stack>
       <Menu
         id="basic-menu"
@@ -106,7 +117,7 @@ function Account() {
           </Box>
         ) : (
           <Box>
-            <MenuItem onClick={() => handleMenuAction('login')}>
+            <MenuItem onClick={() => handleMenuAction('logout')}>
               Logout
             </MenuItem>
           </Box>

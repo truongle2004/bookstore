@@ -7,7 +7,10 @@ import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import { handleSaveLocalStorage } from '~/axios/handleUserServices'
+import {
+  handleSaveEmailUser,
+  handleSaveLocalStorage
+} from '~/axios/handleUserServices'
 import { loginApiCall } from '~/axios/services'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
 
@@ -15,6 +18,11 @@ function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
+
+  const handleCloseDialog = () => {
+    dispatch(isOpenedDialog(false))
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     handleLoginApiCall()
@@ -23,50 +31,75 @@ function LoginForm() {
     dispatch(isOpenedDialog(false))
   }
 
+  const handleSaveEmail = () => {
+    handleSaveEmailUser(email)
+  }
   const handleLoginApiCall = async () => {
     const res = await loginApiCall(email, password)
     if (res && res.status === 200) {
+      handleSaveEmail()
       handleSaveLocalStorage(res.headers.authorization)
+      handleCloseDialog()
       toast.success('Login Successfully')
+      setInterval(() => {
+        window.location.reload()
+      }, 1000)
     } else {
       toast.error('Login Failed')
     }
   }
   return (
-    <Box>
-      <DialogTitle>Login</DialogTitle>
-      <DialogContent>
-        <FormControl variant="standard">
-          <form action="" onSubmit={handleSubmit}>
-            <Box>
-              <Typography>Enter email</Typography>
-              <TextField
-                type="email"
-                fullWidth
-                autoFocus
-                required
-                margin="normal"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Box>
-            <Box>
-              <Typography>Enter password</Typography>
-              <TextField
-                sx={{
-                  width: 320
-                }}
-                type="password"
-                fullWidth
-                required
-                onChange={(e) => setPassword(e.target.value)}
-                margin="normal"
-              />
-            </Box>
-            <DialogActions>
-              <Button onClick={handleClose}>Close</Button>
-              <Button type="submit">Login</Button>
-            </DialogActions>
-          </form>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <DialogTitle
+        sx={{
+          textAlign: 'center'
+        }}
+      >
+        Login
+      </DialogTitle>
+      <DialogContent
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <FormControl
+          variant="standard"
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ width: '100%' }}
+        >
+          <Box>
+            <Typography>Enter email</Typography>
+            <TextField
+              type="email"
+              fullWidth
+              autoFocus
+              required
+              margin="normal"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Box>
+          <Box>
+            <Typography>Enter password</Typography>
+            <TextField
+              type="password"
+              fullWidth
+              required
+              onChange={(e) => setPassword(e.target.value)}
+              margin="normal"
+            />
+          </Box>
+          <DialogActions>
+            <Button onClick={handleClose}>Close</Button>
+            <Button type="submit">Login</Button>
+          </DialogActions>
         </FormControl>
       </DialogContent>
     </Box>

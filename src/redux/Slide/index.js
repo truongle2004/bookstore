@@ -12,5 +12,5 @@ export const rootReducer = combineSlices({
   countSelect: countSelectReducer,
   cartMoney: cartMoneyReducer,
   isSelectedAll: SelectAllItemsReducer,
-  userServiceIndex: UserServiceIndexReducer
+  userServiceIndex: UserServiceIndexReducer,
 })
