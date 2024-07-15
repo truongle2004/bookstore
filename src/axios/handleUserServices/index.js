@@ -9,10 +9,13 @@ const handleSaveEmailUser = (email) => localStorage.setItem('email', email)
 
 const handleGetEmailUser = () => localStorage.getItem('email')
 
+const handleRemoveEmailUser = () => localStorage.removeItem('email')
+
 export {
   handleGetToken,
   handleSaveLocalStorage,
   handleRemoveToken,
   handleSaveEmailUser,
-  handleGetEmailUser
+  handleGetEmailUser,
+  handleRemoveEmailUser
 }

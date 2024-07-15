@@ -4,8 +4,11 @@ import Stack from '@mui/material/Stack'
 import { Outlet } from 'react-router-dom'
 import ModeToggle from '../ModeSelects'
 import { Account, Cart, Logo, Search } from './Menus'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 function Appbars() {
+  const matches = useMediaQuery('(min-width:700px)')
+
   return (
     <>
       <Box
@@ -18,12 +21,13 @@ function Appbars() {
           position="static"
           sx={{
             gap: 3,
-            height: '68px',
+            height: matches ? '68px' : '130px',
             display: 'flex'
           }}
         >
           <Stack
-            direction="row"
+            direction={matches ? 'row' : 'column'}
+            spacing={matches ? '10' : '0'}
             alignItems="center"
             justifyContent="space-evenly"
             sx={{
@@ -31,11 +35,30 @@ function Appbars() {
               position: 'relative'
             }}
           >
-            <Logo />
+            {matches && <Logo />}
             <Search />
-            <Cart />
-            <Account />
-            <ModeToggle />
+            {!matches ? (
+              <>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={5}
+                  sx={{
+                    py: 2
+                  }}
+                >
+                  <Cart />
+                  <ModeToggle />
+                  <Account />
+                </Stack>
+              </>
+            ) : (
+              <>
+                <Cart />
+                <ModeToggle />
+                <Account />
+              </>
+            )}
           </Stack>
         </AppBar>
       </Box>

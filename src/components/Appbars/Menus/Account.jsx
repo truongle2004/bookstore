@@ -6,10 +6,12 @@ import MenuItem from '@mui/material/MenuItem'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 import {
   handleGetEmailUser,
   handleGetToken,
+  handleRemoveEmailUser,
   handleRemoveToken
 } from '~/axios/handleUserServices'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
@@ -49,7 +51,9 @@ function Account() {
     if (action === 'login') {
       dispatch(setOpenLogin())
     } else if (action === 'logout') {
+      toast.success('Logout Successfully')
       handleRemoveToken()
+      handleRemoveEmailUser()
     } else {
       dispatch(setOpenRegister())
     }

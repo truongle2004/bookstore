@@ -6,6 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {
   handleSaveEmailUser,
@@ -18,6 +19,7 @@ function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleCloseDialog = () => {
     dispatch(isOpenedDialog(false))
@@ -34,6 +36,7 @@ function LoginForm() {
   const handleSaveEmail = () => {
     handleSaveEmailUser(email)
   }
+
   const handleLoginApiCall = async () => {
     const res = await loginApiCall(email, password)
     if (res && res.status === 200) {
@@ -42,8 +45,9 @@ function LoginForm() {
       handleCloseDialog()
       toast.success('Login Successfully')
       setInterval(() => {
+        navigate('/home')
         window.location.reload()
-      }, 1000)
+      }, 1300)
     } else {
       toast.error('Login Failed')
     }

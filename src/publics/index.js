@@ -20,7 +20,7 @@ export const bookInfo = {
   headerDcription: 'Chia Sẻ Từ Trái Tim',
   aboutTheAuthor: `Philip Parker sinh năm 1965 tại Liverpool, học chuyên ngành lịch sử tại Trinity Hall và Cambridge. Ông là một tác giả và sử gia chuyên về các hệ thống chính trị và quân sự thời cổ đại và trung cổ.
 Các cuốn sách của Philp Parker đã ra mắt bạn đọc gồm: “World History”; “Eyewitness Companion Guide to World History”; “The Northmen’s Fury: A History of the Viking World”; “A History of Britain in Maps”... Ngoài ra, ông còn biên tập và tham gia xuất bản các tác phẩm lịch sử.`,
-  description: `“Lịch sử thế giới”: Toàn bộ lịch sử loài người trong 400 trang sách
+  description: `Lịch sử thế giới”: Toàn bộ lịch sử loài người trong 400 trang sách
 
 - Bách khoa toàn thư lịch sử cho mỗi gia đình
 
@@ -74,21 +74,6 @@ Philip Parker sinh năm 1965 tại Liverpool, học chuyên ngành lịch sử t
 
 Các cuốn sách của Philp Parker đã ra mắt bạn đọc gồm: “World History”; “Eyewitness Companion Guide to World History”; “The Northmen’s Fury: A History of the Viking World”; “A History of Britain in Maps”... Ngoài ra, ông còn biên tập và tham gia xuất bản các tác phẩm lịch sử.
 
-Mã hàng	8794069304491
-Tên Nhà Cung Cấp	ZenBooks
-Tác giả	Philip Parker
-Người Dịch	Lê Thị Hương Ly
-NXB	Dân Trí
-Năm XB	2023
-Ngôn Ngữ	Tiếng Việt
-Trọng lượng (gr)	530
-Kích Thước Bao Bì	23.5 x 19.5 x 2.2 cm
-Số trang	416
-Hình thức	Bìa Cứng
-Sản phẩm bán chạy nhất	Top 100 sản phẩm Lịch Sử bán chạy của tháng
-Giá sản phẩm trên Fahasa.com đã bao gồm thuế theo luật hiện hành. Bên cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như Phụ phí đóng gói, phí vận chuyển, phụ phí hàng cồng kềnh,...
-Chính sách khuyến mãi trên Fahasa.com không áp dụng cho Hệ thống Nhà sách Fahasa trên toàn quốc
-World History - Lịch Sử Thế Giới - Từ Thế Giới Cổ Đại Đến Thời Đại Thông Tin - Bìa Cứng
 
 “Lịch sử thế giới”: Toàn bộ lịch sử loài người trong 400 trang sách
 
@@ -144,7 +129,7 @@ Sách nằm trong series các cuốn sách tranh khoa học - lịch sử - văn
       date: '2024-07-10',
       rating: 5,
       comment:
-        "An incredible read! The author's dee` understanding of history shines through every page. Highly recommend!"
+        'An incredible read! The author\'s dee` understanding of history shines through every page. Highly recommend!'
     },
     {
       username: 'HistoryBuff89',
@@ -172,7 +157,7 @@ Sách nằm trong series các cuốn sách tranh khoa học - lịch sử - văn
       date: '2024-07-13',
       rating: 4,
       comment:
-        "Philip Parker's writing is both engaging and insightful. I learned a lot about the Viking world. Highly recommended."
+        'Philip Parker\'s writing is both engaging and insightful. I learned a lot about the Viking world. Highly recommended.'
     }
   ]
 }

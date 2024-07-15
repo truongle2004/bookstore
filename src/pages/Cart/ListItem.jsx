@@ -18,7 +18,7 @@ import { formatNumber } from '~/constant'
 import { useControlQuantity } from '~/hooks'
 import { AddMoney, SubtractMoney } from '~/redux/features/CartMoney'
 import {
-  increaseSelecteCheckBox,
+  increaseSelectCheckBox,
   reduceSelectedCheckBox
 } from '~/redux/features/CountProductSelected'
 import { removeAnItemFromCart } from '~/redux/features/ListProducts'
@@ -48,9 +48,7 @@ function CheckSelect(props) {
       handleCheckboxClick(id, checked)
     }
 
-    const action = checked
-      ? increaseSelecteCheckBox()
-      : reduceSelectedCheckBox()
+    const action = checked ? increaseSelectCheckBox() : reduceSelectedCheckBox()
     dispatch(action)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checked, dispatch])
@@ -164,7 +162,12 @@ function ListItem() {
   return (
     <>
       {listBooks.map((props) => (
-        <TableBody key={props.id}>
+        <TableBody
+          key={props.id}
+          sx={{
+            width: '100%'
+          }}
+        >
           <TableRow>
             <CheckSelect
               id={props.id}

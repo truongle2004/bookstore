@@ -7,6 +7,7 @@ import { handleGetToken } from '~/axios/handleUserServices'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { isOpenedDialog } from '~/redux/features/OpenDialog'
+import { setOpenLogin } from '~/redux/features/UserServiceIndex'
 
 function Cart() {
   const navigate = useNavigate()
@@ -17,6 +18,7 @@ function Cart() {
       navigate(`${import.meta.env.VITE_USER_CART_URL}`)
     } else {
       toast.error('You need to login account')
+      dispatch(setOpenLogin())
       dispatch(isOpenedDialog(true))
     }
   }
