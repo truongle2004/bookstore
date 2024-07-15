@@ -14,11 +14,8 @@ import {
   handleRemoveEmailUser,
   handleRemoveToken
 } from '~/axios/handleUserServices'
-import { isOpenedDialog } from '~/redux/features/OpenDialog'
-import {
-  setOpenLogin,
-  setOpenRegister
-} from '~/redux/features/UserServiceIndex'
+import { isOpenedDialog } from '~/redux/features/components/OpenDialog'
+import { setOpenRegister, setOpenLogin } from '~/redux/features/services/UserServiceIndex'
 
 function Account() {
   const [anchorEl, setAnchorEl] = useState(null)

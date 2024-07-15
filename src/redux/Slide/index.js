@@ -1,10 +1,11 @@
-import openDialogReducer from '../features/OpenDialog'
 import { combineSlices } from '@reduxjs/toolkit'
-import ListProductsReducer from '../features/ListProducts'
-import countSelectReducer from '../features/CountProductSelected'
-import cartMoneyReducer from '../features/CartMoney'
-import SelectAllItemsReducer from '../features/SelectAllItem'
-import UserServiceIndexReducer from '../features/UserServiceIndex'
+import openDialogReducer from '../features/components/OpenDialog'
+import ListProductsReducer from '../features/components/ListProducts'
+import countSelectReducer from '../features/cart/CountProductSelected'
+import cartMoneyReducer from '../features/cart/CartMoney'
+import SelectAllItemsReducer from '../features/cart/SelectAllItem'
+import UserServiceIndexReducer from '../features/services/UserServiceIndex'
+import StoreProductIdReducer from '../features/utils/StoreProductId'
 
 export const rootReducer = combineSlices({
   openDialog: openDialogReducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineSlices({
   cartMoney: cartMoneyReducer,
   isSelectedAll: SelectAllItemsReducer,
   userServiceIndex: UserServiceIndexReducer,
+  storeProductId: StoreProductIdReducer
 })

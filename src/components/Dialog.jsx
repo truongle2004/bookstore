@@ -3,10 +3,10 @@ import Slide from '@mui/material/Slide'
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { isOpenedDialog } from '~/redux/features/OpenDialog'
+import { handleGetToken } from '~/axios/handleUserServices'
+import { isOpenedDialog } from '~/redux/features/components/OpenDialog'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
-import { handleGetToken } from '~/axios/handleUserServices'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />

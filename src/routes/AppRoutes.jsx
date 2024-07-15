@@ -19,12 +19,11 @@ function AppRoutes() {
             <Box>
               <CartPage />
               <CartFooterCheckout />
-
               <SwipeableEdgeDrawer />
             </Box>
           }
         />
-        <Route path="product" element={<ProductDetailPages />} />
+        <Route path="product/:id" element={<ProductDetailPages />} />
         <Route path="user/purchase" element={<Purchase />} />
       </Route>
     </Routes>

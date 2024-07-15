@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { handleGetToken } from '~/axios/handleUserServices'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
-import { isOpenedDialog } from '~/redux/features/OpenDialog'
-import { setOpenLogin } from '~/redux/features/UserServiceIndex'
+import { isOpenedDialog } from '~/redux/features/components/OpenDialog'
+import { setOpenLogin } from '~/redux/features/services/UserServiceIndex'
 
 function Cart() {
   const navigate = useNavigate()

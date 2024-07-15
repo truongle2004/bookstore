@@ -1,14 +1,14 @@
 import { Button, Typography } from '@mui/material'
-import { formatNumber } from '~/constant'
+import { formatNumber } from '~/utils/formatNumber'
 import Checkbox from '@mui/material/Checkbox'
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeAllItems } from '~/redux/features/ListProducts'
+import { removeAllItems } from '~/redux/features/components/ListProducts'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { isSelectedAllItem } from '~/redux/features/SelectAllItem'
+import { isSelectedAllItem } from '~/redux/features/cart/SelectAllItem'
 import { useEffect, useState } from 'react'
 
 // TODO add props value and display value

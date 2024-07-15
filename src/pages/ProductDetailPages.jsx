@@ -1,4 +1,5 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import { formatNumber } from '~/utils/formatNumber'
 import Rating from '@mui/material/Rating'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -12,11 +13,12 @@ import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 import { ProductQuantity } from '~/components/BookDetails'
 import theme from '~/theme'
-import { bookInfo } from '~/publics'
 import Divider from '@mui/material/Divider'
 import { useState } from 'react'
 import RadioGroupRating from '~/components/RadioGroupRating'
 import ReadMoreAndLess from '~/components/ReadLessAndMore'
+import { useSelector } from 'react-redux'
+import { useMediaQuery } from '@mui/material'
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.body}`]: {
@@ -27,6 +29,14 @@ const StyledTableCell = styled(TableCell)(() => ({
 
 function ProductDetailPages() {
   const [value, setValue] = useState(2)
+  const matches = useMediaQuery('(min-width:1200px)')
+  const productId = useSelector((state) => state.storeProductId.productId)
+  const product = useSelector((state) =>
+    state.ListProducts.products.find((product) => product.id === productId)
+  )
+  if (!product) {
+    return <p>Page Not Found!</p>
+  }
   return (
     <Box
       sx={{
@@ -51,7 +61,7 @@ function ProductDetailPages() {
           <Box>
             <Stack alignItems="center" spacing={4}>
               <img
-                src="https://cdn0.fahasa.com/media/catalog/product/z/5/z5569703671543_9999563d8928c9cca25d572ab6764328.jpg"
+                src={product.images}
                 style={{
                   width: '388px',
                   height: '400px'
@@ -91,10 +101,10 @@ function ProductDetailPages() {
                     fontWeight: 600
                   }}
                 >
-                  <strong>Hoa Học Trò - Số 1436</strong>
+                  <strong>{product.title}</strong>
                 </Typography>
               </Box>
-              <Stack direction="row" alignItems="center" spacing={5}>
+              <Stack direction={matches ? 'row' : 'column'} spacing={5}>
                 <Box>
                   <Typography
                     sx={{
@@ -102,11 +112,11 @@ function ProductDetailPages() {
                     }}
                   >
                     Publisher:&nbsp;
-                    <strong>BÁO TIỀN PHONG</strong>
+                    <strong>{product.publisher}</strong>
                   </Typography>
                   <Typography>
                     PublishedBy:&nbsp;
-                    <strong>Báo Sinh Viên VN - Hoa Học Trò</strong>
+                    <strong>{product.publishedBy}</strong>
                   </Typography>
                 </Box>
                 <Box>
@@ -116,11 +126,11 @@ function ProductDetailPages() {
                     }}
                   >
                     Author:&nbsp;
-                    <strong>Nhiều Tác Giả</strong>
+                    <strong>{product.author}</strong>
                   </Typography>
                   <Typography>
                     CoverType:&nbsp;
-                    <strong>Bìa Mềm</strong>
+                    <strong>{product.coverType}</strong>
                   </Typography>
                 </Box>
               </Stack>
@@ -137,7 +147,8 @@ function ProductDetailPages() {
                         color: '#C92127'
                       }}
                     >
-                      19000 d
+                      {formatNumber(product.price)}
+                      {product.currency}
                     </Typography>
                   </strong>
                   <Typography
@@ -151,7 +162,7 @@ function ProductDetailPages() {
                       textDecoration: 'line-through'
                     }}
                   >
-                    20000 d
+                    {product.originalPrice}
                   </Typography>
                   <Typography
                     sx={{
@@ -161,7 +172,7 @@ function ProductDetailPages() {
                       color: 'white'
                     }}
                   >
-                    <strong>5%</strong>
+                    <strong>{product.discount}</strong>
                   </Typography>
                 </Stack>
               </Box>
@@ -190,7 +201,7 @@ function ProductDetailPages() {
             }}
           >
             <TableBody>
-              <TableRow key={bookInfo.id}>
+              <TableRow key={product.id}>
                 <StyledTableCell
                   component="th"
                   scope="row"
@@ -200,7 +211,7 @@ function ProductDetailPages() {
                 >
                   ID
                 </StyledTableCell>
-                <StyledTableCell align="justify">{bookInfo.id}</StyledTableCell>
+                <StyledTableCell align="justify">{product.id}</StyledTableCell>
               </TableRow>
               <TableRow>
                 <StyledTableCell
@@ -212,7 +223,7 @@ function ProductDetailPages() {
                   Supplier
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {bookInfo.publishingYear}
+                  {product.publishingYear}
                 </StyledTableCell>
               </TableRow>
               <TableRow>
@@ -225,7 +236,7 @@ function ProductDetailPages() {
                   Language
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {bookInfo.language}
+                  {product.language}
                 </StyledTableCell>
               </TableRow>
               <TableRow>
@@ -238,7 +249,7 @@ function ProductDetailPages() {
                   Packaging size
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {bookInfo.packagingSize}
+                  {product.packagingSize}
                 </StyledTableCell>
               </TableRow>
               <TableRow>
@@ -251,7 +262,7 @@ function ProductDetailPages() {
                   Number of pages
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {bookInfo.numberOfPages}
+                  {product.numberOfPages}
                 </StyledTableCell>
               </TableRow>
               <TableRow>
@@ -264,7 +275,7 @@ function ProductDetailPages() {
                   Cover type
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {bookInfo.coverType}
+                  {product.coverType}
                 </StyledTableCell>
               </TableRow>
             </TableBody>
@@ -279,18 +290,18 @@ function ProductDetailPages() {
         >
           <Stack spacing={5}>
             <Typography sx={{ wordSpacing: '3px' }}>
-              <strong>{bookInfo.headerDcription}</strong>
+              <strong>{product.headerDcription}</strong>
             </Typography>
 
             <Box>
-              <ReadMoreAndLess desc={bookInfo.description} />
+              <ReadMoreAndLess desc={product.description} />
             </Box>
             <Divider />
             <Typography sx={{ wordSpacing: '3px' }}>
               <strong>About The Author</strong>
             </Typography>
             <Typography sx={{ wordSpacing: '3px', px: 3 }}>
-              {bookInfo.aboutTheAuthor}
+              {product.aboutTheAuthor}
             </Typography>
           </Stack>
         </Box>

@@ -13,7 +13,7 @@ import {
   handleSaveLocalStorage
 } from '~/axios/handleUserServices'
 import { loginApiCall } from '~/axios/services'
-import { isOpenedDialog } from '~/redux/features/OpenDialog'
+import { isOpenedDialog } from '~/redux/features/components/OpenDialog'
 
 function LoginForm() {
   const [email, setEmail] = useState('')

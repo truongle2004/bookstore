@@ -14,14 +14,14 @@ import {
 } from '@mui/material'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { formatNumber } from '~/constant'
+import { formatNumber } from '~/utils/formatNumber'
 import { useControlQuantity } from '~/hooks'
-import { AddMoney, SubtractMoney } from '~/redux/features/CartMoney'
+import { AddMoney, SubtractMoney } from '~/redux/features/cart/CartMoney'
 import {
   increaseSelectCheckBox,
   reduceSelectedCheckBox
-} from '~/redux/features/CountProductSelected'
-import { removeAnItemFromCart } from '~/redux/features/ListProducts'
+} from '~/redux/features/cart/CountProductSelected'
+import { removeAnItemFromCart } from '~/redux/features/components/ListProducts'
 
 function CheckSelect(props) {
   const { images, id, handleCheckboxClick } = props
