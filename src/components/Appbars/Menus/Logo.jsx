@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Logo() {
+  const navigate = useNavigate()
   return (
     <img
       alt="logo"
@@ -9,6 +11,7 @@ function Logo() {
         width: '10rem',
         cursor: 'pointer'
       }}
+      onClick={() => navigate('/home')}
     />
   )
 }

@@ -3,6 +3,7 @@ import {
   DeleteForever as DeleteForeverIcon,
   Remove as RemoveIcon
 } from '@mui/icons-material'
+import Box from '@mui/material/Box'
 import {
   Checkbox,
   IconButton,
@@ -14,17 +15,21 @@ import {
 } from '@mui/material'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { formatNumber } from '~/utils/formatNumber'
 import { useControlQuantity } from '~/hooks'
 import { AddMoney, SubtractMoney } from '~/redux/features/cart/CartMoney'
 import {
   increaseSelectCheckBox,
-  reduceSelectedCheckBox
+  reduceSelectedCheckBox,
+  removeSelectedCheckBox
 } from '~/redux/features/cart/CountProductSelected'
-import { removeAnItemFromCart } from '~/redux/features/components/ListProducts'
+import {
+  addToListBuyNow,
+  removeAnItemFromCart
+} from '~/redux/features/components/ListProducts'
+import { formatNumber } from '~/utils/formatNumber'
 
 function CheckSelect(props) {
-  const { images, id, handleCheckboxClick } = props
+  const { author, title, images, id, handleCheckboxClick } = props
   const dispatch = useDispatch()
   const [checked, setChecked] = useState(false)
   const isSelectedAll = useSelector(
@@ -74,28 +79,71 @@ function CheckSelect(props) {
             height: '80px'
           }}
         />
+        <Box
+          sx={{
+            mx: 2
+          }}
+        >
+          <Typography>
+            <strong>{title}</strong>
+          </Typography>
+          <Typography>{author}</Typography>
+        </Box>
       </Stack>
     </TableCell>
   )
 }
 
 function CountQuantityAndPrice(props) {
-  const { isSelected, price, id, currency } = props
+  const {
+    isSelected,
+    price,
+    id,
+    currency,
+    img,
+    originalPrice,
+    title,
+    author,
+    discount
+  } = props
   const dispatch = useDispatch()
-  const { quantity, handleReduce, handleIncrease } = useControlQuantity()
+  const isBought = useSelector((state) => state.buyItem.isBought)
+  let { quantity, handleReduce, handleIncrease, setQuantity } =
+    useControlQuantity()
+
   const previousQuantity = useRef(quantity)
   const firstSelected = useRef(true)
 
+  const handleAddMoney = (money) => dispatch(AddMoney(money))
+  const handleSubtractMoney = (money) => dispatch(SubtractMoney(money))
+  const handleSetQuantityRemove = (quantity) =>
+    dispatch(removeSelectedCheckBox(quantity))
   const handleRemoveItem = useCallback(() => {
     dispatch(removeAnItemFromCart(id))
+    handleSubtractMoney(previousQuantity.current * price)
+    handleSetQuantityRemove(1)
   }, [dispatch, id])
 
   useEffect(() => {
-    const handleAddMoney = (money) => dispatch(AddMoney(money))
-    const handleSubtractMoney = (money) => dispatch(SubtractMoney(money))
-
+    if (isBought && isSelected) {
+      dispatch(
+        addToListBuyNow({
+          img: img,
+          price: price,
+          originalPrice: originalPrice,
+          currency: currency,
+          discount: discount,
+          title: title,
+          id: id,
+          author: author
+        })
+      )
+      dispatch(removeAnItemFromCart(id))
+    }
+  }, [isBought])
+  useEffect(() => {
     if (!isSelected && !firstSelected.current) {
-      handleSubtractMoney(previousQuantity.current * price) // Use previousQuantity for subtraction
+      handleSubtractMoney(previousQuantity.current * price)
       firstSelected.current = true
     }
 
@@ -110,7 +158,14 @@ function CountQuantityAndPrice(props) {
       }
       previousQuantity.current = quantity
     }
-  }, [quantity, dispatch, isSelected, price])
+  }, [
+    quantity,
+    dispatch,
+    isSelected,
+    price,
+    props.previousQuantity,
+    setQuantity
+  ])
 
   return (
     <>
@@ -143,7 +198,7 @@ function CountQuantityAndPrice(props) {
 }
 
 function ListItem() {
-  const listBooks = useSelector((state) => state.ListProducts.products)
+  const listBooks = useSelector((state) => state.ListProducts.productsCart)
 
   const [checkedStates, setCheckedStates] = useState(
     listBooks.reduce((acc, book) => {
@@ -171,8 +226,10 @@ function ListItem() {
           <TableRow>
             <CheckSelect
               id={props.id}
-              images={props.images}
+              images={props.img}
               handleCheckboxClick={handleCheckboxClick}
+              title={props.title}
+              author={props.author}
             />
             <TableCell align="right">
               <Typography
@@ -190,6 +247,11 @@ function ListItem() {
               price={props.price}
               currency={props.currency}
               isSelected={checkedStates[props.id]}
+              originalPrice={props.originalPrice}
+              discount={props.discount}
+              title={props.title}
+              img={props.img}
+              author={props.author}
             />
           </TableRow>
         </TableBody>

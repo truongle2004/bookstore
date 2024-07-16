@@ -1,12 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import Box from '@mui/material/Box'
-import React from 'react'
-import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
-import { useSelector } from 'react-redux'
+import Typography from '@mui/material/Typography'
+import React from 'react'
+import { listBookInfo } from '~/publics'
 
 const ProductDetail = React.memo(() => {
-  const listBooks = useSelector((state) => state.ListProducts.products)
+  const listBooks = listBookInfo
 
   return (
     <>

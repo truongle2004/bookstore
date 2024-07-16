@@ -6,6 +6,7 @@ export const useControlQuantity = () => {
   const handleReduce = () => setQuantity((prev) => (prev > 1 ? prev - 1 : prev))
 
   return {
+    setQuantity,
     quantity,
     handleIncrease,
     handleReduce

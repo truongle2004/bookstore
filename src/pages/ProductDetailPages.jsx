@@ -1,8 +1,12 @@
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { formatNumber } from '~/utils/formatNumber'
-import Rating from '@mui/material/Rating'
+import { useMediaQuery } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import Rating from '@mui/material/Rating'
 import Stack from '@mui/material/Stack'
 import { styled } from '@mui/material/styles'
 import Table from '@mui/material/Table'
@@ -11,14 +15,21 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import { ProductQuantity } from '~/components/BookDetails'
-import theme from '~/theme'
-import Divider from '@mui/material/Divider'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { handleGetToken } from '~/axios/handleUserServices'
+import { getProductByUserId } from '~/axios/services'
 import RadioGroupRating from '~/components/RadioGroupRating'
 import ReadMoreAndLess from '~/components/ReadLessAndMore'
-import { useSelector } from 'react-redux'
-import { useMediaQuery } from '@mui/material'
+import { useControlQuantity } from '~/hooks'
+import {
+  addToCart,
+  addToListBuyNow
+} from '~/redux/features/components/ListProducts'
+import OpenDialog from '~/redux/features/components/OpenDialog'
+import theme from '~/theme'
+import { formatNumber } from '~/utils/formatNumber'
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.body}`]: {
@@ -29,14 +40,79 @@ const StyledTableCell = styled(TableCell)(() => ({
 
 function ProductDetailPages() {
   const [value, setValue] = useState(2)
+  const [listBooks, setListBooks] = useState([])
+  const existUser = handleGetToken()
   const matches = useMediaQuery('(min-width:1200px)')
   const productId = useSelector((state) => state.storeProductId.productId)
-  const product = useSelector((state) =>
-    state.ListProducts.products.find((product) => product.id === productId)
-  )
+  const product = listBooks.find((product) => product.id === productId)
+  const dispatch = useDispatch()
+
+  const { quantity, handleIncrease, handleReduce } = useControlQuantity()
+
+  const handleActionAddToCart = () => {
+    if (existUser) {
+      dispatch(
+        addToCart({
+          img: product.img,
+          price: product.price,
+          originalPrice: product.originalPrice,
+          currency: product.currency,
+          discount: product.discount,
+          title: product.title,
+          id: product.id,
+          author: product.author
+        })
+      )
+    } else {
+      toast.error('User need to login')
+      dispatch(OpenDialog(true))
+    }
+  }
+
+  const handleGetListBook = async () => {
+    try {
+      const res = await getProductByUserId()
+      if (res.status === 200 && res.data) {
+        setListBooks(res.data)
+      } else {
+        console.error('Failed to fetch data:', res.status)
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
+
+  const handleActionBuyNow = () => {
+    if (existUser) {
+      dispatch(
+        addToListBuyNow({
+          img: product.img,
+          price: product.price,
+          originalPrice: product.originalPrice,
+          currency: product.currency,
+          discount: product.discount,
+          title: product.title,
+          id: product.id,
+          quantity: quantity
+        })
+      )
+    } else {
+      toast.error('User need to login')
+      dispatch(OpenDialog(true))
+    }
+  }
+
+  useEffect(() => {
+    if (existUser) {
+      handleGetListBook()
+    }
+  }, [existUser])
+
   if (!product) {
     return <p>Page Not Found!</p>
   }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   return (
     <Box
       sx={{
@@ -51,7 +127,7 @@ function ProductDetailPages() {
           borderTopRightRadius: '8px',
           borderTopLeftRadius: '8px',
           boxShadow: 9,
-          minWidth: 800,
+          minWidth: 1000,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
@@ -61,7 +137,7 @@ function ProductDetailPages() {
           <Box>
             <Stack alignItems="center" spacing={4}>
               <img
-                src={product.images}
+                src={product.img}
                 style={{
                   width: '388px',
                   height: '400px'
@@ -73,6 +149,7 @@ function ProductDetailPages() {
                   color="error"
                   sx={theme.buttonStyle}
                   startIcon={<ShoppingCartIcon />}
+                  onClick={handleActionAddToCart}
                 >
                   Add to cart
                 </Button>
@@ -80,6 +157,7 @@ function ProductDetailPages() {
                   variant="contained"
                   color="error"
                   sx={theme.buttonStyle}
+                  onClick={handleActionBuyNow}
                 >
                   Buy now
                 </Button>
@@ -116,7 +194,7 @@ function ProductDetailPages() {
                   </Typography>
                   <Typography>
                     PublishedBy:&nbsp;
-                    <strong>{product.publishedBy}</strong>
+                    <strong>{product.publisherBy}</strong>
                   </Typography>
                 </Box>
                 <Box>
@@ -172,12 +250,20 @@ function ProductDetailPages() {
                       color: 'white'
                     }}
                   >
-                    <strong>{product.discount}</strong>
+                    <strong>-{product.discount}%</strong>
                   </Typography>
                 </Stack>
               </Box>
             </Box>
-            <ProductQuantity />
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <IconButton onClick={handleReduce}>
+                <RemoveIcon />
+              </IconButton>
+              <Typography>{quantity}</Typography>
+              <IconButton onClick={handleIncrease}>
+                <AddIcon />
+              </IconButton>
+            </Stack>
           </Box>
         </Stack>
       </Box>

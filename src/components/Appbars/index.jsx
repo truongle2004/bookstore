@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom'
 import ModeToggle from '../ModeSelects'
 import { Account, Cart, Logo, Search } from './Menus'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import MyBook from './Menus/Mybook'
 
 function Appbars() {
   const matches = useMediaQuery('(min-width:700px)')
@@ -47,6 +48,7 @@ function Appbars() {
                     py: 2
                   }}
                 >
+                  <MyBook />
                   <Cart />
                   <ModeToggle />
                   <Account />
@@ -54,6 +56,7 @@ function Appbars() {
               </>
             ) : (
               <>
+                <MyBook />
                 <Cart />
                 <ModeToggle />
                 <Account />

@@ -10,7 +10,7 @@ function ReadMoreAndLess({ desc }) {
     setExpanded((prev) => !prev)
   }
 
-  const description = expanded ? desc : desc.slice(0, 1000) // first 0 > 1000 characters
+  const description = expanded ? desc : desc.slice(0, 1000)
 
   return (
     <Box
@@ -30,6 +30,8 @@ function ReadMoreAndLess({ desc }) {
         {description}
       </Typography>
       <Button
+        variant="outlined"
+        color="error"
         onClick={showFullDescriptionHandler}
         style={{ marginTop: '8px', alignSelf: 'center' }}
       >

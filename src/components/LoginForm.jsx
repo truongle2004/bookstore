@@ -10,7 +10,9 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {
   handleSaveEmailUser,
-  handleSaveLocalStorage
+  handleSaveIdUser,
+  handleSaveLocalStorage,
+  handleSetRoleUser
 } from '~/axios/handleUserServices'
 import { loginApiCall } from '~/axios/services'
 import { isOpenedDialog } from '~/redux/features/components/OpenDialog'
@@ -40,6 +42,9 @@ function LoginForm() {
   const handleLoginApiCall = async () => {
     const res = await loginApiCall(email, password)
     if (res && res.status === 200) {
+      const data = res.data
+      handleSaveIdUser(data.userId)
+      handleSetRoleUser(data.role)
       handleSaveEmail()
       handleSaveLocalStorage(res.headers.authorization)
       handleCloseDialog()
@@ -48,7 +53,7 @@ function LoginForm() {
         navigate('/home')
         window.location.reload()
       }, 1300)
-    } else {
+    } else if (res.respose.status === 403) {
       toast.error('Login Failed')
     }
   }

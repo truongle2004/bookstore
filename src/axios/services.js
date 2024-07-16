@@ -5,7 +5,8 @@ const baseURL = import.meta.env.VITE_BASE_URL
 const authenticationURL = import.meta.env.VITE_URL_TOKEN_CUSTOMER
 
 const registerApiCall = (_name, _email, _password) => {
-  return axios.post(`${baseURL}${import.meta.env.VITE_REGISTER_URL}`, {
+  console.log(baseURL + import.meta.env.VITE_REGISTER_URL)
+  return axios.post(baseURL + import.meta.env.VITE_REGISTER_URL, {
     name: _name,
     email: _email,
     password: _password
@@ -30,7 +31,7 @@ const addProductToCartApiCall = (_userId, _productId) => {
       },
       {
         headers: {
-          Authorization: `${token}`
+          Authorization: `Bearer ${token}`
         }
       }
     )
@@ -38,14 +39,14 @@ const addProductToCartApiCall = (_userId, _productId) => {
   return Promise.reject('No token found')
 }
 
-const getProductByUserId = (_userId) => {
+const getProductByUserId = () => {
   const token = handleGetToken()
   if (token) {
     return axios.get(
-      `${authenticationURL}${import.meta.env.VITE_CART_URL}/${_userId}`,
+      `${baseURL}${import.meta.env.VITE_URL_TOKEN_CUSTOMER}/product`,
       {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: token
         }
       }
     )

@@ -6,6 +6,8 @@ import cartMoneyReducer from '../features/cart/CartMoney'
 import SelectAllItemsReducer from '../features/cart/SelectAllItem'
 import UserServiceIndexReducer from '../features/services/UserServiceIndex'
 import StoreProductIdReducer from '../features/utils/StoreProductId'
+import UserAddressReducer from '../features/services/UserAddress'
+import BuyItemReducer from '../features/cart/BuyItem'
 
 export const rootReducer = combineSlices({
   openDialog: openDialogReducer,
@@ -14,5 +16,7 @@ export const rootReducer = combineSlices({
   cartMoney: cartMoneyReducer,
   isSelectedAll: SelectAllItemsReducer,
   userServiceIndex: UserServiceIndexReducer,
-  storeProductId: StoreProductIdReducer
+  storeProductId: StoreProductIdReducer,
+  userAddress: UserAddressReducer,
+  buyItem: BuyItemReducer
 })

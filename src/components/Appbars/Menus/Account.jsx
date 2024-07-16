@@ -15,7 +15,10 @@ import {
   handleRemoveToken
 } from '~/axios/handleUserServices'
 import { isOpenedDialog } from '~/redux/features/components/OpenDialog'
-import { setOpenRegister, setOpenLogin } from '~/redux/features/services/UserServiceIndex'
+import {
+  setOpenRegister,
+  setOpenLogin
+} from '~/redux/features/services/UserServiceIndex'
 
 function Account() {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -49,6 +52,7 @@ function Account() {
       dispatch(setOpenLogin())
     } else if (action === 'logout') {
       toast.success('Logout Successfully')
+      window.location.reload()
       handleRemoveToken()
       handleRemoveEmailUser()
     } else {

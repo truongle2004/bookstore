@@ -27,6 +27,7 @@ const RegisterForm = () => {
 
   const handleRegisterApiCall = async () => {
     const res = await registerApiCall(username, email, password)
+    console.log(res)
     if (res.data && res.status == 200) {
       toast.success('Register Successfully')
       dispatch(isOpenedDialog(false))
@@ -42,16 +43,16 @@ const RegisterForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const isPassedChecking =
-      checkUsername(username) &&
-      checkEmail(email) &&
-      checkPassword(password) &&
-      checkConfirmPassword(confirmPassword, password)
-        ? true
-        : false
-    if (isPassedChecking) {
+    //const isPassedChecking =
+    //  checkUsername(username) &&
+    //  checkEmail(email) &&
+    //  checkPassword(password) &&
+    //  checkConfirmPassword(confirmPassword, password)
+    //    ? true
+    //    : false
+    //if (isPassedChecking) {
       handleRegisterApiCall(username, email, password)
-    }
+    //}
   }
 
   const handleClose = () => {
@@ -80,11 +81,8 @@ const RegisterForm = () => {
           width: '100%'
         }}
       >
-        <FormControl
-          variant="standard"
-          component="form"
-          onSubmit={handleSubmit}
-          sx={{ width: '100%' }} // Ensure form takes full width
+        <form
+          style={{ width: '100%' }} // Ensure form takes full width
         >
           <Box>
             <Typography>Enter Email</Typography>
@@ -131,9 +129,11 @@ const RegisterForm = () => {
           </Box>
           <DialogActions>
             <Button onClick={handleClose}>Close</Button>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Submit
+            </Button>
           </DialogActions>
-        </FormControl>
+        </form>
       </DialogContent>
     </Box>
   )

@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import CartFooterCheckout from '~/components/Footer/CartFooterCheckout'
 import Home from '~/pages/Home'
 import Purchase from '~/pages/Purchase'
-import SwipeableEdgeDrawer from '~/components/SwipeableEdge'
+import DialogRequire from '~/components/DialogRequire'
 
 function AppRoutes() {
   return (
@@ -17,9 +17,9 @@ function AppRoutes() {
           path="checkout/cart"
           element={
             <Box>
+              <DialogRequire />
               <CartPage />
               <CartFooterCheckout />
-              <SwipeableEdgeDrawer />
             </Box>
           }
         />

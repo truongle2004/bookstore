@@ -14,10 +14,16 @@ export const ProductSelectedSlide = createSlice({
     reduceSelectedCheckBox: (state) => {
       state.productsSelected =
         state.productsSelected > 0 ? state.productsSelected - 1 : 0
+    },
+    removeSelectedCheckBox: (state, action) => {
+      state.productsSelected = state.productsSelected - action.payload
     }
   }
 })
 
-export const { increaseSelectCheckBox, reduceSelectedCheckBox } =
-  ProductSelectedSlide.actions
+export const {
+  increaseSelectCheckBox,
+  reduceSelectedCheckBox,
+  removeSelectedCheckBox
+} = ProductSelectedSlide.actions
 export default ProductSelectedSlide.reducer
