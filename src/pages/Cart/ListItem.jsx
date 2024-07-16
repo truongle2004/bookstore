@@ -118,6 +118,7 @@ function CountQuantityAndPrice(props) {
   const handleSubtractMoney = (money) => dispatch(SubtractMoney(money))
   const handleSetQuantityRemove = (quantity) =>
     dispatch(removeSelectedCheckBox(quantity))
+
   const handleRemoveItem = useCallback(() => {
     dispatch(removeAnItemFromCart(id))
     handleSubtractMoney(previousQuantity.current * price)
@@ -135,12 +136,15 @@ function CountQuantityAndPrice(props) {
           discount: discount,
           title: title,
           id: id,
-          author: author
+          author: author,
+          quantity: quantity
         })
       )
       dispatch(removeAnItemFromCart(id))
+      handleSubtractMoney(previousQuantity.current * price)
     }
   }, [isBought])
+
   useEffect(() => {
     if (!isSelected && !firstSelected.current) {
       handleSubtractMoney(previousQuantity.current * price)
@@ -213,6 +217,8 @@ function ListItem() {
       [id]: checked
     }))
   }
+  
+  
 
   return (
     <>

@@ -6,9 +6,8 @@ import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import { listBookInfo } from '~/publics'
+import { useSelector } from 'react-redux'
 import ListItem from './Cart/ListItem'
-import {useSelector} from 'react-redux'
 
 function CartPage() {
   const listBooks = useSelector((state) => state.ListProducts.productsCart)

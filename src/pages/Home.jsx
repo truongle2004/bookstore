@@ -4,11 +4,9 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import { handleGetToken } from '~/axios/handleUserServices'
 import { Typography } from '@mui/material'
-import { useSelector } from 'react-redux'
 
 function Home() {
   const existUser = !!handleGetToken()
-  console.log(useSelector((state) => state.buyItem.isBought));
   return (
     <>
       <Container

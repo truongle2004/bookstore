@@ -7,6 +7,7 @@ import CartFooterCheckout from '~/components/Footer/CartFooterCheckout'
 import Home from '~/pages/Home'
 import Purchase from '~/pages/Purchase'
 import DialogRequire from '~/components/DialogRequire'
+import AdminPage from '~/pages/Admin'
 
 function AppRoutes() {
   return (
@@ -25,6 +26,7 @@ function AppRoutes() {
         />
         <Route path="product/:id" element={<ProductDetailPages />} />
         <Route path="user/purchase" element={<Purchase />} />
+        <Route path="authentication/admin" element={<AdminPage />} />
       </Route>
     </Routes>
   )

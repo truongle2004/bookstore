@@ -56,17 +56,14 @@ const CartFooterCheckout = () => {
   }
 
   const handleBuy = () => {
-    console.log('handleBuy is called')
     if (existAddressUser === '') {
       handleOpenDialog()
       return
     }
-    console.log('is called')
+
     dispatch(BuyItem(true))
-    console.log('next step is called')
     setOpen(true)
     setTimeout(() => {
-      console.log('is callled inside')
       setOpen(false)
       toast.success('Buy successfully')
       dispatch(BuyItem(false))
