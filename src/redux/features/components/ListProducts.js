@@ -1,7 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
+import { fetchAllProduct } from '~/axios/services'
+
+export const fetchAllProducts = createAsyncThunk(
+  'listporduct',
+  async (_, { rejectWithValue }) => {
+    const res = await fetchAllProduct()
+    if (res.status < 200 || res.status > 300) {
+      return rejectWithValue(res.data)
+    }
+    return res.data
+  }
+)
 
 const initialState = {
+  listAllProduct: [],
   productsCart: [],
   productsBuyNow: []
 }
@@ -38,6 +51,11 @@ const ListProductsSlice = createSlice({
         toast.success('Added to buy now list successfully')
       }
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchAllProducts.fulfilled, (state, action) => {
+      state.listAllProduct = action.payload
+    })
   }
 })
 

@@ -23,6 +23,9 @@ const handleGetIdUser = () => localStorage.getItem('id')
 const handleSetRoleUser = (role) => localStorage.setItem('role', role)
 
 const handleGetRoleUser = () => localStorage.getItem('role')
+
+//TODO create handle checking exist token
+
 export {
   handleGetRoleUser,
   handleSetRoleUser,
