@@ -7,7 +7,7 @@ import CartFooterCheckout from '~/components/Footer/CartFooterCheckout'
 import Home from '~/pages/Home'
 import Purchase from '~/pages/Purchase'
 import DialogRequire from '~/components/DialogRequire'
-import AdminPage from '~/pages/Admin'
+import AdminPage from '~/pages/Admin/Admin'
 
 function AppRoutes() {
   return (

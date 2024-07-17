@@ -1,39 +1,26 @@
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import EditIcon from '@mui/icons-material/Edit'
-import FastfoodIcon from '@mui/icons-material/Fastfood'
-import HotelIcon from '@mui/icons-material/Hotel'
 import InfoIcon from '@mui/icons-material/Info'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import LaptopMacIcon from '@mui/icons-material/LaptopMac'
-import RepeatIcon from '@mui/icons-material/Repeat'
-import Timeline from '@mui/lab/Timeline'
-import TimelineConnector from '@mui/lab/TimelineConnector'
-import TimelineContent from '@mui/lab/TimelineContent'
-import TimelineDot from '@mui/lab/TimelineDot'
-import TimelineItem from '@mui/lab/TimelineItem'
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent'
-import TimelineSeparator from '@mui/lab/TimelineSeparator'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
-import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
-import { alpha, styled } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { handleGetToken } from '~/axios/handleUserServices'
 import { fetchAllProducts } from '~/redux/features/components/ListProducts'
-
-const BOX_HEIGH = 700
+import styled from '@emotion/styled'
+import Menu from '@mui/material/Menu'
+import { alpha } from '@mui/material'
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -78,15 +65,22 @@ const StyledMenu = styled((props) => (
   }
 }))
 
-function BasicTable() {
+function AdminTable() {
   const existToken = !!handleGetToken()
   const dispatch = useDispatch()
   const listBook = useSelector((state) => state.ListProducts.listAllProduct)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
+  const navigate = useNavigate()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
+
+  const handleMoreInfo = (id) => {
+    handleClose()
+    navigate(import.meta.env.VITE_ADMIN_PRODUCT + '/' + id)
+  }
+
   const handleClose = () => {
     setAnchorEl(null)
   }
@@ -95,6 +89,7 @@ function BasicTable() {
       dispatch(fetchAllProducts())
     }
   }, [existToken, dispatch])
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -161,7 +156,12 @@ function BasicTable() {
                       <DeleteForeverIcon />
                       remove
                     </MenuItem>
-                    <MenuItem onClick={handleClose} disableRipple>
+                    <MenuItem
+                      onClick={() => {
+                        handleMoreInfo(value.id)
+                      }}
+                      disableRipple
+                    >
                       <InfoIcon />
                       Info
                     </MenuItem>
@@ -176,109 +176,4 @@ function BasicTable() {
   )
 }
 
-function AdminPage() {
-  return (
-    <Container maxWidth="xl">
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          flexFlow: 'wrap'
-        }}
-      >
-        <Box
-          sx={{
-            height: BOX_HEIGH
-          }}
-        >
-          <Timeline position="alternate">
-            <TimelineItem>
-              <TimelineOppositeContent
-                sx={{ m: 'auto 0' }}
-                align="right"
-                variant="body2"
-                color="text.secondary"
-              >
-                9:30 am
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineConnector />
-                <TimelineDot>
-                  <FastfoodIcon />
-                </TimelineDot>
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent sx={{ py: '12px', px: 2 }}>
-                <Typography variant="h6" component="span">
-                  Eat
-                </Typography>
-                <Typography>Because you need strength</Typography>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-              <TimelineOppositeContent
-                sx={{ m: 'auto 0' }}
-                variant="body2"
-                color="text.secondary"
-              >
-                10:00 am
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineConnector />
-                <TimelineDot color="primary">
-                  <LaptopMacIcon />
-                </TimelineDot>
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent sx={{ py: '12px', px: 2 }}>
-                <Typography variant="h6" component="span">
-                  Code
-                </Typography>
-                <Typography>Because it&apos;s awesome!</Typography>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineConnector />
-                <TimelineDot color="primary" variant="outlined">
-                  <HotelIcon />
-                </TimelineDot>
-                <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-              </TimelineSeparator>
-              <TimelineContent sx={{ py: '12px', px: 2 }}>
-                <Typography variant="h6" component="span">
-                  Sleep
-                </Typography>
-                <Typography>Because you need rest</Typography>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-              <TimelineSeparator>
-                <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-                <TimelineDot color="secondary">
-                  <RepeatIcon />
-                </TimelineDot>
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent sx={{ py: '12px', px: 2 }}>
-                <Typography variant="h6" component="span">
-                  Repeat
-                </Typography>
-                <Typography>Because this is the life you love!</Typography>
-              </TimelineContent>
-            </TimelineItem>
-          </Timeline>
-        </Box>
-        <Box
-          sx={{
-            height: BOX_HEIGH
-          }}
-        >
-          <BasicTable />
-        </Box>
-      </Box>
-    </Container>
-  )
-}
-
-export default AdminPage
+export default AdminTable
