@@ -1,4 +1,5 @@
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { formatNumber } from '~/utils/formatNumber'
 import EditIcon from '@mui/icons-material/Edit'
 import InfoIcon from '@mui/icons-material/Info'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
@@ -65,7 +66,8 @@ const StyledMenu = styled((props) => (
   }
 }))
 
-function AdminTable() {
+function AdminTable(props) {
+  const { handleOpenFormEdit, handleSetProductData } = props
   const existToken = !!handleGetToken()
   const dispatch = useDispatch()
   const listBook = useSelector((state) => state.ListProducts.listAllProduct)
@@ -124,7 +126,7 @@ function AdminTable() {
               </TableCell>
               <TableCell align="right">{value.title}</TableCell>
               <TableCell align="right">{value.author}</TableCell>
-              <TableCell align="right">{value.price}</TableCell>
+              <TableCell align="right">{formatNumber(value.price)}</TableCell>
               <TableCell align="right">
                 <Box>
                   <Button
@@ -148,7 +150,14 @@ function AdminTable() {
                     open={open}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={handleClose} disableRipple>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose()
+                        handleSetProductData(value)
+                        handleOpenFormEdit()
+                      }}
+                      disableRipple
+                    >
                       <EditIcon />
                       Edit
                     </MenuItem>
