@@ -1,17 +1,9 @@
-import FastfoodIcon from '@mui/icons-material/Fastfood'
-import Container from '@mui/material/Container'
-import * as React from 'react'
-import { styled, alpha } from '@mui/material/styles'
-import Button from '@mui/material/Button'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import EditIcon from '@mui/icons-material/Edit'
-import Divider from '@mui/material/Divider'
-import ArchiveIcon from '@mui/icons-material/Archive'
-import FileCopyIcon from '@mui/icons-material/FileCopy'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import FastfoodIcon from '@mui/icons-material/Fastfood'
 import HotelIcon from '@mui/icons-material/Hotel'
+import InfoIcon from '@mui/icons-material/Info'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import LaptopMacIcon from '@mui/icons-material/LaptopMac'
 import RepeatIcon from '@mui/icons-material/Repeat'
 import Timeline from '@mui/lab/Timeline'
@@ -22,24 +14,26 @@ import TimelineItem from '@mui/lab/TimelineItem'
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent'
 import TimelineSeparator from '@mui/lab/TimelineSeparator'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
+import { alpha, styled } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import TableHead from '@mui/material/TableHead'
-import { handleGetToken } from '~/axios/handleUserServices'
-import { useDispatch, useSelector } from 'react-redux'
+import * as React from 'react'
 import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { handleGetToken } from '~/axios/handleUserServices'
 import { fetchAllProducts } from '~/redux/features/components/ListProducts'
 
 const BOX_HEIGH = 700
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein }
-}
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -148,7 +142,7 @@ function BasicTable() {
                     onClick={handleClick}
                     endIcon={<KeyboardArrowDownIcon />}
                   >
-                    truong
+                    Menu
                   </Button>
                   <StyledMenu
                     id="demo-customized-menu"
@@ -164,17 +158,12 @@ function BasicTable() {
                       Edit
                     </MenuItem>
                     <MenuItem onClick={handleClose} disableRipple>
-                      <FileCopyIcon />
-                      Duplicate
-                    </MenuItem>
-                    <Divider sx={{ my: 0.5 }} />
-                    <MenuItem onClick={handleClose} disableRipple>
-                      <ArchiveIcon />
-                      Archive
+                      <DeleteForeverIcon />
+                      remove
                     </MenuItem>
                     <MenuItem onClick={handleClose} disableRipple>
-                      <MoreHorizIcon />
-                      More
+                      <InfoIcon />
+                      Info
                     </MenuItem>
                   </StyledMenu>
                 </Box>
