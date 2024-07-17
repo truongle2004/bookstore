@@ -6,16 +6,19 @@ const initialState = {
   productsBuyNow: []
 }
 
-export const ListProductsSlice = createSlice({
+const ListProductsSlice = createSlice({
   name: 'user_products',
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      if (!state.productsCart.find((value) => value.id === action.payload.id)) {
+      const productExists = state.productsCart.some(
+        (product) => product.id === action.payload.id
+      )
+      if (!productExists) {
         state.productsCart.push(action.payload)
-        toast.success('Add successfully')
+        toast.success('Added to cart successfully')
       } else {
-        toast.error('Product exists in cart')
+        toast.error('Product already exists in cart')
       }
     },
     removeAnItemFromCart: (state, action) => {
@@ -27,11 +30,12 @@ export const ListProductsSlice = createSlice({
       state.productsCart = []
     },
     addToListBuyNow: (state, action) => {
-      if (
-        !state.productsBuyNow.find((value) => value.id === action.payload.id)
-      ) {
+      const productExists = state.productsBuyNow.some(
+        (product) => product.id === action.payload.id
+      )
+      if (!productExists) {
         state.productsBuyNow.push(action.payload)
-        toast.success('Buy successfully')
+        toast.success('Added to buy now list successfully')
       }
     }
   }

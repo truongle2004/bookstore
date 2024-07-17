@@ -5,7 +5,6 @@ const baseURL = import.meta.env.VITE_BASE_URL
 const authenticationURL = import.meta.env.VITE_URL_TOKEN_CUSTOMER
 
 const registerApiCall = (_name, _email, _password) => {
-  console.log(baseURL + import.meta.env.VITE_REGISTER_URL)
   return axios.post(baseURL + import.meta.env.VITE_REGISTER_URL, {
     name: _name,
     email: _email,
@@ -39,7 +38,7 @@ const addProductToCartApiCall = (_userId, _productId) => {
   return Promise.reject('No token found')
 }
 
-const getProductByUserId = () => {
+const fetchAllProduct = () => {
   const token = handleGetToken()
   if (token) {
     return axios.get(
@@ -58,5 +57,5 @@ export {
   registerApiCall,
   loginApiCall,
   addProductToCartApiCall,
-  getProductByUserId
+  fetchAllProduct
 }

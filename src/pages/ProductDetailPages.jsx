@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { handleGetToken } from '~/axios/handleUserServices'
-import { getProductByUserId } from '~/axios/services'
+import { fetchAllProduct } from '~/axios/services'
 import RadioGroupRating from '~/components/RadioGroupRating'
 import ReadMoreAndLess from '~/components/ReadLessAndMore'
 import { useControlQuantity } from '~/hooks'
@@ -71,7 +71,7 @@ function ProductDetailPages() {
 
   const handleGetListBook = async () => {
     try {
-      const res = await getProductByUserId()
+      const res = await fetchAllProduct()
       if (res.status === 200 && res.data) {
         setListBooks(res.data)
       } else {

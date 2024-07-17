@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { handleGetToken } from '~/axios/handleUserServices'
-import { getProductByUserId } from '~/axios/services'
+import { fetchAllProduct } from '~/axios/services'
 import { setProductId } from '~/redux/features/utils/StoreProductId'
 import { formatNumber } from '~/utils/formatNumber'
 
@@ -19,14 +19,12 @@ function BookCard() {
   const existUser = handleGetToken() ? true : false
   const handleGetListBook = async () => {
     try {
-      const res = await getProductByUserId()
+      const res = await fetchAllProduct()
       if (res.status === 200 && res.data) {
         setListBooks(res.data)
-      } else {
-        console.error('Failed to fetch data:', res.status)
       }
     } catch (error) {
-      console.error('Error fetching data:', error)
+      throw new Error('error', error)
     }
   }
   const handleStoreProduct = (id) => {
@@ -70,7 +68,7 @@ function BookCard() {
               sx={{
                 width: '226px',
                 height: '250px',
-                objectFit: 'cover',
+                objectFit: 'cover'
               }}
             />
             <CardContent>
@@ -117,11 +115,11 @@ function BookCard() {
             justifyContent: 'center',
             alignItems: 'center',
             height: '100vh',
-            position: 'absolute', // Ensure it is positioned absolutely
-            top: 0, // Adjust as needed
-            bottom: 0, // Adjust as needed
-            left: 0, // Adjust as needed
-            right: 0 // Adjust as needed
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0
           }}
         >
           <img

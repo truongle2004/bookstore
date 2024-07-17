@@ -1,8 +1,4 @@
 import FastfoodIcon from '@mui/icons-material/Fastfood'
-import Table from '@mui/material/Table'
-import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
 import HotelIcon from '@mui/icons-material/Hotel'
 import LaptopMacIcon from '@mui/icons-material/LaptopMac'
 import RepeatIcon from '@mui/icons-material/Repeat'
@@ -16,10 +12,63 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator'
 import { Container } from '@mui/material'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import ListItem from './Cart/ListItem'
+import { DataGrid } from '@mui/x-data-grid'
 
 const BOX_HEIGH = 700
-const BOX_WIDTH = '50%'
+
+const columns = [
+  { field: 'id', headerName: 'ID', width: 70, type: 'number' },
+  {
+    field: 'age',
+    headerName: 'Age',
+    type: 'number',
+    width: 90
+  },
+  {
+    field: 'image',
+    headerName: 'Image',
+    width: 150,
+    renderCell: (params) => (
+      <img
+        src={params.row.imageUrl}
+        alt="Profile"
+        style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+      />
+    )
+  }
+]
+
+const rows = [
+  {
+    id: 1,
+    age: 35,
+    imageUrl:
+      'https://th.bing.com/th/id/OIP.KdRE7KHqL-46M8nrvOX2CgHaHa?rs=1&pid=ImgDetMain'
+  }
+  //{ id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+  //{ id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+  //{ id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+  //{ id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+  //{ id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+  //{ id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+  //{ id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+  //{ id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 }
+]
+
+function ControlledSelectionGrid() {
+  return (
+    <div style={{ height: 400, width: '600px' }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        checkboxSelection
+        onRowSelectionModelChange={(ids) => {
+          //setSelectedRows(selectedRows)
+        }}
+      />
+    </div>
+  )
+}
 
 function AdminPage() {
   return (
@@ -28,12 +77,11 @@ function AdminPage() {
         sx={{
           display: 'flex',
           flexDirection: 'row',
-          gap: 5
+          justifyContent: 'space-evenly'
         }}
       >
         <Box
           sx={{
-            width: BOX_WIDTH,
             height: BOX_HEIGH
           }}
         >
@@ -117,22 +165,10 @@ function AdminPage() {
         </Box>
         <Box
           sx={{
-            width: BOX_WIDTH,
             height: BOX_HEIGH
           }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label="caption table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Products</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Quantity</TableCell>
-                <TableCell align="right">Bills</TableCell>
-                <TableCell align="right">Operator</TableCell>
-              </TableRow>
-            </TableHead>
-            <ListItem />
-          </Table>
+          <ControlledSelectionGrid />
         </Box>
       </Box>
     </Container>
