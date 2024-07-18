@@ -1,13 +1,33 @@
+import Info from './TabDialog/Info'
 import { Typography } from '@mui/material'
-import { formatNumber } from '~/utils/formatNumber'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
 import TextField from '@mui/material/TextField'
-import Box from '@mui/material/Box'
 import * as React from 'react'
+import Price from './TabDialog/Price'
+import Image from './TabDialog/Image'
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  )
+}
 
 function LabelTextField(productData) {
   return (
@@ -26,11 +46,23 @@ function LabelTextField(productData) {
     </Box>
   )
 }
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
+  }
+}
+
 function FormDialogAdmin(props) {
   const { openFormEdit, handleCloseFormEdit, productData } = props
-  //const handleSetNewValue = (pre, new) => {
-  //
-  //}
+  const [value, setValue] = React.useState(0)
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+  }
+
+  console.log(productData);
 
   return (
     <React.Fragment>
@@ -42,121 +74,27 @@ function FormDialogAdmin(props) {
             gap: 3
           }}
         >
-          {/* <Box> */}
-          {/*   <Typography>Title</Typography> */}
-          {/*   <TextField */}
-          {/*     autoFocus */}
-          {/*     margin="dense" */}
-          {/*     id="title" */}
-          {/*     name="title" */}
-          {/*     label={productData.title} */}
-          {/*     type="text" */}
-          {/*     fullWidth */}
-          {/*     variant="outlined" */}
-          {/*   /> */}
-          {/**/}
-          {/*   <Typography>Publisher</Typography> */}
-          {/*   <TextField */}
-          {/*     autoFocus */}
-          {/*     margin="dense" */}
-          {/*     id="publisher" */}
-          {/*     name="publisher" */}
-          {/*     label={productData.publisher} */}
-          {/*     type="text" */}
-          {/*     fullWidth */}
-          {/*     variant="outlined" */}
-          {/*   /> */}
-          {/*   <Typography>Publisher By</Typography> */}
-          {/*   <TextField */}
-          {/*     autoFocus */}
-          {/*     margin="dense" */}
-          {/*     id="publishedBy" */}
-          {/*     name="publishedBy" */}
-          {/*     label={productData.publisherBy} */}
-          {/*     type="text" */}
-          {/*     fullWidth */}
-          {/*     variant="outlined" */}
-          {/*   /> */}
-          {/*   <Typography>Author</Typography> */}
-          {/*   <TextField */}
-          {/*     autoFocus */}
-          {/*     margin="dense" */}
-          {/*     id="author" */}
-          {/*     name="author" */}
-          {/*     label={productData.author} */}
-          {/*     type="text" */}
-          {/*     fullWidth */}
-          {/*     variant="outlined" */}
-          {/*   /> */}
-          {/*   <Typography>Cover type</Typography> */}
-          {/*   <TextField */}
-          {/*     autoFocus */}
-          {/*     margin="dense" */}
-          {/*     id="coverType" */}
-          {/*     name="coverType" */}
-          {/*     label={productData.coverType} */}
-          {/*     type="email" */}
-          {/*     fullWidth */}
-          {/*     variant="outlined" */}
-          {/*   /> */}
-          {/* </Box> */}
-          <Box>
-            <Typography>Price</Typography>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="price"
-              name="price"
-              label={formatNumber(productData.price)}
-              type="text"
-              fullWidth
-              variant="outlined"
-            />
-
-            <Typography>originalPrice</Typography>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="publisher"
-              name="publisher"
-              label={productData.publisher}
-              type="text"
-              fullWidth
-              variant="outlined"
-            />
-            <Typography>Publisher By</Typography>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="publishedBy"
-              name="publishedBy"
-              label={productData.publisherBy}
-              type="text"
-              fullWidth
-              variant="outlined"
-            />
-            <Typography>Author</Typography>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="author"
-              name="author"
-              label={productData.author}
-              type="text"
-              fullWidth
-              variant="outlined"
-            />
-            <Typography>Cover type</Typography>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="coverType"
-              name="coverType"
-              label={productData.coverType}
-              type="email"
-              fullWidth
-              variant="outlined"
-            />
+          <Box sx={{ width: '100%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab label="Info" {...a11yProps(0)} />
+                <Tab label="Price" {...a11yProps(1)} />
+                <Tab label="Image" {...a11yProps(2)} />
+              </Tabs>
+            </Box>
+            <CustomTabPanel value={value} index={0}>
+              <Info productData={productData} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <Price productData={productData} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
+              <Image imgUrl={productData.img} />
+            </CustomTabPanel>
           </Box>
         </DialogContent>
         <DialogActions>

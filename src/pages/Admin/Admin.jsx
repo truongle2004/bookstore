@@ -12,7 +12,6 @@ function AdminPage() {
   const [data, setData] = useState({})
 
   const handleSetProductData = (data) => {
-    console.log('handleset', data);
     setData(data)
   }
 
