@@ -68,7 +68,7 @@ const StyledMenu = styled((props) => (
 
 function AdminTable(props) {
   const { handleOpenFormEdit, handleSetProductData } = props
-  const existToken = !!handleGetToken()
+  const existToken = Boolean(handleGetToken())
   const dispatch = useDispatch()
   const listBook = useSelector((state) => state.ListProducts.listAllProduct)
   const [anchorEl, setAnchorEl] = React.useState(null)

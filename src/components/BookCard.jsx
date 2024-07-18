@@ -16,7 +16,7 @@ function BookCard() {
   const [listBooks, setListBooks] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const existUser = handleGetToken() ? true : false
+  const existUser = Boolean(handleGetToken())
   const handleGetListBook = async () => {
     try {
       const res = await fetchAllProduct()

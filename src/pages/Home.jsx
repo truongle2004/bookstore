@@ -6,7 +6,7 @@ import { handleGetToken } from '~/axios/handleUserServices'
 import { Typography } from '@mui/material'
 
 function Home() {
-  const existUser = !!handleGetToken()
+  const existUser = Boolean(handleGetToken())
   return (
     <>
       <Container

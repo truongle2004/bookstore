@@ -44,7 +44,7 @@ function a11yProps(index) {
 export default function FormDialog() {
   const open = useSelector((state) => state.openDialog.open)
   const dispatch = useDispatch()
-  const existToken = handleGetToken() ? true : false
+  const existToken = Boolean(handleGetToken())
   const [value, setValue] = React.useState(0)
 
   const index = useSelector((state) => state.userServiceIndex.index)

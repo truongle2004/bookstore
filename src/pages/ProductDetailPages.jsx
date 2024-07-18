@@ -41,7 +41,7 @@ const StyledTableCell = styled(TableCell)(() => ({
 function ProductDetailPages() {
   const [value, setValue] = useState(2)
   const [listBooks, setListBooks] = useState([])
-  const existUser = handleGetToken()
+  const existUser = Boolean(handleGetToken())
   const matches = useMediaQuery('(min-width:1200px)')
   const productId = useSelector((state) => state.storeProductId.productId)
   const product = listBooks.find((product) => product.id === productId)
