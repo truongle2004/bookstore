@@ -31,7 +31,6 @@ export default function Info(props) {
 
         <Typography>Publisher</Typography>
         <TextField
-          autoFocus
           margin="dense"
           id="publisher"
           name="publisher"
@@ -42,7 +41,6 @@ export default function Info(props) {
         />
         <Typography>Publisher By</Typography>
         <TextField
-          autoFocus
           margin="dense"
           id="publishedBy"
           name="publishedBy"
@@ -53,7 +51,6 @@ export default function Info(props) {
         />
         <Typography>Author</Typography>
         <TextField
-          autoFocus
           margin="dense"
           id="author"
           name="author"
@@ -65,7 +62,6 @@ export default function Info(props) {
 
         <Typography>Number of Pages</Typography>
         <TextField
-          autoFocus
           margin="dense"
           id="coverType"
           name="coverType"
@@ -82,7 +78,6 @@ export default function Info(props) {
       >
         <Typography>Cover type</Typography>
         <TextField
-          autoFocus
           margin="dense"
           id="coverType"
           name="coverType"
@@ -93,7 +88,6 @@ export default function Info(props) {
         />
         <Typography>Publishing Year</Typography>
         <TextField
-          autoFocus
           margin="dense"
           id="price"
           name="price"
@@ -105,7 +99,6 @@ export default function Info(props) {
 
         <Typography>Language</Typography>
         <TextField
-          autoFocus
           margin="dense"
           id="publisher"
           name="publisher"
@@ -116,7 +109,6 @@ export default function Info(props) {
         />
         <Typography>Supplier</Typography>
         <TextField
-          autoFocus
           margin="dense"
           id="publishedBy"
           name="publishedBy"
@@ -127,7 +119,6 @@ export default function Info(props) {
         />
         <Typography>Packaging Size</Typography>
         <TextField
-          autoFocus
           margin="dense"
           id="author"
           name="author"

@@ -1,5 +1,3 @@
-import Info from './TabDialog/Info'
-import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -8,10 +6,12 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
-import TextField from '@mui/material/TextField'
 import * as React from 'react'
-import Price from './TabDialog/Price'
 import Image from './TabDialog/Image'
+import Info from './TabDialog/Info'
+import Price from './TabDialog/Price'
+import Description from './TabDialog/Description'
+import Author from './TabDialog/Author'
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props
@@ -29,24 +29,6 @@ function CustomTabPanel(props) {
   )
 }
 
-function LabelTextField(productData) {
-  return (
-    <Box>
-      <Typography>Title</Typography>
-      <TextField
-        autoFocus
-        margin="dense"
-        id="title"
-        name="title"
-        label={productData.title}
-        type="text"
-        fullWidth
-        variant="outlined"
-      />
-    </Box>
-  )
-}
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -61,8 +43,6 @@ function FormDialogAdmin(props) {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
-
-  console.log(productData);
 
   return (
     <React.Fragment>
@@ -84,6 +64,8 @@ function FormDialogAdmin(props) {
                 <Tab label="Info" {...a11yProps(0)} />
                 <Tab label="Price" {...a11yProps(1)} />
                 <Tab label="Image" {...a11yProps(2)} />
+                <Tab label="Book Description" {...a11yProps(3)} />
+                <Tab label="Author" {...a11yProps(4)} />
               </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
@@ -94,6 +76,13 @@ function FormDialogAdmin(props) {
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
               <Image imgUrl={productData.img} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={3}>
+              <Description productData={productData} />
+            </CustomTabPanel>
+
+            <CustomTabPanel value={value} index={4}>
+              <Author productData={productData} />
             </CustomTabPanel>
           </Box>
         </DialogContent>

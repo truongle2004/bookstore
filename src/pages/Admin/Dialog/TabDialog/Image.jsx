@@ -16,7 +16,6 @@ export default function Image(props) {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        width: (theme) => theme.widthTextField,
         alignItems: 'center'
       }}
     >

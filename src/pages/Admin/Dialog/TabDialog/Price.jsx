@@ -25,11 +25,7 @@ const currencies = [
 export default function Price(props) {
   const { productData } = props
   return (
-    <Box
-      sx={{
-        width: (theme) => theme.widthTextField
-      }}
-    >
+    <Box>
       <Typography>Price</Typography>
       <TextField
         autoFocus

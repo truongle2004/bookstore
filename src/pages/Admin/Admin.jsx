@@ -15,6 +15,10 @@ function AdminPage() {
     setData(data)
   }
 
+  const handleRemoveProduct = (id) => {
+    // TODO remove logic
+  }
+
   const handleOpenFormEdit = () => {
     setOpenFormEdit(true)
   }
