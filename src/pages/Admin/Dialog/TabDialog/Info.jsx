@@ -1,9 +1,10 @@
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 export default function Info(props) {
-  const { productData } = props
+  const { formValues, handleChange } = props
+
   return (
     <Box
       sx={{
@@ -23,7 +24,8 @@ export default function Info(props) {
           margin="dense"
           id="title"
           name="title"
-          label={productData.title}
+          label={formValues.title}
+          onChange={handleChange}
           type="text"
           fullWidth
           variant="outlined"
@@ -34,27 +36,32 @@ export default function Info(props) {
           margin="dense"
           id="publisher"
           name="publisher"
-          label={productData.publisher}
+          label={formValues.publisher}
+          onChange={handleChange}
           type="text"
           fullWidth
           variant="outlined"
         />
-        <Typography>Publisher By</Typography>
+
+        <Typography>Published By</Typography>
         <TextField
           margin="dense"
           id="publishedBy"
           name="publishedBy"
-          label={productData.publisherBy}
+          label={formValues.publisherBy}
+          onChange={handleChange}
           type="text"
           fullWidth
           variant="outlined"
         />
+
         <Typography>Author</Typography>
         <TextField
           margin="dense"
           id="author"
           name="author"
-          label={productData.author}
+          label={formValues.author}
+          onChange={handleChange}
           type="text"
           fullWidth
           variant="outlined"
@@ -63,9 +70,10 @@ export default function Info(props) {
         <Typography>Number of Pages</Typography>
         <TextField
           margin="dense"
-          id="coverType"
-          name="coverType"
-          label={productData.numberOfPages}
+          id="numberOfPages"
+          name="numberOfPages"
+          label={formValues.numberOfPages}
+          onChange={handleChange}
           type="text"
           fullWidth
           variant="outlined"
@@ -76,22 +84,25 @@ export default function Info(props) {
           width: (theme) => theme.widthTextField
         }}
       >
-        <Typography>Cover type</Typography>
+        <Typography>Cover Type</Typography>
         <TextField
           margin="dense"
           id="coverType"
           name="coverType"
-          label={productData.coverType}
+          onChange={handleChange}
+          label={formValues.coverType}
           type="text"
           fullWidth
           variant="outlined"
         />
+
         <Typography>Publishing Year</Typography>
         <TextField
           margin="dense"
-          id="price"
-          name="price"
-          label={productData.publishingYear}
+          id="publishingYear"
+          name="publishingYear"
+          onChange={handleChange}
+          label={formValues.publishingYear}
           type="text"
           fullWidth
           variant="outlined"
@@ -100,29 +111,34 @@ export default function Info(props) {
         <Typography>Language</Typography>
         <TextField
           margin="dense"
-          id="publisher"
-          name="publisher"
-          label={productData.language}
+          id="language"
+          name="language"
+          label={formValues.language}
+          onChange={handleChange}
           type="text"
           fullWidth
           variant="outlined"
         />
+
         <Typography>Supplier</Typography>
         <TextField
           margin="dense"
-          id="publishedBy"
-          name="publishedBy"
-          label={productData.supplier}
+          id="supplier"
+          name="supplier"
+          label={formValues.supplier}
+          onChange={handleChange}
           type="text"
           fullWidth
           variant="outlined"
         />
+
         <Typography>Packaging Size</Typography>
         <TextField
           margin="dense"
-          id="author"
-          name="author"
-          label={productData.packagingSize}
+          id="packagingSize"
+          name="packagingSize"
+          label={formValues.packagingSize}
+          onChange={handleChange}
           type="text"
           fullWidth
           variant="outlined"

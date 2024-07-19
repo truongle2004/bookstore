@@ -12,6 +12,7 @@ import { fetchAllProduct } from '~/axios/services'
 import { setProductId } from '~/redux/features/utils/StoreProductId'
 import { formatNumber } from '~/utils/formatNumber'
 
+
 function BookCard() {
   const [listBooks, setListBooks] = useState(null)
   const dispatch = useDispatch()

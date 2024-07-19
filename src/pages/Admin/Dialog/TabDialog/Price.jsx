@@ -5,6 +5,10 @@ import TextField from '@mui/material/TextField'
 
 const currencies = [
   {
+    value: 'VIETNAMESE DONG',
+    label: '₫'
+  },
+  {
     value: 'USD',
     label: '$'
   },
@@ -23,7 +27,7 @@ const currencies = [
 ]
 
 export default function Price(props) {
-  const { productData } = props
+  const { formValues, handleChange } = props
   return (
     <Box>
       <Typography>Price</Typography>
@@ -32,7 +36,8 @@ export default function Price(props) {
         margin="dense"
         id="price"
         name="price"
-        label={productData.price}
+        label={formValues.price}
+        onChange={handleChange}
         type="text"
         fullWidth
         variant="outlined"
@@ -44,7 +49,8 @@ export default function Price(props) {
         margin="dense"
         id="publisher"
         name="publisher"
-        label={productData.originalPrice}
+        label={formValues.originalPrice}
+        onChange={handleChange}
         type="text"
         fullWidth
         variant="outlined"
@@ -55,7 +61,8 @@ export default function Price(props) {
         margin="dense"
         id="publishedBy"
         name="publishedBy"
-        label={productData.discount}
+        label={formValues.discount}
+        onChange={handleChange}
         type="text"
         fullWidth
         variant="outlined"
@@ -64,7 +71,9 @@ export default function Price(props) {
       <TextField
         id="outlined-select-currency"
         select
-        label={productData.currency}
+        defaultValue="VIETNAMESE DONG"
+        label={formValues.currency}
+        onChange={handleChange}
         margin="dense"
         fullWidth
       >

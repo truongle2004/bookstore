@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box'
+import { toast } from 'react-toastify'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -12,6 +13,8 @@ import Info from './TabDialog/Info'
 import Price from './TabDialog/Price'
 import Description from './TabDialog/Description'
 import Author from './TabDialog/Author'
+import { useState } from 'react'
+import _ from 'lodash'
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props
@@ -40,8 +43,53 @@ function FormDialogAdmin(props) {
   const { openFormEdit, handleCloseFormEdit, productData } = props
   const [value, setValue] = React.useState(0)
 
-  const handleChange = (event, newValue) => {
+  const handleChangeTab = (event, newValue) => {
     setValue(newValue)
+  }
+
+  const defaultBook = {
+    id: '',
+    title: '',
+    publisher: '',
+    categoryName: '',
+    publisherBy: '',
+    author: '',
+    coverType: '',
+    price: 0,
+    originalPrice: 0,
+    discount: '',
+    currency: '',
+    img: [],
+    publishingYear: 0,
+    supplier: '',
+    language: '',
+    packagingSize: '',
+    numberOfPages: 0,
+    headerDescription: '',
+    aboutTheAuthor: '',
+    description: '',
+    rating: 0
+  }
+
+  const [formValues, setFormValues] = useState(
+    _.defaults(defaultBook, productData)
+  )
+
+  React.useEffect(() => {
+    setFormValues(productData)
+  }, [productData])
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+
+    setFormValues({
+      ...formValues,
+      [name]: value
+    })
+  }
+  if (!formValues) {
+    toast.error('There are somethings wrong')
+    return
   }
 
   return (
@@ -58,7 +106,7 @@ function FormDialogAdmin(props) {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 value={value}
-                onChange={handleChange}
+                onChange={handleChangeTab}
                 aria-label="basic tabs example"
               >
                 <Tab label="Info" {...a11yProps(0)} />
@@ -69,20 +117,20 @@ function FormDialogAdmin(props) {
               </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-              <Info productData={productData} />
+              <Info formValues={formValues} handleChange={handleChange} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              <Price productData={productData} />
+              <Price formValues={formValues} handleChange={handleChange} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-              <Image imgUrl={productData.img} />
+              <Image formValues={formValues} handleChange={handleChange} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
-              <Description productData={productData} />
+              <Description handleChange={handleChange} />
             </CustomTabPanel>
 
             <CustomTabPanel value={value} index={4}>
-              <Author productData={productData} />
+              <Author handleChange={handleChange} />
             </CustomTabPanel>
           </Box>
         </DialogContent>

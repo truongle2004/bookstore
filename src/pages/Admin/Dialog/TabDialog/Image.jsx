@@ -1,15 +1,9 @@
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { useState } from 'react'
 
 export default function Image(props) {
-  const { imgUrl } = props
-  const [url, setUrl] = useState(imgUrl)
-
-  const handleSetImage = (value) => {
-    setUrl(value)
-  }
+  const { formValues, handleChange } = props
 
   return (
     <Box
@@ -25,16 +19,16 @@ export default function Image(props) {
         margin="dense"
         id="coverType"
         name="coverType"
-        label={url}
+        label={formValues.img}
         type="text"
         fullWidth
         variant="outlined"
-        onPaste={(e) => handleSetImage(e.target.value)}
+        onPaste={handleChange}
       />
       <img
-        src={`${url}`}
+        src={`${formValues.img}`}
         style={{
-          objectFit: 'cover',
+          obectFit: 'cover',
           height: 200,
           width: 200
         }}

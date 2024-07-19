@@ -26,6 +26,7 @@ function AdminPage() {
   const handleCloseFormEdit = () => {
     setOpenFormEdit(false)
   }
+
   return (
     <Box>
       <FormDialogAdmin
