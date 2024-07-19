@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography'
 
 export default function Image(props) {
   const { formValues, handleChange } = props
+  console.log(formValues.img)
 
   return (
     <Box

@@ -8,6 +8,9 @@ const theme = extendTheme({
     height: '44px',
     width: '220px'
   },
+  heightTableAdmin: {
+    height: 700
+  },
   colorSchemes: {
     dark: {
       palette: {

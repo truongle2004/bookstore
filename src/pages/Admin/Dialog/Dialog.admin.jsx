@@ -15,6 +15,7 @@ import Description from './TabDialog/Description'
 import Author from './TabDialog/Author'
 import { useState } from 'react'
 import _ from 'lodash'
+import { useData } from '~/providers/AdminDataProvider'
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props
@@ -39,12 +40,16 @@ function a11yProps(index) {
   }
 }
 
-function FormDialogAdmin(props) {
-  const { openFormEdit, handleCloseFormEdit, productData } = props
+function FormDialogAdmin() {
+  const { openFormEdit, handleCloseFormEdit, data } = useData()
   const [value, setValue] = React.useState(0)
 
   const handleChangeTab = (event, newValue) => {
     setValue(newValue)
+  }
+
+  const hanleSubmitData = () => {
+    //TODO somethings here
   }
 
   const defaultBook = {
@@ -71,16 +76,17 @@ function FormDialogAdmin(props) {
     rating: 0
   }
 
-  const [formValues, setFormValues] = useState(
-    _.defaults(defaultBook, productData)
-  )
+  const [formValues, setFormValues] = useState(_.defaults(defaultBook, data))
 
   React.useEffect(() => {
-    setFormValues(productData)
-  }, [productData])
+    setFormValues(data)
+  }, [data])
 
+  console.log(formValues)
   const handleChange = (event) => {
     const { name, value } = event.target
+    console.log('name', name)
+    console.log('value', value)
 
     setFormValues({
       ...formValues,

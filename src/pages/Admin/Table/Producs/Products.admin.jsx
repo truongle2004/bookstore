@@ -1,10 +1,12 @@
+import styled from '@emotion/styled'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import { formatNumber } from '~/utils/formatNumber'
 import EditIcon from '@mui/icons-material/Edit'
 import InfoIcon from '@mui/icons-material/Info'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { alpha } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -18,10 +20,9 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { handleGetToken } from '~/axios/handleUserServices'
+import { useData } from '~/providers/AdminDataProvider'
 import { fetchAllProducts } from '~/redux/features/components/ListProducts'
-import styled from '@emotion/styled'
-import Menu from '@mui/material/Menu'
-import { alpha } from '@mui/material'
+import { formatNumber } from '~/utils/formatNumber'
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -66,11 +67,22 @@ const StyledMenu = styled((props) => (
   }
 }))
 
-function AdminTable(props) {
-  const { handleOpenFormEdit, handleSetProductData } = props
-  const existToken = Boolean(handleGetToken())
-  const dispatch = useDispatch()
-  const listBook = useSelector((state) => state.ListProducts.listAllProduct)
+function TableHeader() {
+  return (
+    <>
+      <TableCell>Id</TableCell>
+      <TableCell align="right">Imges</TableCell>
+      <TableCell align="right">Name</TableCell>
+      <TableCell align="right">Author</TableCell>
+      <TableCell align="right">Price</TableCell>
+      <TableCell align="right">Action</TableCell>
+    </>
+  )
+}
+
+function TableRowMenu(props) {
+  const { id } = props
+  const { handleOpenFormEdit, handleSetProductData } = useData()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const navigate = useNavigate()
@@ -86,6 +98,65 @@ function AdminTable(props) {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  return (
+    <>
+      <Box>
+        <Button
+          id="demo-customized-button"
+          aria-controls={open ? 'demo-customized-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          variant="contained"
+          disableElevation
+          onClick={handleClick}
+          endIcon={<KeyboardArrowDownIcon />}
+        >
+          Menu
+        </Button>
+        <StyledMenu
+          id="demo-customized-menu"
+          MenuListProps={{
+            'aria-labelledby': 'demo-customized-button'
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+        >
+          <MenuItem
+            onClick={() => {
+              handleClose()
+              handleSetProductData(id)
+              handleOpenFormEdit()
+            }}
+            disableRipple
+          >
+            <EditIcon />
+            Edit
+          </MenuItem>
+          <MenuItem onClick={handleClose} disableRipple>
+            <DeleteForeverIcon />
+            remove
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleMoreInfo(id)
+            }}
+            disableRipple
+          >
+            <InfoIcon />
+            Info
+          </MenuItem>
+        </StyledMenu>
+      </Box>
+    </>
+  )
+}
+
+function AdminProductManagementTable() {
+  const existToken = Boolean(handleGetToken())
+  const dispatch = useDispatch()
+  const listBook = useSelector((state) => state.ListProducts.listAllProduct)
+
   useEffect(() => {
     if (existToken) {
       dispatch(fetchAllProducts())
@@ -102,12 +173,7 @@ function AdminTable(props) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell align="right">Imges</TableCell>
-            <TableCell align="right">Name</TableCell>
-            <TableCell align="right">Author</TableCell>
-            <TableCell align="right">Price</TableCell>
-            <TableCell align="right">Action</TableCell>
+            <TableHeader />
           </TableRow>
         </TableHead>
         <TableBody>
@@ -133,54 +199,7 @@ function AdminTable(props) {
               <TableCell align="right">{value.author}</TableCell>
               <TableCell align="right">{formatNumber(value.price)}</TableCell>
               <TableCell align="right">
-                <Box>
-                  <Button
-                    id="demo-customized-button"
-                    aria-controls={open ? 'demo-customized-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    variant="contained"
-                    disableElevation
-                    onClick={handleClick}
-                    endIcon={<KeyboardArrowDownIcon />}
-                  >
-                    Menu
-                  </Button>
-                  <StyledMenu
-                    id="demo-customized-menu"
-                    MenuListProps={{
-                      'aria-labelledby': 'demo-customized-button'
-                    }}
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                  >
-                    <MenuItem
-                      onClick={() => {
-                        handleClose()
-                        handleSetProductData(value)
-                        handleOpenFormEdit()
-                      }}
-                      disableRipple
-                    >
-                      <EditIcon />
-                      Edit
-                    </MenuItem>
-                    <MenuItem onClick={handleClose} disableRipple>
-                      <DeleteForeverIcon />
-                      remove
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        handleMoreInfo(value.id)
-                      }}
-                      disableRipple
-                    >
-                      <InfoIcon />
-                      Info
-                    </MenuItem>
-                  </StyledMenu>
-                </Box>
+                <TableRowMenu id={value.id} />
               </TableCell>
             </TableRow>
           ))}
@@ -190,4 +209,4 @@ function AdminTable(props) {
   )
 }
 
-export default AdminTable
+export default AdminProductManagementTable
