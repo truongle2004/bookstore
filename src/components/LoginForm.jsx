@@ -88,7 +88,7 @@ function LoginForm() {
           <Box>
             <Typography>Enter email</Typography>
             <TextField
-              type="email"
+              type="text"
               fullWidth
               autoFocus
               required

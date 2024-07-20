@@ -4,7 +4,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   TextField,
   Typography
 } from '@mui/material'
@@ -14,9 +13,10 @@ import { toast } from 'react-toastify'
 import { registerApiCall } from '~/axios/services'
 import { isOpenedDialog } from '~/redux/features/components/OpenDialog'
 import { setOpenLogin } from '~/redux/features/services/UserServiceIndex'
-import { checkEmail } from '~/utils/emailValidation'
-import { checkConfirmPassword, checkPassword } from '~/utils/passwordValidation'
+import { checkConfirmPassword } from '~/utils/passwordValidation'
 import checkUsername from '~/utils/userNameValidation'
+import { checkEmail } from '~/utils/emailValidation'
+import { checkPassword } from '~/utils/passwordValidation'
 
 const RegisterForm = () => {
   const [email, setEmail] = useState('')
@@ -26,18 +26,21 @@ const RegisterForm = () => {
   const dispatch = useDispatch()
 
   const handleRegisterApiCall = async () => {
-    const res = await registerApiCall(username, email, password)
-    console.log(res)
-    if (res.data && res.status == 200) {
-      toast.success('Register Successfully')
-      dispatch(isOpenedDialog(false))
-      setInterval(() => {
-        window.location.reload()
-        dispatch(setOpenLogin())
-        dispatch(isOpenedDialog(true))
-      }, 1000)
-    } else {
-      toast.error('Register Failed')
+    try {
+      console.log('is called');
+      const res = await registerApiCall(username, email, password)
+      console.log(res);
+      if (res.data && res.status == 200) {
+        toast.success('Register Successfully')
+        dispatch(isOpenedDialog(false))
+        setInterval(() => {
+          window.location.reload()
+          dispatch(setOpenLogin())
+          dispatch(isOpenedDialog(true))
+        }, 1000)
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 

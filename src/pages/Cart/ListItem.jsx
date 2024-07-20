@@ -50,7 +50,7 @@ function ListItem(props) {
               </Typography>
             </TableCell>
             <CountQuantityAndPrice
-              id={props.product.id}
+              id={props.id}
               price={props.product.price}
               currency={props.product.currency}
               isSelected={checkedStates[props.product.id]}

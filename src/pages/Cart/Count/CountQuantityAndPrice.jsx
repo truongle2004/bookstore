@@ -6,6 +6,7 @@ import {
 import { IconButton, Stack, TableCell, Typography } from '@mui/material'
 import { useCallback, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { removeProductFromCart } from '~/axios/services'
 import { useControlQuantity } from '~/hooks'
 import { AddMoney, SubtractMoney } from '~/redux/features/cart/CartMoney'
 import { removeSelectedCheckBox } from '~/redux/features/cart/CountProductSelected'
@@ -42,10 +43,18 @@ function CountQuantityAndPrice(props) {
   const handleSetQuantityRemove = (quantity) =>
     dispatch(removeSelectedCheckBox(quantity))
 
-  const handleRemoveItem = useCallback(() => {
-    dispatch(removeAnItemFromCart(id))
-    handleSubtractMoney(previousQuantity.current * price)
-    handleSetQuantityRemove(1)
+  const handleRemoveItem = useCallback(async () => {
+    //dispatch(removeAnItemFromCart(id))
+    try {
+      const res = await removeProductFromCart(id)
+      if (res) {
+        handleSubtractMoney(previousQuantity.current * price)
+        handleSetQuantityRemove(1)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, id])
 

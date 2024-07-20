@@ -19,6 +19,8 @@ function DialogRequire() {
   )
 
   const [address, setAddress] = useState('')
+  const [fullName, setFullName] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
 
   const handleClose = () => {
     dispatch(isOpenedDialogRequireInfo(false))
@@ -29,11 +31,6 @@ function DialogRequire() {
     dispatch(setUserAddress(address))
   }
 
-  const [paymentType, setPaymentType] = useState('')
-
-  const handleChange = (event) => {
-    setPaymentType(event.target.value)
-  }
 
   return (
     <Dialog open={isOpenedDialog} fullWidth={true} maxWidth={'xs'}>
@@ -52,26 +49,32 @@ function DialogRequire() {
           onChange={(e) => setAddress(e.target.value)}
           sx={{ width: '100%' }}
         />
-        <InputLabel
-          id="age-select-label"
-          sx={{
-            mt: 3
-          }}
-        >
-          Payment
-        </InputLabel>
-        <Select
-          labelId="age-select-label"
-          id="age-select"
-          value={paymentType}
-          label="Age"
-          onChange={handleChange}
+
+        <TextField
+          required
+          margin="dense"
+          id="text"
+          name="number"
+          label="Enter phone number"
+          type="text"
           fullWidth
+          variant="standard"
+          onChange={(e) => setPhoneNumber(e.target.value)}
           sx={{ width: '100%' }}
-        >
-          <MenuItem value={1}>Payment on delivery</MenuItem>
-          <MenuItem value={2}>Payment by card</MenuItem>
-        </Select>
+        />
+
+        <TextField
+          required
+          margin="dense"
+          id="text"
+          name="name"
+          label="Enter full name"
+          type="text"
+          fullWidth
+          variant="standard"
+          onChange={(e) => setFullName(e.target.value)}
+          sx={{ width: '100%' }}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>

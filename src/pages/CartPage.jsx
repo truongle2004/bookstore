@@ -17,7 +17,7 @@ function CartPage() {
 
   useEffect(() => {
     dispatch(fetchProductInCart())
-  }, [])
+  }, [dispatch])
   return (
     <>
       <Container

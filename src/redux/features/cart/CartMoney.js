@@ -12,7 +12,9 @@ export const CartMoneySlide = createSlice({
       state.CartMoney = state.CartMoney + action.payload
     },
     SubtractMoney: (state, action) => {
-      state.CartMoney = state.CartMoney - action.payload
+      if (state.CartMoney > 0 && state.CartMoney >= action.payload) {
+        state.CartMoney = state.CartMoney - action.payload
+      }
     }
   }
 })
