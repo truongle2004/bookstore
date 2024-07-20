@@ -9,7 +9,7 @@ const orderUrl = import.meta.env.VITE_ORDER_URL
 
 const registerApiCall = (_name, _email, _password) => {
   return axios.post(registerUrl, {
-    name: _name,
+    username: _name,
     email: _email,
     password: _password
   })
