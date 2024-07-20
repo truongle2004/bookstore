@@ -41,6 +41,7 @@ function LoginForm() {
 
   const handleLoginApiCall = async () => {
     const res = await loginApiCall(email, password)
+    console.log(res);
     if (res && res.status === 200) {
       const data = res.data
       handleSaveIdUser(data.userId)

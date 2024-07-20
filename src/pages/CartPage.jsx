@@ -6,11 +6,18 @@ import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProductInCart } from '~/redux/features/components/ListProducts'
 import ListItem from './Cart/ListItem'
 
 function CartPage() {
-  const listBooks = useSelector((state) => state.ListProducts.productsCart)
+  const dispatch = useDispatch()
+  const listProducts = useSelector((state) => state.ListProducts.productsCart)
+
+  useEffect(() => {
+    dispatch(fetchProductInCart())
+  }, [])
   return (
     <>
       <Container
@@ -25,7 +32,7 @@ function CartPage() {
             mb: 2
           }}
         >
-          <strong>Cart ({listBooks.length} product)</strong>
+          <strong>Cart ({listProducts.length} product)</strong>
         </Typography>
         <Box
           sx={{
@@ -33,7 +40,7 @@ function CartPage() {
             mt: '20px'
           }}
         >
-          {listBooks.length === 0 ? (
+          {listProducts.length === 0 ? (
             <Box
               sx={{
                 display: 'flex',
@@ -81,7 +88,7 @@ function CartPage() {
                   <TableCell align="right">Operator</TableCell>
                 </TableRow>
               </TableHead>
-              <ListItem />
+              <ListItem listProducts={listProducts} />
             </Table>
           )}
         </Box>

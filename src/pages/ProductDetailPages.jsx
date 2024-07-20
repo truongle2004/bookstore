@@ -19,14 +19,11 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { handleGetToken } from '~/axios/handleUserServices'
-import { fetchAllProduct } from '~/axios/services'
+import { addProductToCartApiCall, fetchAllProduct } from '~/axios/services'
 import RadioGroupRating from '~/components/RadioGroupRating'
 import ReadMoreAndLess from '~/components/ReadLessAndMore'
 import { useControlQuantity } from '~/hooks'
-import {
-  addToCart,
-  addToListBuyNow
-} from '~/redux/features/components/ListProducts'
+import { addToListBuyNow } from '~/redux/features/components/ListProducts'
 import OpenDialog from '~/redux/features/components/OpenDialog'
 import theme from '~/theme'
 import { formatNumber } from '~/utils/formatNumber'
@@ -49,20 +46,24 @@ function ProductDetailPages() {
 
   const { quantity, handleIncrease, handleReduce } = useControlQuantity()
 
-  const handleActionAddToCart = () => {
+  const handleActionAddToCart = async () => {
     if (existUser) {
-      dispatch(
-        addToCart({
-          img: product.img,
-          price: product.price,
-          originalPrice: product.originalPrice,
-          currency: product.currency,
-          discount: product.discount,
-          title: product.title,
-          id: product.id,
-          author: product.author
-        })
-      )
+      const res = await addProductToCartApiCall(product.id)
+      if (res && res.status === 201) {
+        toast.success('Add Product Success')
+      }
+      //dispatch(
+      //  addToCart({
+      //    img: product.img,
+      //    price: product.price,
+      //    originalPrice: product.originalPrice,
+      //    currency: product.currency,
+      //    discount: product.discount,
+      //    title: product.title,
+      //    id: product.id,
+      //    author: product.author
+      //  })
+      //)
     } else {
       toast.error('User need to login')
       dispatch(OpenDialog(true))
@@ -112,7 +113,6 @@ function ProductDetailPages() {
     return <p>Page Not Found!</p>
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   return (
     <Box
       sx={{

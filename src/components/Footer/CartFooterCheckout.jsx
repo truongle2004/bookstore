@@ -28,6 +28,7 @@ const CartFooterCheckout = () => {
   const dispatch = useDispatch()
   const existAddressUser = useSelector((state) => state.userAddress.address)
   const handleRemoveAllItem = () => {
+  //const [listProducts, setListProduct] = useState([])
     dispatch(removeAllItems())
   }
   const listBooks = useSelector((state) => state.ListProducts.productsCart)
@@ -122,7 +123,7 @@ const CartFooterCheckout = () => {
           </Stack>
           <Stack direction="row" alignItems="center" spacing={2}>
             <Typography>
-              Total products ({totalProducts} product):{' '}
+              Total products ({totalProducts} product):
               {formatNumber(CartMoney)}d
             </Typography>
             <Button

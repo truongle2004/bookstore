@@ -19,41 +19,51 @@ const loginApiCall = (_email, _password) => {
   })
 }
 
-const addProductToCartApiCall = (_userId, _productId) => {
+const addProductToCartApiCall = (_productId) => {
   const token = handleGetToken()
-  if (token) {
-    return axios.post(
-      `${authenticationURL}${import.meta.env.VITE_CART_URL}`,
-      {
-        userId: _userId,
-        productId: _productId
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    )
+  if (!token) {
+    return Promise.reject('No token found')
   }
-  return Promise.reject('No token found')
+
+  const url = `${baseURL}${authenticationURL}${import.meta.env.VITE_ADD_CART_URL}/${_productId}`
+  const headers = {
+    Authorization: token
+  }
+  const data = { productId: _productId }
+
+  return axios.post(url, data, { headers })
+}
+
+const fetchAllProductInCart = () => {
+  const token = handleGetToken()
+  if (!token) {
+    return Promise.reject('No token found')
+  }
+
+  const url = `${baseURL}${authenticationURL}${import.meta.env.VITE_ADD_CART_URL}`
+  const headers = {
+    Authorization: token
+  }
+
+  return axios.get(url, { headers })
 }
 
 const fetchAllProduct = () => {
   const token = handleGetToken()
-  if (token) {
-    return axios.get(
-      `${baseURL}${import.meta.env.VITE_URL_TOKEN_CUSTOMER}/product`,
-      {
-        headers: {
-          Authorization: token
-        }
-      }
-    )
+  if (!token) {
+    return Promise.reject('No token found')
   }
-  return Promise.reject('No token found')
+
+  const url = `${baseURL}${import.meta.env.VITE_URL_TOKEN_CUSTOMER}/product`
+  const headers = {
+    Authorization: token
+  }
+
+  return axios.get(url, { headers })
 }
 
 export {
+  fetchAllProductInCart,
   registerApiCall,
   loginApiCall,
   addProductToCartApiCall,

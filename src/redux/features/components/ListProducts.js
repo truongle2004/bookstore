@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
-import { fetchAllProduct } from '~/axios/services'
+import { fetchAllProduct, fetchAllProductInCart } from '~/axios/services'
 
 export const fetchAllProducts = createAsyncThunk(
   'listporduct',
@@ -13,6 +13,16 @@ export const fetchAllProducts = createAsyncThunk(
   }
 )
 
+export const fetchProductInCart = createAsyncThunk(
+  'listCart',
+  async (_, { rejectWithValue }) => {
+    const res = await fetchAllProductInCart()
+    if (res.status < 200 || res.status > 300) {
+      return rejectWithValue(res.data)
+    }
+    return res.data
+  }
+)
 const initialState = {
   listAllProduct: [],
   productsCart: [],
@@ -55,6 +65,9 @@ const ListProductsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchAllProducts.fulfilled, (state, action) => {
       state.listAllProduct = action.payload
+    })
+    builder.addCase(fetchProductInCart.fulfilled, (state, action) => {
+      state.productsCart = action.payload
     })
   }
 })
