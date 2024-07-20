@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import Appbars from '~/components/Appbars'
-import ProductDetailPages from '~/pages/ProductDetailPages'
 import CartPage from '~/pages/CartPage'
+import ProductDetail from '~/pages/ProductDetail/ProductDetail'
 import Box from '@mui/material/Box'
 import CartFooterCheckout from '~/components/Footer/CartFooterCheckout'
 import Home from '~/pages/Home'
@@ -24,7 +24,7 @@ function AppRoutes() {
             </Box>
           }
         />
-        <Route path="product/:id" element={<ProductDetailPages />} />
+        <Route path="product/:id" element={<ProductDetail />} />
         <Route path="user/purchase" element={<Purchase />} />
         <Route path="authentication/admin" element={<AdminPage />} />
       </Route>
