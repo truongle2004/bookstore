@@ -1,4 +1,3 @@
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { Button, Typography } from '@mui/material'
 import Backdrop from '@mui/material/Backdrop'
@@ -14,7 +13,6 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { BuyItem } from '~/redux/features/cart/BuyItem'
 import { isSelectedAllItem } from '~/redux/features/cart/SelectAllItem'
-import { removeAllItems } from '~/redux/features/components/ListProducts'
 import { isOpenedDialogRequireInfo } from '~/redux/features/components/OpenDialog'
 import { formatNumber } from '~/utils/formatNumber'
 
@@ -27,10 +25,6 @@ const CartFooterCheckout = () => {
   const CartMoney = useSelector((state) => state.cartMoney.CartMoney)
   const dispatch = useDispatch()
   const existAddressUser = useSelector((state) => state.userAddress.address)
-  const handleRemoveAllItem = () => {
-  //const [listProducts, setListProduct] = useState([])
-    dispatch(removeAllItems())
-  }
   const listBooks = useSelector((state) => state.ListProducts.productsCart)
   const [open, setOpen] = React.useState(false)
   const handleClose = () => {
@@ -112,14 +106,6 @@ const CartFooterCheckout = () => {
               onClick={handleCheckboxClick}
             />
             <Typography>Select all ({listBooks.length})</Typography>
-            <Button
-              startIcon={<DeleteOutlineIcon />}
-              variant="contained"
-              color="primary"
-              onClick={handleRemoveAllItem}
-            >
-              Remove All
-            </Button>
           </Stack>
           <Stack direction="row" alignItems="center" spacing={2}>
             <Typography>
