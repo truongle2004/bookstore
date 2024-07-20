@@ -58,7 +58,7 @@ const ListProductsSlice = createSlice({
       )
       if (!productExists) {
         state.productsBuyNow.push(action.payload)
-        toast.success('Added to buy now list successfully')
+        toast.success('Buy successfully')
       }
     }
   },

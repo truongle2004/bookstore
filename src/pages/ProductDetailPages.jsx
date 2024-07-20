@@ -52,18 +52,6 @@ function ProductDetailPages() {
       if (res && res.status === 201) {
         toast.success('Add Product Success')
       }
-      //dispatch(
-      //  addToCart({
-      //    img: product.img,
-      //    price: product.price,
-      //    originalPrice: product.originalPrice,
-      //    currency: product.currency,
-      //    discount: product.discount,
-      //    title: product.title,
-      //    id: product.id,
-      //    author: product.author
-      //  })
-      //)
     } else {
       toast.error('User need to login')
       dispatch(OpenDialog(true))

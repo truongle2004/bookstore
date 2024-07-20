@@ -3,8 +3,9 @@ import { handleGetToken } from './handleUserServices'
 
 const registerUrl = import.meta.env.VITE_REGISTER_URL
 const loginUrl = import.meta.env.VITE_LOGIN_URL
-const ProductUrl = import.meta.env.VITE_PRODUCT_URL
-const CartUrl = import.meta.env.VITE_CART_URL
+const productUrl = import.meta.env.VITE_PRODUCT_URL
+const cartUrl = import.meta.env.VITE_CART_URL
+const orderUrl = import.meta.env.VITE_ORDER_URL
 
 const registerApiCall = (_name, _email, _password) => {
   return axios.post(registerUrl, {
@@ -27,7 +28,7 @@ const addProductToCartApiCall = (id) => {
     return Promise.reject('No token found')
   }
 
-  const url = `${CartUrl}/${id}`
+  const url = `${cartUrl}/${id}`
   const headers = {
     Authorization: token
   }
@@ -42,7 +43,7 @@ const fetchAllProductInCart = () => {
     return Promise.reject('No token found')
   }
 
-  const url = CartUrl
+  const url = cartUrl
   const headers = {
     Authorization: token
   }
@@ -56,7 +57,7 @@ const fetchAllProduct = () => {
     return Promise.reject('No token found')
   }
 
-  const url = ProductUrl
+  const url = productUrl
   const headers = {
     Authorization: token
   }
@@ -69,7 +70,7 @@ const removeProductFromCart = (id) => {
   if (!token) {
     return Promise.reject('No token found')
   }
-  const url = `${CartUrl}/delete/${id}`
+  const url = `${cartUrl}/delete/${id}`
 
   const headers = {
     Authorization: token
@@ -78,8 +79,27 @@ const removeProductFromCart = (id) => {
   return axios.delete(url, { headers })
 }
 
-//const addProductOrder = ()
+const addProductOrder = (userInfo, list) => {
+  const token = handleGetToken()
+  if (!token) {
+    return Promise.reject('No token found')
+  }
+  const url = orderUrl
+
+  const headers = {
+    Authorization: token
+  }
+
+  const data = {
+    fullName: userInfo.fullName,
+    fullAddress: userInfo.fullAddress,
+    contactNumber: userInfo.phoneNumber,
+    product: list
+  }
+  return axios.post(url, data, { headers })
+}
 export {
+  addProductOrder,
   removeProductFromCart,
   fetchAllProductInCart,
   registerApiCall,

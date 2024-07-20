@@ -24,7 +24,7 @@ const CartFooterCheckout = () => {
   const navigate = useNavigate()
   const CartMoney = useSelector((state) => state.cartMoney.CartMoney)
   const dispatch = useDispatch()
-  const existAddressUser = useSelector((state) => state.userAddress.address)
+  const existUserInfo = useSelector((state) => state.userInfo.user_info)
   const listBooks = useSelector((state) => state.ListProducts.productsCart)
   const [open, setOpen] = React.useState(false)
   const handleClose = () => {
@@ -51,7 +51,7 @@ const CartFooterCheckout = () => {
   }
 
   const handleBuy = () => {
-    if (existAddressUser === '') {
+    if (existUserInfo === '') {
       handleOpenDialog()
       return
     }

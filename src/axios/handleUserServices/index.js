@@ -1,4 +1,5 @@
-import { addProductToCartApiCall } from '../services'
+import { toast } from 'react-toastify'
+import { addProductOrder } from '../services'
 
 const handleSaveLocalStorage = (token) => {
   localStorage.setItem('token', token)
@@ -21,7 +22,19 @@ const handleSetRoleUser = (role) => localStorage.setItem('role', role)
 
 const handleGetRoleUser = () => localStorage.getItem('role')
 
+const handleAddToOrder = async (user_info, list) => {
+  const res = await addProductOrder(user_info, list)
+  try {
+    if (res) {
+      toast.success('Buy successfully')
+    }
+  } catch (err) {
+    console.error('err: ', err)
+  }
+}
+
 export {
+  handleAddToOrder,
   handleGetRoleUser,
   handleSetRoleUser,
   handleGetIdUser,
