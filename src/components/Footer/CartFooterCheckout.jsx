@@ -51,15 +51,20 @@ const CartFooterCheckout = () => {
   }
 
   const handleBuy = () => {
-    if (existUserInfo === '') {
+    const isAllowed = Boolean(
+      existUserInfo.address &&
+        existUserInfo.fullName &&
+        existUserInfo.phoneNumber
+    )
+    if (!isAllowed) {
       handleOpenDialog()
       return
     }
 
     dispatch(BuyItem(true))
-    setOpen(true)
+    handleOpen()
     setTimeout(() => {
-      setOpen(false)
+      handleClose()
       toast.success('Buy successfully')
       dispatch(BuyItem(false))
       navigate('/user/purchase')

@@ -1,10 +1,11 @@
-import Check from '@mui/icons-material/Check'
-import Alert from '@mui/material/Alert'
-import CheckIcon from '@mui/icons-material/Check'
+import {
+  default as Check,
+  default as CheckIcon
+} from '@mui/icons-material/Check'
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining'
 import Inventory2Icon from '@mui/icons-material/Inventory2'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
-import { Typography } from '@mui/material'
+import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'

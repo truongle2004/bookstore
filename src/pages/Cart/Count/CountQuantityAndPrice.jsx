@@ -4,12 +4,11 @@ import {
   Remove as RemoveIcon
 } from '@mui/icons-material'
 import { IconButton, Stack, TableCell, Typography } from '@mui/material'
-import { useCallback, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeProductFromCart } from '~/axios/services'
 import { useControlQuantity } from '~/hooks'
-import { AddMoney, SubtractMoney } from '~/redux/features/cart/CartMoney'
-import { removeSelectedCheckBox } from '~/redux/features/cart/CountProductSelected'
+import { useCart } from '~/providers/RemoveItemProvider'
+import { AddMoney } from '~/redux/features/cart/CartMoney'
 import {
   addToListBuyNow,
   removeAnItemFromCart
@@ -28,6 +27,7 @@ function CountQuantityAndPrice(props) {
     author,
     discount
   } = props
+  const { handleSubtractMoney, handleRemoveItem } = useCart()
   const dispatch = useDispatch()
   const isBought = useSelector((state) => state.buyItem.isBought)
   let { quantity, handleReduce, handleIncrease, setQuantity } =
@@ -39,24 +39,9 @@ function CountQuantityAndPrice(props) {
   const handleAddMoney = (money) => {
     dispatch(AddMoney(money))
   }
-  const handleSubtractMoney = (money) => dispatch(SubtractMoney(money))
-  const handleSetQuantityRemove = (quantity) =>
-    dispatch(removeSelectedCheckBox(quantity))
-
-  const handleRemoveItem = useCallback(async () => {
-    //dispatch(removeAnItemFromCart(id))
-    try {
-      const res = await removeProductFromCart(id)
-      if (res) {
-        handleSubtractMoney(previousQuantity.current * price)
-        handleSetQuantityRemove(1)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, id])
+  //const handleSubtractMoney = (money) => dispatch(SubtractMoney(money))
+  //const handleSetQuantityRemove = (quantity) =>
+  //  dispatch(removeSelectedCheckBox(quantity))
 
   useEffect(() => {
     if (isBought && isSelected) {
@@ -128,7 +113,7 @@ function CountQuantityAndPrice(props) {
         {formatNumber(quantity * price)} {currency}
       </TableCell>
       <TableCell align="right">
-        <IconButton color="error" onClick={handleRemoveItem}>
+        <IconButton color="error" onClick={() => handleRemoveItem(id)}>
           <DeleteForeverIcon />
         </IconButton>
       </TableCell>

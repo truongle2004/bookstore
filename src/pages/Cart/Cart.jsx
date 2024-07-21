@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProductInCart } from '~/redux/features/components/ListProducts'
 import ListItem from './ListItems/ListItem'
+import CartItemProvider from '~/providers/RemoveItemProvider'
 
 function Cart() {
   const dispatch = useDispatch()
@@ -88,7 +89,9 @@ function Cart() {
                   <TableCell align="right">Operator</TableCell>
                 </TableRow>
               </TableHead>
-              <ListItem listProducts={listProducts} />
+              <CartItemProvider>
+                <ListItem />
+              </CartItemProvider>
             </Table>
           )}
         </Box>
