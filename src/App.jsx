@@ -1,7 +1,7 @@
 import { CssBaseline } from '@mui/material'
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles'
 import theme from '~/theme'
-import FormDialog from './components/Dialog'
+import FormDialog from './components/Dialogs/auth/Dialog'
 import AppRoutes from './routes/AppRoutes'
 import { ToastContainer } from 'react-toastify'
 

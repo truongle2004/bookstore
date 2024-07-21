@@ -1,5 +1,5 @@
-import BoardBar from '~/components/BoardBar/BoardBar'
-import BookCard from '~/components/BookCard'
+import BoardBar from './BoardBar/BoardBar'
+import BookCard from './Content/BookCard'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import { handleGetToken } from '~/axios/handleUserServices'
@@ -52,7 +52,7 @@ function Home() {
                 alt="Placeholder"
                 style={{ maxWidth: '100%', maxHeight: '100%' }}
               />
-              <Typography>Có tiền thì vô không thì ra chỗ khác 👌</Typography>
+              <Typography>What are you looking for ?</Typography>
 
               <Typography>
                 <strong>You need to login</strong>

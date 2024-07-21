@@ -1,13 +1,13 @@
+import Box from '@mui/material/Box'
 import { Route, Routes } from 'react-router-dom'
 import Appbars from '~/components/Appbars'
-import CartPage from '~/pages/CartPage'
-import ProductDetail from '~/pages/ProductDetail/ProductDetail'
-import Box from '@mui/material/Box'
+import DialogRequire from '~/components/Dialogs/UserProfile/DialogRequire'
 import CartFooterCheckout from '~/components/Footer/CartFooterCheckout'
-import Home from '~/pages/Home'
-import Purchase from '~/pages/Purchase'
-import DialogRequire from '~/components/DialogRequire'
 import AdminPage from '~/pages/Admin/Admin'
+import Cart from '~/pages/Cart/Cart'
+import Home from '~/pages/Home/Home'
+import ProductDetail from '~/pages/ProductDetail/ProductDetail'
+import Purchase from '~/pages/Purchase/Purchase'
 
 function AppRoutes() {
   return (
@@ -19,7 +19,7 @@ function AppRoutes() {
           element={
             <Box>
               <DialogRequire />
-              <CartPage />
+              <Cart />
               <CartFooterCheckout />
             </Box>
           }

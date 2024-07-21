@@ -20,14 +20,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { handleGetToken } from '~/axios/handleUserServices'
 import { addProductToCartApiCall, fetchAllProduct } from '~/axios/services'
-import RadioGroupRating from '~/components/RadioGroupRating'
-import ReadMoreAndLess from '~/components/ReadLessAndMore'
+import RadioGroupRating from '~/components/Comment/RadioGroupRating'
+import ReadMoreAndLess from '~/components/Comment/ReadLessAndMore'
 import { useControlQuantity } from '~/hooks'
 import { addToListBuyNow } from '~/redux/features/components/ListProducts'
 import OpenDialog from '~/redux/features/components/OpenDialog'
 import theme from '~/theme'
 import { formatNumber } from '~/utils/formatNumber'
-import Notification from './Notification/Notification'
+import Notification from './Notification/Dialog/Dialog.detail'
+import Alert from '@mui/material/Alert'
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.body}`]: {
@@ -39,6 +40,7 @@ const StyledTableCell = styled(TableCell)(() => ({
 function ProductDetail() {
   const [value, setValue] = useState(2)
   const [listBooks, setListBooks] = useState([])
+  console.log(listBooks)
   const existUser = Boolean(handleGetToken())
   const matches = useMediaQuery('(min-width:1200px)')
   const productId = useSelector((state) => state.storeProductId.productId)
@@ -121,7 +123,7 @@ function ProductDetail() {
   }, [existUser])
 
   if (!product) {
-    return <p>Page Not Found!</p>
+    return <Alert severity="error">There is no product here</Alert>
   }
 
   return (

@@ -1,8 +1,8 @@
 import { TableBody, TableCell, TableRow, Typography } from '@mui/material'
 import { useState } from 'react'
 import { formatNumber } from '~/utils/formatNumber'
-import CheckSelect from './CheckBox/CheckBox'
-import CountQuantityAndPrice from './Count/CountQuantityAndPrice'
+import CheckSelect from '../CheckBox/CheckBox'
+import CountQuantityAndPrice from '../Count/CountQuantityAndPrice'
 
 function ListItem(props) {
   const { listProducts } = props

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import { Outlet } from 'react-router-dom'
 import ModeToggle from '../ModeSelects'
-import { Account, Cart, Logo, Search } from './Menus'
+import { Account, Cart, Logo } from './Menus'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import MyBook from './Menus/Mybook'
 
@@ -37,7 +37,6 @@ function Appbars() {
             }}
           >
             {matches && <Logo />}
-            <Search />
             {!matches ? (
               <>
                 <Stack

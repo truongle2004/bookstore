@@ -1,7 +1,10 @@
 import Check from '@mui/icons-material/Check'
+import Alert from '@mui/material/Alert'
+import CheckIcon from '@mui/icons-material/Check'
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining'
 import Inventory2Icon from '@mui/icons-material/Inventory2'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
+import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
@@ -160,6 +163,14 @@ const steps = ['Are preparing', 'Are delivering', 'Are shipping']
 export default function Purchase() {
   const listProduct = useSelector((state) => state.ListProducts.productsBuyNow)
 
+  if (!listProduct) {
+    return (
+      <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+        Here is a gentle confirmation that your action was successful.
+      </Alert>
+    )
+  }
+
   return (
     <Container
       maxWidth={'xl'}
@@ -168,15 +179,15 @@ export default function Purchase() {
         alignItems: 'center'
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          width: '100%'
-        }}
-      >
-        {listProduct.length > 0 ? (
+      {listProduct.length > 0 && (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%'
+          }}
+        >
           <Stack sx={{ width: '100%', py: 10 }} spacing={4}>
             <Stepper
               alternativeLabel
@@ -192,47 +203,45 @@ export default function Purchase() {
               ))}
             </Stepper>
           </Stack>
-        ) : (
-          <div></div>
-        )}
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Product</TableCell>
-                <TableCell align="right">Quantity</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Bill</TableCell>
-                <TableCell align="right">Status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {listProduct.map((value) => (
-                <TableRow
-                  key={value.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    <img
-                      src={`${value.img}`}
-                      style={{
-                        width: '80px',
-                        height: '80px'
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell align="right">{value.quantity}</TableCell>
-                  <TableCell align="right">{value.price}</TableCell>
-                  <TableCell align="right">
-                    {value.quantity * value.price}
-                  </TableCell>
-                  <TableCell align="right">Processing</TableCell>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Product</TableCell>
+                  <TableCell align="right">Quantity</TableCell>
+                  <TableCell align="right">Price</TableCell>
+                  <TableCell align="right">Bill</TableCell>
+                  <TableCell align="right">Status</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
+              </TableHead>
+              <TableBody>
+                {listProduct.map((value) => (
+                  <TableRow
+                    key={value.id}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      <img
+                        src={`${value.img}`}
+                        style={{
+                          width: '80px',
+                          height: '80px'
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell align="right">{value.quantity}</TableCell>
+                    <TableCell align="right">{value.price}</TableCell>
+                    <TableCell align="right">
+                      {value.quantity * value.price}
+                    </TableCell>
+                    <TableCell align="right">Processing</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      )}
     </Container>
   )
 }

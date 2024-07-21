@@ -9,9 +9,9 @@ import Typography from '@mui/material/Typography'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProductInCart } from '~/redux/features/components/ListProducts'
-import ListItem from './Cart/ListItem'
+import ListItem from './ListItems/ListItem'
 
-function CartPage() {
+function Cart() {
   const dispatch = useDispatch()
   const listProducts = useSelector((state) => state.ListProducts.productsCart)
 
@@ -97,4 +97,4 @@ function CartPage() {
   )
 }
 
-export default CartPage
+export default Cart
