@@ -7,7 +7,7 @@ import { IconButton, Stack, TableCell, Typography } from '@mui/material'
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useControlQuantity } from '~/hooks'
-import { useCart } from '~/providers/RemoveItemProvider'
+import { useCart } from '~/providers/CartItemProvider'
 import { AddMoney } from '~/redux/features/cart/CartMoney'
 import {
   addToListBuyNow,
@@ -40,10 +40,6 @@ function CountQuantityAndPrice(props) {
   const handleAddMoney = (money) => {
     dispatch(AddMoney(money))
   }
-  //const handleSubtractMoney = (money) => dispatch(SubtractMoney(money))
-  //const handleSetQuantityRemove = (quantity) =>
-  //  dispatch(removeSelectedCheckBox(quantity))
-
   useEffect(() => {
     if (isBought && isSelected) {
       dispatch(

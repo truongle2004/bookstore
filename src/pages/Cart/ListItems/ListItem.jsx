@@ -3,11 +3,21 @@ import { useState } from 'react'
 import { formatNumber } from '~/utils/formatNumber'
 import CheckSelect from '../CheckBox/CheckBox'
 import CountQuantityAndPrice from '../Count/CountQuantityAndPrice'
-import { useCart } from '~/providers/RemoveItemProvider'
+import { useCart } from '~/providers/CartItemProvider'
+import { useDispatch } from 'react-redux'
+import { fetchProductInCart } from '~/redux/features/components/ListProducts'
 
-function ListItem(props) {
-  const { handleIsRemovedItem } = props
+function ListItem() {
   const { listProducts } = useCart()
+  const [isRemovedItem, setIsRemovedItem] = useState(false)
+  const dispatch = useDispatch()
+  const handleIsRemovedItem = () => {
+    setIsRemovedItem(true)
+    setTimeout(() => {
+      setIsRemovedItem(false)
+      dispatch(fetchProductInCart())
+    }, 500)
+  }
   const [checkedStates, setCheckedStates] = useState(
     listProducts.reduce((acc, book) => {
       acc[book.id] = false

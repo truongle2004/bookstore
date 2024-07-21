@@ -164,12 +164,8 @@ const steps = ['Are preparing', 'Are delivering', 'Are shipping']
 export default function Purchase() {
   const listProduct = useSelector((state) => state.ListProducts.productsBuyNow)
 
-  if (!listProduct) {
-    return (
-      <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-        Here is a gentle confirmation that your action was successful.
-      </Alert>
-    )
+  if (listProduct.length === 0) {
+    return <Alert severity="error">You should buy somethings!</Alert>
   }
 
   return (

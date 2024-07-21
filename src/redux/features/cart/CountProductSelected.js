@@ -16,7 +16,8 @@ export const ProductSelectedSlide = createSlice({
         state.productsSelected > 0 ? state.productsSelected - 1 : 0
     },
     removeSelectedCheckBox: (state, action) => {
-      state.productsSelected = state.productsSelected - action.payload
+      state.productsSelected =
+        state.productsSelected > 0 ? state.productsSelected - action.payload : 0
     }
   }
 })

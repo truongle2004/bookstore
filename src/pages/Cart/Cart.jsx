@@ -6,22 +6,15 @@ import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProductInCart } from '~/redux/features/components/ListProducts'
 import ListItem from './ListItems/ListItem'
-import CartItemProvider from '~/providers/RemoveItemProvider'
+import CartItemProvider from '~/providers/CartItemProvider'
 
 function Cart() {
   const dispatch = useDispatch()
   const listProducts = useSelector((state) => state.ListProducts.productsCart)
-  const [isRemovedItem, setIsRemovedItem] = useState(false)
-  const handleIsRemovedItem = () => {
-    setIsRemovedItem(true)
-    setTimeout(() => {
-      setIsRemovedItem(false)
-    }, 500)
-  }
 
   useEffect(() => {
     dispatch(fetchProductInCart())
@@ -97,7 +90,7 @@ function Cart() {
                 </TableRow>
               </TableHead>
               <CartItemProvider>
-                <ListItem handleIsRemovedItem={handleIsRemovedItem} />
+                <ListItem />
               </CartItemProvider>
             </Table>
           )}
