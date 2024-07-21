@@ -25,7 +25,8 @@ function CountQuantityAndPrice(props) {
     originalPrice,
     title,
     author,
-    discount
+    discount,
+    handleIsRemovedItem
   } = props
   const { handleSubtractMoney, handleRemoveItem } = useCart()
   const dispatch = useDispatch()
@@ -113,7 +114,13 @@ function CountQuantityAndPrice(props) {
         {formatNumber(quantity * price)} {currency}
       </TableCell>
       <TableCell align="right">
-        <IconButton color="error" onClick={() => handleRemoveItem(id)}>
+        <IconButton
+          color="error"
+          onClick={() => {
+            handleRemoveItem(id)
+            handleIsRemovedItem()
+          }}
+        >
           <DeleteForeverIcon />
         </IconButton>
       </TableCell>

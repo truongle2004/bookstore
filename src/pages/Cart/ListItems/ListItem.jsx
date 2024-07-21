@@ -3,9 +3,10 @@ import { useState } from 'react'
 import { formatNumber } from '~/utils/formatNumber'
 import CheckSelect from '../CheckBox/CheckBox'
 import CountQuantityAndPrice from '../Count/CountQuantityAndPrice'
-import {useCart} from '~/providers/RemoveItemProvider'
+import { useCart } from '~/providers/RemoveItemProvider'
 
-function ListItem() {
+function ListItem(props) {
+  const { handleIsRemovedItem } = props
   const { listProducts } = useCart()
   const [checkedStates, setCheckedStates] = useState(
     listProducts.reduce((acc, book) => {
@@ -60,6 +61,7 @@ function ListItem() {
               title={props.product.title}
               img={props.product.img}
               author={props.product.author}
+              handleIsRemovedItem={handleIsRemovedItem}
             />
           </TableRow>
         </TableBody>
