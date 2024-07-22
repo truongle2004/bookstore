@@ -98,6 +98,14 @@ function TableRowMenu(props) {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const handleUpdateItem = () => {
+    //TODO somethings here
+  }
+
+  const handleRemoveItem = () => {
+    //TODO somethings here
+  }
   return (
     <>
       <Box>

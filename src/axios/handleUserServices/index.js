@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify'
-import { addProductOrder } from '../services'
+import { addProductOrder, removeProduct } from '../services'
 
 const handleSaveLocalStorage = (token) => {
   localStorage.setItem('token', token)
@@ -33,7 +33,17 @@ const handleAddToOrder = async (user_info, list) => {
   }
 }
 
+const handleRemoveProduct = async (id) => {
+  const res = await removeProduct(id)
+  if (res.status === 204) {
+    toast.success('Remove Item successfully')
+    return
+  }
+  toast.error('Cannot remove the item!')
+}
+
 export {
+  handleRemoveProduct,
   handleAddToOrder,
   handleGetRoleUser,
   handleSetRoleUser,

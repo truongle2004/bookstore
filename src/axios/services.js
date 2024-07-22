@@ -98,7 +98,21 @@ const addProductOrder = (userInfo, list) => {
   }
   return axios.post(url, data, { headers })
 }
+
+const removeProduct = (id) => {
+  const token = handleGetToken()
+  if (!token) {
+    return Promise.reject('No token found')
+  }
+  const url = productUrl
+
+  const headers = {
+    Authorization: token
+  }
+  return axios.post(url, id, { headers })
+}
 export {
+  removeProduct,
   addProductOrder,
   removeProductFromCart,
   fetchAllProductInCart,
