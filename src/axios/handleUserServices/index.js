@@ -35,6 +35,7 @@ const handleAddToOrder = async (user_info, list) => {
 
 const handleRemoveProduct = async (id) => {
   const res = await removeProduct(id)
+  console.log(res);
   if (res.status === 204) {
     toast.success('Remove Item successfully')
     return

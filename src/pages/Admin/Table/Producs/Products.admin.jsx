@@ -19,10 +19,11 @@ import * as React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { handleGetToken } from '~/axios/handleUserServices'
+import { handleGetToken, handleRemoveProduct } from '~/axios/handleUserServices'
 import { useData } from '~/providers/AdminDataProvider'
 import { fetchAllProducts } from '~/redux/features/components/ListProducts'
 import { formatNumber } from '~/utils/formatNumber'
+import { useCallback } from 'react'
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -86,6 +87,7 @@ function TableRowMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -99,13 +101,16 @@ function TableRowMenu(props) {
     setAnchorEl(null)
   }
 
-  const handleUpdateItem = () => {
+  const handleUpdateProduct = () => {
     //TODO somethings here
   }
 
-  const handleRemoveItem = () => {
-    //TODO somethings here
+  const handleRemoveItem = (id) => {
+    handleRemoveProduct(id)
+
+    dispatch(fetchAllProducts())
   }
+
   return (
     <>
       <Box>
@@ -141,7 +146,13 @@ function TableRowMenu(props) {
             <EditIcon />
             Edit
           </MenuItem>
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem
+            onClick={() => {
+              handleClose()
+              handleRemoveItem(id)
+            }}
+            disableRipple
+          >
             <DeleteForeverIcon />
             remove
           </MenuItem>

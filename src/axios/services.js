@@ -104,12 +104,12 @@ const removeProduct = (id) => {
   if (!token) {
     return Promise.reject('No token found')
   }
-  const url = productUrl
+  const url = `${productUrl}/${id}`
 
   const headers = {
     Authorization: token
   }
-  return axios.post(url, id, { headers })
+  return axios.delete(url, { headers })
 }
 export {
   removeProduct,
