@@ -24,43 +24,6 @@ Các cuốn sách của Philp Parker đã ra mắt bạn đọc gồm: “World 
 
 Độc giả có thể tìm hiểu thêm các cuốn sách trong series này, bao gồm: “1000 phát minh và khám phá vĩ đại”; “Vòng đời”; “Tôn giáo thế giới”...`,
   rating: 4,
-  comment: [
-    {
-      username: 'BookLover123',
-      date: '2024-07-10',
-      rating: 5,
-      comment:
-        'An incredible read! The author\'s dee` understanding of history shines through every page. Highly recommend!'
-    },
-    {
-      username: 'HistoryBuff89',
-      date: '2024-07-11',
-      rating: 4,
-      comment:
-        'Very informative and well-written. A must-read for anyone interested in ancient and medieval politics and military systems.'
-    },
-    {
-      username: 'CasualReader56',
-      date: '2024-07-12',
-      rating: 3,
-      comment:
-        'The book was good, but some sections were a bit dense for my taste. Overall, a worthwhile read.'
-    },
-    {
-      username: 'Scholar2024',
-      date: '2024-07-12',
-      rating: 5,
-      comment:
-        'An outstanding work of historical scholarship. The maps and illustrations are particularly helpful.'
-    },
-    {
-      username: 'LiteraryCritic01',
-      date: '2024-07-13',
-      rating: 4,
-      comment:
-        'Philip Parker\'s writing is both engaging and insightful. I learned a lot about the Viking world. Highly recommended.'
-    }
-  ]
 }
 
 export const listBookInfo = [

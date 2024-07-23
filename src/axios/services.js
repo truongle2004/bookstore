@@ -111,7 +111,21 @@ const removeProduct = (id) => {
   }
   return axios.delete(url, { headers })
 }
+
+const updateProduct = (value) => {
+  const token = handleGetToken()
+  if (!token) {
+    return Promise.reject('No token found')
+  }
+  const url = `${productUrl}/update`
+
+  const headers = {
+    Authorization: token
+  }
+  return axios.post(url, value, { headers })
+}
 export {
+  updateProduct,
   removeProduct,
   addProductOrder,
   removeProductFromCart,

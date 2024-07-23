@@ -16,6 +16,9 @@ import Author from './TabDialog/Author'
 import { useState } from 'react'
 import _ from 'lodash'
 import { useData } from '~/providers/AdminDataProvider'
+import { useDispatch } from 'react-redux'
+import { handleUpdateProduct } from '~/axios/handleUserServices'
+import { fetchAllProducts } from '~/redux/features/components/ListProducts'
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props
@@ -43,6 +46,7 @@ function a11yProps(index) {
 function FormDialogAdmin() {
   const { openFormEdit, handleCloseFormEdit, data } = useData()
   const [value, setValue] = React.useState(0)
+  const dispatch = useDispatch()
 
   const handleChangeTab = (event, newValue) => {
     setValue(newValue)
@@ -82,11 +86,8 @@ function FormDialogAdmin() {
     setFormValues(data)
   }, [data])
 
-  console.log(formValues)
   const handleChange = (event) => {
     const { name, value } = event.target
-    console.log('name', name)
-    console.log('value', value)
 
     setFormValues({
       ...formValues,
@@ -96,6 +97,13 @@ function FormDialogAdmin() {
   if (!formValues) {
     toast.error('There are somethings wrong')
     return
+  }
+
+  const handleUpdateItem = () => {
+    handleUpdateProduct(formValues)
+    setTimeout(() => {
+      dispatch(fetchAllProducts())
+    }, 500)
   }
 
   return (
@@ -142,7 +150,9 @@ function FormDialogAdmin() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseFormEdit}>Cancel</Button>
-          <Button type="submit">Subscribe</Button>
+          <Button type="submit" onClick={handleUpdateItem}>
+            Subscribe
+          </Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

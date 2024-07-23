@@ -23,7 +23,6 @@ import { handleGetToken, handleRemoveProduct } from '~/axios/handleUserServices'
 import { useData } from '~/providers/AdminDataProvider'
 import { fetchAllProducts } from '~/redux/features/components/ListProducts'
 import { formatNumber } from '~/utils/formatNumber'
-import { useCallback } from 'react'
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -82,16 +81,22 @@ function TableHeader() {
 }
 
 function TableRowMenu(props) {
-  const { id } = props
+  const { value } = props
   const { handleOpenFormEdit, handleSetProductData } = useData()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
-  const navigate = useNavigate()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
 
+  const handleRemoveItem = (id) => {
+    handleRemoveProduct(id)
+    setTimeout(() => {
+      dispatch(fetchAllProducts())
+    }, 500)
+  }
   const handleMoreInfo = (id) => {
     handleClose()
     navigate(import.meta.env.VITE_ADMIN_PRODUCT + '/' + id)
@@ -99,16 +104,6 @@ function TableRowMenu(props) {
 
   const handleClose = () => {
     setAnchorEl(null)
-  }
-
-  const handleUpdateProduct = () => {
-    //TODO somethings here
-  }
-
-  const handleRemoveItem = (id) => {
-    handleRemoveProduct(id)
-
-    dispatch(fetchAllProducts())
   }
 
   return (
@@ -138,7 +133,7 @@ function TableRowMenu(props) {
           <MenuItem
             onClick={() => {
               handleClose()
-              handleSetProductData(id)
+              handleSetProductData(value.id)
               handleOpenFormEdit()
             }}
             disableRipple
@@ -149,7 +144,7 @@ function TableRowMenu(props) {
           <MenuItem
             onClick={() => {
               handleClose()
-              handleRemoveItem(id)
+              handleRemoveItem(value.id)
             }}
             disableRipple
           >
@@ -158,7 +153,7 @@ function TableRowMenu(props) {
           </MenuItem>
           <MenuItem
             onClick={() => {
-              handleMoreInfo(id)
+              handleMoreInfo(value.id)
             }}
             disableRipple
           >
@@ -218,7 +213,7 @@ function AdminProductManagementTable() {
               <TableCell align="right">{value.author}</TableCell>
               <TableCell align="right">{formatNumber(value.price)}</TableCell>
               <TableCell align="right">
-                <TableRowMenu id={value.id} />
+                <TableRowMenu value={value} />
               </TableCell>
             </TableRow>
           ))}

@@ -12,6 +12,7 @@ import {
   handleGetEmailUser,
   handleGetToken,
   handleRemoveEmailUser,
+  handleRemoveRole,
   handleRemoveToken
 } from '~/axios/handleUserServices'
 import { isOpenedDialog } from '~/redux/features/components/OpenDialog'
@@ -55,6 +56,7 @@ function Account() {
       window.location.reload()
       handleRemoveToken()
       handleRemoveEmailUser()
+      handleRemoveRole()
     } else {
       dispatch(setOpenRegister())
     }

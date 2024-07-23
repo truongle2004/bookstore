@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify'
-import { addProductOrder, removeProduct } from '../services'
+import { addProductOrder, removeProduct, updateProduct } from '../services'
 
 const handleSaveLocalStorage = (token) => {
   localStorage.setItem('token', token)
@@ -22,6 +22,8 @@ const handleSetRoleUser = (role) => localStorage.setItem('role', role)
 
 const handleGetRoleUser = () => localStorage.getItem('role')
 
+const handleRemoveRole = () => localStorage.removeItem('role')
+
 const handleAddToOrder = async (user_info, list) => {
   const res = await addProductOrder(user_info, list)
   try {
@@ -29,21 +31,41 @@ const handleAddToOrder = async (user_info, list) => {
       toast.success('Buy successfully')
     }
   } catch (err) {
-    console.error('err: ', err)
+    throw new Error('error:', err)
   }
 }
 
 const handleRemoveProduct = async (id) => {
-  const res = await removeProduct(id)
-  console.log(res);
-  if (res.status === 204) {
-    toast.success('Remove Item successfully')
-    return
+  try {
+    const res = await removeProduct(id)
+    if (res.status === 204) {
+      toast.success('Remove Item successfully')
+    }
+  } catch (error) {
+    const status = error.response?.status || 'Unknown'
+    console.error(`Error removing product: ${status}`, error)
+    throw new Error({
+      status: status,
+      error: error.message
+    })
   }
-  toast.error('Cannot remove the item!')
+}
+
+const handleUpdateProduct = async (data) => {
+  try {
+    const res = await updateProduct(data)
+    if (res.status === 200) {
+      toast.success('Update product successfully')
+    }
+  } catch (err) {
+    console.error(`Error update product: ${data}`, err)
+    throw new Error(err)
+  }
 }
 
 export {
+  handleUpdateProduct,
+  handleRemoveRole,
   handleRemoveProduct,
   handleAddToOrder,
   handleGetRoleUser,

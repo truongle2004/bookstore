@@ -6,10 +6,13 @@ import ModeToggle from '../ModeSelects'
 import { Account, Cart, Logo } from './Menus'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import MyBook from './Menus/Mybook'
+import { handleGetRoleUser } from '~/axios/handleUserServices'
+import { useState } from 'react'
 
 function Appbars() {
   const matches = useMediaQuery('(min-width:700px)')
-
+  const [isAdmin, setIsAdmin] = useState(() => handleGetRoleUser() === 'ADMIN')
+  console.log(isAdmin)
   return (
     <>
       <Box
@@ -47,16 +50,24 @@ function Appbars() {
                     py: 2
                   }}
                 >
-                  <MyBook />
-                  <Cart />
+                  {!isAdmin && (
+                    <>
+                      <MyBook />
+                      <Cart />
+                    </>
+                  )}
                   <ModeToggle />
                   <Account />
                 </Stack>
               </>
             ) : (
               <>
-                <MyBook />
-                <Cart />
+                {!isAdmin && (
+                  <>
+                    <MyBook />
+                    <Cart />
+                  </>
+                )}
                 <ModeToggle />
                 <Account />
               </>

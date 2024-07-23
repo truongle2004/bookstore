@@ -41,17 +41,20 @@ function LoginForm() {
 
   const handleLoginApiCall = async () => {
     const res = await loginApiCall(email, password)
-    console.log(res);
     if (res && res.status === 200) {
       const data = res.data
       handleSaveIdUser(data.userId)
-      handleSetRoleUser(data.role)
       handleSaveEmail()
       handleSaveLocalStorage(res.headers.authorization)
       handleCloseDialog()
+      handleSetRoleUser(data.role)
       toast.success('Login Successfully')
       setInterval(() => {
-        navigate('/home')
+        if (data.role !== 'ADMIN') {
+          navigate('/home')
+        } else {
+          navigate('/authentication/admin')
+        }
         window.location.reload()
       }, 1300)
     } else if (res.respose.status === 403) {
@@ -86,7 +89,7 @@ function LoginForm() {
           sx={{ width: '100%' }}
         >
           <Box>
-            <Typography>Enter email</Typography>
+            <Typography>Enter user name</Typography>
             <TextField
               type="text"
               fullWidth
